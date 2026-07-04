@@ -1,0 +1,3 @@
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/CondominioApiApplicationTests.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/audit/PostgresAuditInterceptorTest.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/controller/AuthControllerTest.java

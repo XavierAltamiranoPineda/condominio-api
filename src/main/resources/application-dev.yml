@@ -1,0 +1,61 @@
+# ═══════════════════════════════════════════════════════════════
+#  application-dev.yml — Perfil de desarrollo local
+#  Activa con: -Dspring.profiles.active=dev
+# ═══════════════════════════════════════════════════════════════
+spring:
+
+  # ── Base de datos (Docker Compose local) ───────────────────
+  datasource:
+    url: jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require
+    username: postgres
+    password: hOH47kW9xJSzP7b5
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  # ── JPA / Hibernate ─────────────────────────────────────────
+  jpa:
+    hibernate:
+      ddl-auto: validate        # Flyway gestiona el esquema; Hibernate solo valida
+    show-sql: true
+
+  # ── Flyway ──────────────────────────────────────────────────
+  flyway:
+    url: jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require
+    user: postgres
+    password: hOH47kW9xJSzP7b5
+
+# ── Servidor ────────────────────────────────────────────────
+server:
+  port: 8080
+  error:
+    include-message: always       # Mensajes de error visibles en dev
+    include-stacktrace: on_param
+
+# ── Logging ─────────────────────────────────────────────────
+logging:
+  level:
+    root: INFO
+    com.condominio: DEBUG
+    org.springframework.security: DEBUG
+    org.flywaydb: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"
+
+# ── JWT (secreto de desarrollo, NO usar en producción) ──────
+app:
+  jwt:
+    secret: dev-secret-key-for-local-environment-only-32-chars-min
+  cors:
+    allowed-origins: "http://localhost:3000,http://localhost:4200,http://localhost:8081"
+
+# ── SpringDoc — visible solo en dev ────────────────────────
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

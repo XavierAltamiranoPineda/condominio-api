@@ -1,0 +1,60 @@
+# ═══════════════════════════════════════════════════════════════
+#  application.yml — Configuración base (compartida por todos
+#  los perfiles). Los valores específicos de cada entorno se
+#  sobreescriben en application-dev.yml / application-prod.yml
+# ═══════════════════════════════════════════════════════════════
+spring:
+  application:
+    name: condominio-api
+
+  # ── Perfil activo por defecto ───────────────────────────────
+  profiles:
+    active: dev
+
+  # ── JPA / Hibernate ─────────────────────────────────────────
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+
+  # ── Flyway ──────────────────────────────────────────────────
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+  # ── Jackson ─────────────────────────────────────────────────
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: America/Guayaquil
+
+# ── Servidor ────────────────────────────────────────────────
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+
+# ── Seguridad JWT ───────────────────────────────────────────
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-must-be-at-least-256-bits-long-secret-key}
+    access-token-expiration-ms: 900000        # 15 minutos
+    refresh-token-expiration-ms: 604800000    # 7 días
+  cors:
+    allowed-origins: "*"
+
+# ── SpringDoc / Swagger UI ──────────────────────────────────
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+  show-actuator: false
