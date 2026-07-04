@@ -5,16 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Mapea la tabla {@code persona} de condominio-db.
- * Persona es una entidad independiente que puede o no tener Usuario.
- * PK: id_persona (BIGSERIAL).
- */
 @Entity
 @Table(name = "persona")
 @Getter
@@ -29,8 +24,8 @@ public class Persona {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_identificacion", nullable = false,
-            columnDefinition = "tipo_identificacion_enum")
+    @Column(name = "tipo_identificacion", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private TipoIdentificacion tipoIdentificacion;
 
     @Column(name = "numero_identificacion", nullable = false, length = 30)
@@ -58,16 +53,13 @@ public class Persona {
     private String fotoPerfil;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false, columnDefinition = "estado_persona_enum")
+    @Column(name = "estado", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private EstadoPersona estado = EstadoPersona.ACTIVO;
 
     // Lado inverso — 1 persona puede tener 1 usuario
     @OneToOne(mappedBy = "persona", fetch = FetchType.LAZY)
     private Usuario usuario;
-
-    // Lado inverso — relaciones con unidades (Descomentar al implementar PersonaUnidad)
-    // @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
-    // private List<PersonaUnidad> personaUnidades = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {
@@ -81,7 +73,6 @@ public class Persona {
         return getClass().hashCode();
     }
 
-    // ── Enums internos ───────────────────────────────────────────
-    public enum TipoIdentificacion { CEDULA, PASAPORTE, RUC }
+    public enum TipoIdentificacion { CEDULA, PASAPORTE, RUC, OTRO }
     public enum EstadoPersona { ACTIVO, INACTIVO }
 }

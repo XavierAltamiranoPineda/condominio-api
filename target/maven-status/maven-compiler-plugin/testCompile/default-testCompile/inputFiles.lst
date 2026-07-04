@@ -2,8 +2,10 @@
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/audit/PostgresAuditInterceptorTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/controller/AuthControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/CondominioControllerTest.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/PersonaControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/TorreControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/UnidadControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/CondominioServiceImplTest.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/PersonaServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/TorreServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/UnidadServiceImplTest.java

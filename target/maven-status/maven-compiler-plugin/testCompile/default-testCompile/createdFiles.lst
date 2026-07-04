@@ -1,6 +1,8 @@
+com/condominio/condominio_api/integration/controller/PersonaControllerTest.class
 com/condominio/condominio_api/integration/controller/UnidadControllerTest.class
 com/condominio/condominio_api/CondominioApiApplicationTests.class
 com/condominio/condominio_api/controller/AuthControllerTest.class
+com/condominio/condominio_api/service/impl/PersonaServiceImplTest.class
 com/condominio/condominio_api/service/impl/UnidadServiceImplTest.class
 com/condominio/condominio_api/integration/controller/CondominioControllerTest.class
 com/condominio/condominio_api/service/impl/TorreServiceImplTest.class

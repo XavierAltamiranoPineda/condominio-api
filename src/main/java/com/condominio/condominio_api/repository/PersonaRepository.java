@@ -9,10 +9,16 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     Optional<Persona> findByCorreo(String correo);
 
-    boolean existsByCorreo(String correo);
+    boolean existsByCorreoIgnoreCase(String correo);
+    boolean existsByCorreoIgnoreCaseAndIdNot(String correo, Long id);
 
-    boolean existsByTipoIdentificacionAndNumeroIdentificacion(
+    boolean existsByTipoIdentificacionAndNumeroIdentificacionIgnoreCase(
             Persona.TipoIdentificacion tipoIdentificacion,
             String numeroIdentificacion
+    );
+    boolean existsByTipoIdentificacionAndNumeroIdentificacionIgnoreCaseAndIdNot(
+            Persona.TipoIdentificacion tipoIdentificacion,
+            String numeroIdentificacion,
+            Long id
     );
 }

@@ -4,13 +4,13 @@ import com.condominio.condominio_api.dto.request.PersonaRequest;
 import com.condominio.condominio_api.dto.response.ApiResponse;
 import com.condominio.condominio_api.dto.response.PersonaResponse;
 import com.condominio.condominio_api.service.interfaces.PersonaService;
-import com.condominio.condominio_api.util.ApiResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,49 +19,50 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(&quot;/api/v1/personas&quot;)
 @RequiredArgsConstructor
-@Tag(name = &quot;Personas&quot;, description = &quot;Gestión de personas del condominio&quot;)
+@Tag(name = &quot;Personas&quot;, description = &quot;Gestión de personas (propietarios, arrendatarios, etc.)&quot;)
 public class PersonaController {
 
     private final PersonaService personaService;
 
     @GetMapping
-    @PreAuthorize(&quot;hasAuthority('RESIDENTES_LEER')&quot;)
-    @Operation(summary = &quot;Listar todas las personas de forma paginada&quot;)
+    @PreAuthorize(&quot;hasAuthority('PERSONAS_LEER')&quot;)
+    @Operation(summary = &quot;Listar personas paginadas&quot;)
     public ResponseEntity&lt;ApiResponse&lt;Page&lt;PersonaResponse&gt;&gt;&gt; listar(
-            @PageableDefault(size = 20, sort = &quot;apellidos&quot;) Pageable pageable) {
-<span class="nc" id="L32">        return ResponseEntity.ok(ApiResponse.ok(personaService.findAll(pageable), &quot;Personas obtenidas&quot;));</span>
+            @PageableDefault(size = 20, sort = &quot;apellidos&quot;, direction = Sort.Direction.ASC)
+            Pageable pageable) {
+<span class="fc" id="L33">        return ResponseEntity.ok(ApiResponse.ok(personaService.findAll(pageable), &quot;Personas obtenidas&quot;));</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
-    @PreAuthorize(&quot;hasAuthority('RESIDENTES_LEER')&quot;)
+    @PreAuthorize(&quot;hasAuthority('PERSONAS_LEER')&quot;)
     @Operation(summary = &quot;Obtener persona por ID&quot;)
     public ResponseEntity&lt;ApiResponse&lt;PersonaResponse&gt;&gt; obtenerPorId(@PathVariable Long id) {
-<span class="nc" id="L39">        return ResponseEntity.ok(ApiResponse.ok(personaService.findById(id), &quot;Persona encontrada&quot;));</span>
+<span class="fc" id="L40">        return ResponseEntity.ok(ApiResponse.ok(personaService.findById(id), &quot;Persona encontrada&quot;));</span>
     }
 
     @PostMapping
-    @PreAuthorize(&quot;hasAuthority('RESIDENTES_CREAR')&quot;)
-    @Operation(summary = &quot;Registrar una nueva persona&quot;)
+    @PreAuthorize(&quot;hasAuthority('PERSONAS_CREAR')&quot;)
+    @Operation(summary = &quot;Crear una nueva persona&quot;)
     public ResponseEntity&lt;ApiResponse&lt;PersonaResponse&gt;&gt; crear(@Valid @RequestBody PersonaRequest request) {
-<span class="nc" id="L46">        return ResponseEntity.status(201)</span>
-<span class="nc" id="L47">                .body(ApiResponse.created(personaService.create(request), &quot;Persona registrada con éxito&quot;));</span>
+<span class="fc" id="L47">        return ResponseEntity.status(201)</span>
+<span class="fc" id="L48">                .body(ApiResponse.created(personaService.create(request), &quot;Persona creada exitosamente&quot;));</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
-    @PreAuthorize(&quot;hasAuthority('RESIDENTES_EDITAR')&quot;)
-    @Operation(summary = &quot;Actualizar datos de una persona&quot;)
+    @PreAuthorize(&quot;hasAuthority('PERSONAS_EDITAR')&quot;)
+    @Operation(summary = &quot;Actualizar una persona existente&quot;)
     public ResponseEntity&lt;ApiResponse&lt;PersonaResponse&gt;&gt; actualizar(
             @PathVariable Long id,
             @Valid @RequestBody PersonaRequest request) {
-<span class="nc" id="L56">        return ResponseEntity.ok(ApiResponse.ok(personaService.update(id, request), &quot;Persona actualizada&quot;));</span>
+<span class="fc" id="L57">        return ResponseEntity.ok(ApiResponse.ok(personaService.update(id, request), &quot;Persona actualizada&quot;));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
-    @PreAuthorize(&quot;hasAuthority('RESIDENTES_ELIMINAR')&quot;)
-    @Operation(summary = &quot;Desactivar una persona lógicamente (estado INACTIVO)&quot;)
+    @PreAuthorize(&quot;hasAuthority('PERSONAS_ELIMINAR')&quot;)
+    @Operation(summary = &quot;Eliminar una persona&quot;)
     public ResponseEntity&lt;Void&gt; eliminar(@PathVariable Long id) {
-<span class="nc" id="L63">        personaService.delete(id);</span>
-<span class="nc" id="L64">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L64">        personaService.delete(id);</span>
+<span class="fc" id="L65">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,7 +1,7 @@
 package com.condominio.condominio_api.dto.request;
 
-import com.condominio.condominio_api.entity.Persona.TipoIdentificacion;
 import com.condominio.condominio_api.entity.Persona.EstadoPersona;
+import com.condominio.condominio_api.entity.Persona.TipoIdentificacion;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,31 +19,32 @@ public class PersonaRequest {
     private TipoIdentificacion tipoIdentificacion;
 
     @NotBlank(message = "El número de identificación es obligatorio")
-    @Size(max = 30, message = "El número de identificación no puede superar los 30 caracteres")
+    @Size(max = 30, message = "Máximo 30 caracteres")
     private String numeroIdentificacion;
 
     @NotBlank(message = "Los nombres son obligatorios")
-    @Size(max = 100, message = "Los nombres no pueden superar los 100 caracteres")
+    @Size(max = 100, message = "Máximo 100 caracteres")
     private String nombres;
 
     @NotBlank(message = "Los apellidos son obligatorios")
-    @Size(max = 100, message = "Los apellidos no pueden superar los 100 caracteres")
+    @Size(max = 100, message = "Máximo 100 caracteres")
     private String apellidos;
 
-    @Size(max = 30, message = "El teléfono no puede superar los 30 caracteres")
+    @Size(max = 30, message = "Máximo 30 caracteres")
     private String telefono;
 
-    @NotBlank(message = "El correo electrónico es obligatorio")
-    @Email(message = "El formato de correo es inválido")
-    @Size(max = 254, message = "El correo no puede superar los 254 caracteres")
+    @NotBlank(message = "El correo es obligatorio")
+    @Email(message = "Formato de correo inválido")
+    @Size(max = 254, message = "Máximo 254 caracteres")
     private String correo;
 
     private LocalDate fechaNacimiento;
 
-    @Size(max = 255, message = "La dirección no puede superar los 255 caracteres")
+    @Size(max = 255, message = "Máximo 255 caracteres")
     private String direccion;
 
     private String fotoPerfil;
 
-    private EstadoPersona estado = EstadoPersona.ACTIVO;
+    @NotNull(message = "El estado es obligatorio")
+    private EstadoPersona estado;
 }

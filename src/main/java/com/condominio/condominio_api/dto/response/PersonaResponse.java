@@ -1,7 +1,7 @@
 package com.condominio.condominio_api.dto.response;
 
-import com.condominio.condominio_api.entity.Persona.TipoIdentificacion;
 import com.condominio.condominio_api.entity.Persona.EstadoPersona;
+import com.condominio.condominio_api.entity.Persona.TipoIdentificacion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

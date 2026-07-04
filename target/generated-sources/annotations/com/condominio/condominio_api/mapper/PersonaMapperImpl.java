@@ -3,12 +3,14 @@ package com.condominio.condominio_api.mapper;
 import com.condominio.condominio_api.dto.request.PersonaRequest;
 import com.condominio.condominio_api.dto.response.PersonaResponse;
 import com.condominio.condominio_api.entity.Persona;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-07-04T17:44:23-0500",
+    date = "2026-07-04T17:51:26-0500",
     comments = "version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)"
 )
 @Component
@@ -60,7 +62,21 @@ public class PersonaMapperImpl implements PersonaMapper {
     }
 
     @Override
-    public void updateFromRequest(PersonaRequest request, Persona persona) {
+    public List<PersonaResponse> toResponseList(List<Persona> personas) {
+        if ( personas == null ) {
+            return null;
+        }
+
+        List<PersonaResponse> list = new ArrayList<PersonaResponse>( personas.size() );
+        for ( Persona persona : personas ) {
+            list.add( toResponse( persona ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public void updateEntityFromRequest(PersonaRequest request, Persona persona) {
         if ( request == null ) {
             return;
         }

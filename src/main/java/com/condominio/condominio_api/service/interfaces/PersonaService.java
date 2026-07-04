@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PersonaService {
 
     @Transactional(readOnly = true)
-    Page<PersonaResponse> findAll(Pageable pageable);
+    PersonaResponse findById(Long id);
 
     @Transactional(readOnly = true)
-    PersonaResponse findById(Long id);
+    Page<PersonaResponse> findAll(Pageable pageable);
 
     @Transactional
     PersonaResponse create(PersonaRequest request);

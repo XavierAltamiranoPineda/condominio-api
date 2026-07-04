@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.422" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.63" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -66,10 +66,10 @@
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[condominio-api] "/>
   </properties>
-  <testcase name="shouldReturn200_whenUpdateTorre" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.021">
-    <system-out><![CDATA[17:52:24.947 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.integration.controller.TorreControllerTest]: TorreControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:52:24.954 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.integration.controller.TorreControllerTest
-17:52:24.956 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+  <testcase name="shouldReturn204_whenDeletePersona" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.012">
+    <system-out><![CDATA[17:52:24.313 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.integration.controller.PersonaControllerTest]: PersonaControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:52:24.334 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.integration.controller.PersonaControllerTest
+17:52:24.338 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -80,17 +80,17 @@
 
  :: Spring Boot ::                (v3.5.3)
 
-17:52:24.983 INFO  [           main] c.c.c.i.controller.TorreControllerTest   : Starting TorreControllerTest using Java 25.0.3 with PID 52725 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
-17:52:24.983 DEBUG [           main] c.c.c.i.controller.TorreControllerTest   : Running with Spring Boot v3.5.3, Spring v6.2.8
-17:52:24.983 INFO  [           main] c.c.c.i.controller.TorreControllerTest   : The following 1 profile is active: "dev"
-17:52:25.291 INFO  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-17:52:25.294 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CsrfFilter, LogoutFilter, UsernamePasswordAuthenticationFilter, DefaultResourcesFilter, DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter, BasicAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
-17:52:25.299 INFO  [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-17:52:25.299 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-17:52:25.299 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-17:52:25.303 INFO  [           main] c.c.c.i.controller.TorreControllerTest   : Started TorreControllerTest in 0.346 seconds (process running for 57.334)
+17:52:24.357 INFO  [           main] c.c.c.i.c.PersonaControllerTest          : Starting PersonaControllerTest using Java 25.0.3 with PID 52725 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
+17:52:24.357 DEBUG [           main] c.c.c.i.c.PersonaControllerTest          : Running with Spring Boot v3.5.3, Spring v6.2.8
+17:52:24.357 INFO  [           main] c.c.c.i.c.PersonaControllerTest          : The following 1 profile is active: "dev"
+17:52:24.784 INFO  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+17:52:24.808 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CsrfFilter, LogoutFilter, UsernamePasswordAuthenticationFilter, DefaultResourcesFilter, DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter, BasicAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+17:52:24.814 INFO  [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+17:52:24.814 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+17:52:24.814 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+17:52:24.817 INFO  [           main] c.c.c.i.c.PersonaControllerTest          : Started PersonaControllerTest in 0.48 seconds (process running for 56.849)
 ]]></system-out>
-    <system-err><![CDATA[java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz with JaCoCo 0.8.12.202403310830/dbfb6f2.
+    <system-err><![CDATA[java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1 with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -234,7 +234,7 @@
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1 with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -247,7 +247,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:77)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	... 143 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz$auxiliary$qILgaeo8 with JaCoCo 0.8.12.202403310830/dbfb6f2.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1$auxiliary$SPLAYXH1 with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -391,7 +391,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz$auxiliary$qILgaeo8 with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1$auxiliary$SPLAYXH1 with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -404,7 +404,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:77)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	... 143 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz$auxiliary$a5OvveNM with JaCoCo 0.8.12.202403310830/dbfb6f2.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1$auxiliary$ASSkqEKx with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -548,7 +548,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/TorreService$MockitoMock$9lLi0kZz$auxiliary$a5OvveNM with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/PersonaService$MockitoMock$9yqfYjO1$auxiliary$ASSkqEKx with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -561,7 +561,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:77)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	... 143 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h with JaCoCo 0.8.12.202403310830/dbfb6f2.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -705,7 +705,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -718,7 +718,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:77)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	... 143 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h$auxiliary$NEy2xQlS with JaCoCo 0.8.12.202403310830/dbfb6f2.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p$auxiliary$44ic90sk with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -862,7 +862,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h$auxiliary$NEy2xQlS with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p$auxiliary$44ic90sk with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -875,7 +875,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:77)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	... 143 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h$auxiliary$2JrAV0O0 with JaCoCo 0.8.12.202403310830/dbfb6f2.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p$auxiliary$vOrpcx5y with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:257)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
@@ -1019,7 +1019,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: java.io.IOException: Error while instrumenting com/condominio/condominio_api/service/interfaces/UnidadService$MockitoMock$VLXORu8h$auxiliary$2JrAV0O0 with JaCoCo 0.8.12.202403310830/dbfb6f2.
+Caused by: java.io.IOException: Error while instrumenting org/springframework/security/core/userdetails/UserDetailsService$MockitoMock$99fZrC7p$auxiliary$vOrpcx5y with JaCoCo 0.8.12.202403310830/dbfb6f2.
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
 	at org.jacoco.agent.rt.internal_aeaf9ab.core.instr.Instrumenter.instrument(Instrumenter.java:111)
 	at org.jacoco.agent.rt.internal_aeaf9ab.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -1034,18 +1034,18 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	... 143 more
 ]]></system-err>
   </testcase>
-  <testcase name="shouldReturn200_whenListingTorres" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.014">
-    <system-out><![CDATA[17:52:25.337 WARN  [           main] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+  <testcase name="shouldReturn201_whenCreatePersona" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.043"/>
+  <testcase name="shouldReturn200_whenListingPersonas" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.013">
+    <system-out><![CDATA[17:52:24.887 WARN  [           main] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 ]]></system-out>
   </testcase>
-  <testcase name="shouldReturn204_whenDeleteTorre" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.003"/>
-  <testcase name="shouldReturn400_whenCreateTorreInvalid" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.005">
-    <system-out><![CDATA[17:52:25.349 WARN  [           main] c.c.c.exception.GlobalExceptionHandler   : Error de validación en '/api/v1/torres': [{mensaje=El nombre es obligatorio, campo=nombre}]
+  <testcase name="shouldReturn200_whenGetPersonaById" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.005"/>
+  <testcase name="shouldReturn400_whenCreatePersonaInvalid" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.026">
+    <system-out><![CDATA[17:52:24.918 WARN  [           main] c.c.c.exception.GlobalExceptionHandler   : Error de validación en '/api/v1/personas': [{mensaje=Formato de correo inválido, campo=correo}]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldReturn201_whenCreateTorre" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.005"/>
-  <testcase name="shouldReturn200_whenGetTorreById" classname="com.condominio.condominio_api.integration.controller.TorreControllerTest" time="0.004"/>
+  <testcase name="shouldReturn200_whenUpdatePersona" classname="com.condominio.condominio_api.integration.controller.PersonaControllerTest" time="0.012"/>
 </testsuite>

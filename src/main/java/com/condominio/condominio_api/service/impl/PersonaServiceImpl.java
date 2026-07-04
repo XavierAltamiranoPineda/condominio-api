@@ -4,7 +4,6 @@ import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
 import com.condominio.condominio_api.dto.request.PersonaRequest;
 import com.condominio.condominio_api.dto.response.PersonaResponse;
 import com.condominio.condominio_api.entity.Persona;
-import com.condominio.condominio_api.exception.BusinessException;
 import com.condominio.condominio_api.exception.ResourceAlreadyExistsException;
 import com.condominio.condominio_api.exception.ResourceNotFoundException;
 import com.condominio.condominio_api.mapper.PersonaMapper;
@@ -26,34 +25,34 @@ public class PersonaServiceImpl implements PersonaService {
     private final PostgresAuditInterceptor auditInterceptor;
 
     @Override
+    public PersonaResponse findById(Long id) {
+        return personaRepository.findById(id)
+                .map(personaMapper::toResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("Persona", "id", id));
+    }
+
+    @Override
     public Page<PersonaResponse> findAll(Pageable pageable) {
         return personaRepository.findAll(pageable)
                 .map(personaMapper::toResponse);
     }
 
     @Override
-    public PersonaResponse findById(Long id) {
-        Persona persona = personaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Persona", "id", id));
-        return personaMapper.toResponse(persona);
-    }
-
-    @Override
     public PersonaResponse create(PersonaRequest request) {
-        if (personaRepository.existsByCorreo(request.getCorreo())) {
-            throw new ResourceAlreadyExistsException("Persona", "correo", request.getCorreo());
+        if (personaRepository.existsByTipoIdentificacionAndNumeroIdentificacionIgnoreCase(request.getTipoIdentificacion(), request.getNumeroIdentificacion())) {
+            throw new ResourceAlreadyExistsException("Persona", "identificación", request.getTipoIdentificacion() + "-" + request.getNumeroIdentificacion());
         }
-        if (personaRepository.existsByTipoIdentificacionAndNumeroIdentificacion(
-                request.getTipoIdentificacion(), request.getNumeroIdentificacion())) {
-            throw new ResourceAlreadyExistsException("Persona", "identificación",
-                    request.getTipoIdentificacion() + ":" + request.getNumeroIdentificacion());
+
+        if (personaRepository.existsByCorreoIgnoreCase(request.getCorreo())) {
+            throw new ResourceAlreadyExistsException("Persona", "correo", request.getCorreo());
         }
 
         auditInterceptor.setUsuarioActual();
         Persona persona = personaMapper.toEntity(request);
-        Persona saved = personaRepository.save(persona);
-        log.info("Persona creada: id={}, identificación={}", saved.getId(), saved.getNumeroIdentificacion());
-        return personaMapper.toResponse(saved);
+        persona = personaRepository.save(persona);
+
+        log.info("Persona creada: id={}, correo={}", persona.getId(), persona.getCorreo());
+        return personaMapper.toResponse(persona);
     }
 
     @Override
@@ -61,24 +60,20 @@ public class PersonaServiceImpl implements PersonaService {
         Persona persona = personaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Persona", "id", id));
 
-        if (!persona.getCorreo().equalsIgnoreCase(request.getCorreo())
-                && personaRepository.existsByCorreo(request.getCorreo())) {
+        if (personaRepository.existsByTipoIdentificacionAndNumeroIdentificacionIgnoreCaseAndIdNot(request.getTipoIdentificacion(), request.getNumeroIdentificacion(), id)) {
+            throw new ResourceAlreadyExistsException("Persona", "identificación", request.getTipoIdentificacion() + "-" + request.getNumeroIdentificacion());
+        }
+
+        if (personaRepository.existsByCorreoIgnoreCaseAndIdNot(request.getCorreo(), id)) {
             throw new ResourceAlreadyExistsException("Persona", "correo", request.getCorreo());
         }
 
-        if ((persona.getTipoIdentificacion() != request.getTipoIdentificacion()
-                || !persona.getNumeroIdentificacion().equals(request.getNumeroIdentificacion()))
-                && personaRepository.existsByTipoIdentificacionAndNumeroIdentificacion(
-                        request.getTipoIdentificacion(), request.getNumeroIdentificacion())) {
-            throw new ResourceAlreadyExistsException("Persona", "identificación",
-                    request.getTipoIdentificacion() + ":" + request.getNumeroIdentificacion());
-        }
-
         auditInterceptor.setUsuarioActual();
-        personaMapper.updateFromRequest(request, persona);
-        Persona saved = personaRepository.save(persona);
-        log.info("Persona actualizada: id={}", saved.getId());
-        return personaMapper.toResponse(saved);
+        personaMapper.updateEntityFromRequest(request, persona);
+        persona = personaRepository.save(persona);
+
+        log.info("Persona actualizada: id={}, correo={}", persona.getId(), persona.getCorreo());
+        return personaMapper.toResponse(persona);
     }
 
     @Override
@@ -87,8 +82,8 @@ public class PersonaServiceImpl implements PersonaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Persona", "id", id));
 
         auditInterceptor.setUsuarioActual();
-        persona.setEstado(Persona.EstadoPersona.INACTIVO);
-        personaRepository.save(persona);
-        log.info("Persona desactivada lógicamente: id={}", id);
+        personaRepository.delete(persona);
+
+        log.info("Persona eliminada: id={}", id);
     }
 }

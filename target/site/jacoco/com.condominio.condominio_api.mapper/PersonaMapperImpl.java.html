@@ -3,98 +3,114 @@
 import com.condominio.condominio_api.dto.request.PersonaRequest;
 import com.condominio.condominio_api.dto.response.PersonaResponse;
 import com.condominio.condominio_api.entity.Persona;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
-    date = &quot;2026-07-04T17:44:23-0500&quot;,
+    date = &quot;2026-07-04T17:51:26-0500&quot;,
     comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
 )
 @Component
-<span class="fc" id="L15">public class PersonaMapperImpl implements PersonaMapper {</span>
+<span class="fc" id="L17">public class PersonaMapperImpl implements PersonaMapper {</span>
 
     @Override
     public PersonaResponse toResponse(Persona persona) {
-<span class="nc bnc" id="L19" title="All 2 branches missed.">        if ( persona == null ) {</span>
-<span class="nc" id="L20">            return null;</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        if ( persona == null ) {</span>
+<span class="nc" id="L22">            return null;</span>
         }
 
-<span class="nc" id="L23">        PersonaResponse.PersonaResponseBuilder personaResponse = PersonaResponse.builder();</span>
+<span class="nc" id="L25">        PersonaResponse.PersonaResponseBuilder personaResponse = PersonaResponse.builder();</span>
 
-<span class="nc" id="L25">        personaResponse.id( persona.getId() );</span>
-<span class="nc" id="L26">        personaResponse.tipoIdentificacion( persona.getTipoIdentificacion() );</span>
-<span class="nc" id="L27">        personaResponse.numeroIdentificacion( persona.getNumeroIdentificacion() );</span>
-<span class="nc" id="L28">        personaResponse.nombres( persona.getNombres() );</span>
-<span class="nc" id="L29">        personaResponse.apellidos( persona.getApellidos() );</span>
-<span class="nc" id="L30">        personaResponse.telefono( persona.getTelefono() );</span>
-<span class="nc" id="L31">        personaResponse.correo( persona.getCorreo() );</span>
-<span class="nc" id="L32">        personaResponse.fechaNacimiento( persona.getFechaNacimiento() );</span>
-<span class="nc" id="L33">        personaResponse.direccion( persona.getDireccion() );</span>
-<span class="nc" id="L34">        personaResponse.fotoPerfil( persona.getFotoPerfil() );</span>
-<span class="nc" id="L35">        personaResponse.estado( persona.getEstado() );</span>
+<span class="nc" id="L27">        personaResponse.id( persona.getId() );</span>
+<span class="nc" id="L28">        personaResponse.tipoIdentificacion( persona.getTipoIdentificacion() );</span>
+<span class="nc" id="L29">        personaResponse.numeroIdentificacion( persona.getNumeroIdentificacion() );</span>
+<span class="nc" id="L30">        personaResponse.nombres( persona.getNombres() );</span>
+<span class="nc" id="L31">        personaResponse.apellidos( persona.getApellidos() );</span>
+<span class="nc" id="L32">        personaResponse.telefono( persona.getTelefono() );</span>
+<span class="nc" id="L33">        personaResponse.correo( persona.getCorreo() );</span>
+<span class="nc" id="L34">        personaResponse.fechaNacimiento( persona.getFechaNacimiento() );</span>
+<span class="nc" id="L35">        personaResponse.direccion( persona.getDireccion() );</span>
+<span class="nc" id="L36">        personaResponse.fotoPerfil( persona.getFotoPerfil() );</span>
+<span class="nc" id="L37">        personaResponse.estado( persona.getEstado() );</span>
 
-<span class="nc" id="L37">        return personaResponse.build();</span>
+<span class="nc" id="L39">        return personaResponse.build();</span>
     }
 
     @Override
     public Persona toEntity(PersonaRequest request) {
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        if ( request == null ) {</span>
-<span class="nc" id="L43">            return null;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L45">            return null;</span>
         }
 
-<span class="nc" id="L46">        Persona persona = new Persona();</span>
+<span class="nc" id="L48">        Persona persona = new Persona();</span>
 
-<span class="nc" id="L48">        persona.setTipoIdentificacion( request.getTipoIdentificacion() );</span>
-<span class="nc" id="L49">        persona.setNumeroIdentificacion( request.getNumeroIdentificacion() );</span>
-<span class="nc" id="L50">        persona.setNombres( request.getNombres() );</span>
-<span class="nc" id="L51">        persona.setApellidos( request.getApellidos() );</span>
-<span class="nc" id="L52">        persona.setTelefono( request.getTelefono() );</span>
-<span class="nc" id="L53">        persona.setCorreo( request.getCorreo() );</span>
-<span class="nc" id="L54">        persona.setFechaNacimiento( request.getFechaNacimiento() );</span>
-<span class="nc" id="L55">        persona.setDireccion( request.getDireccion() );</span>
-<span class="nc" id="L56">        persona.setFotoPerfil( request.getFotoPerfil() );</span>
-<span class="nc" id="L57">        persona.setEstado( request.getEstado() );</span>
+<span class="nc" id="L50">        persona.setTipoIdentificacion( request.getTipoIdentificacion() );</span>
+<span class="nc" id="L51">        persona.setNumeroIdentificacion( request.getNumeroIdentificacion() );</span>
+<span class="nc" id="L52">        persona.setNombres( request.getNombres() );</span>
+<span class="nc" id="L53">        persona.setApellidos( request.getApellidos() );</span>
+<span class="nc" id="L54">        persona.setTelefono( request.getTelefono() );</span>
+<span class="nc" id="L55">        persona.setCorreo( request.getCorreo() );</span>
+<span class="nc" id="L56">        persona.setFechaNacimiento( request.getFechaNacimiento() );</span>
+<span class="nc" id="L57">        persona.setDireccion( request.getDireccion() );</span>
+<span class="nc" id="L58">        persona.setFotoPerfil( request.getFotoPerfil() );</span>
+<span class="nc" id="L59">        persona.setEstado( request.getEstado() );</span>
 
-<span class="nc" id="L59">        return persona;</span>
+<span class="nc" id="L61">        return persona;</span>
     }
 
     @Override
-    public void updateFromRequest(PersonaRequest request, Persona persona) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if ( request == null ) {</span>
-<span class="nc" id="L65">            return;</span>
+    public List&lt;PersonaResponse&gt; toResponseList(List&lt;Persona&gt; personas) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if ( personas == null ) {</span>
+<span class="nc" id="L67">            return null;</span>
         }
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if ( request.getTipoIdentificacion() != null ) {</span>
-<span class="nc" id="L69">            persona.setTipoIdentificacion( request.getTipoIdentificacion() );</span>
+<span class="nc" id="L70">        List&lt;PersonaResponse&gt; list = new ArrayList&lt;PersonaResponse&gt;( personas.size() );</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for ( Persona persona : personas ) {</span>
+<span class="nc" id="L72">            list.add( toResponse( persona ) );</span>
+<span class="nc" id="L73">        }</span>
+
+<span class="nc" id="L75">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(PersonaRequest request, Persona persona) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L81">            return;</span>
         }
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if ( request.getNumeroIdentificacion() != null ) {</span>
-<span class="nc" id="L72">            persona.setNumeroIdentificacion( request.getNumeroIdentificacion() );</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if ( request.getTipoIdentificacion() != null ) {</span>
+<span class="nc" id="L85">            persona.setTipoIdentificacion( request.getTipoIdentificacion() );</span>
         }
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if ( request.getNombres() != null ) {</span>
-<span class="nc" id="L75">            persona.setNombres( request.getNombres() );</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if ( request.getNumeroIdentificacion() != null ) {</span>
+<span class="nc" id="L88">            persona.setNumeroIdentificacion( request.getNumeroIdentificacion() );</span>
         }
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        if ( request.getApellidos() != null ) {</span>
-<span class="nc" id="L78">            persona.setApellidos( request.getApellidos() );</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if ( request.getNombres() != null ) {</span>
+<span class="nc" id="L91">            persona.setNombres( request.getNombres() );</span>
         }
-<span class="nc bnc" id="L80" title="All 2 branches missed.">        if ( request.getTelefono() != null ) {</span>
-<span class="nc" id="L81">            persona.setTelefono( request.getTelefono() );</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if ( request.getApellidos() != null ) {</span>
+<span class="nc" id="L94">            persona.setApellidos( request.getApellidos() );</span>
         }
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        if ( request.getCorreo() != null ) {</span>
-<span class="nc" id="L84">            persona.setCorreo( request.getCorreo() );</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if ( request.getTelefono() != null ) {</span>
+<span class="nc" id="L97">            persona.setTelefono( request.getTelefono() );</span>
         }
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if ( request.getFechaNacimiento() != null ) {</span>
-<span class="nc" id="L87">            persona.setFechaNacimiento( request.getFechaNacimiento() );</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if ( request.getCorreo() != null ) {</span>
+<span class="nc" id="L100">            persona.setCorreo( request.getCorreo() );</span>
         }
-<span class="nc bnc" id="L89" title="All 2 branches missed.">        if ( request.getDireccion() != null ) {</span>
-<span class="nc" id="L90">            persona.setDireccion( request.getDireccion() );</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if ( request.getFechaNacimiento() != null ) {</span>
+<span class="nc" id="L103">            persona.setFechaNacimiento( request.getFechaNacimiento() );</span>
         }
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        if ( request.getFotoPerfil() != null ) {</span>
-<span class="nc" id="L93">            persona.setFotoPerfil( request.getFotoPerfil() );</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        if ( request.getDireccion() != null ) {</span>
+<span class="nc" id="L106">            persona.setDireccion( request.getDireccion() );</span>
         }
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        if ( request.getEstado() != null ) {</span>
-<span class="nc" id="L96">            persona.setEstado( request.getEstado() );</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if ( request.getFotoPerfil() != null ) {</span>
+<span class="nc" id="L109">            persona.setFotoPerfil( request.getFotoPerfil() );</span>
         }
-<span class="nc" id="L98">    }</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if ( request.getEstado() != null ) {</span>
+<span class="nc" id="L112">            persona.setEstado( request.getEstado() );</span>
+        }
+<span class="nc" id="L114">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
