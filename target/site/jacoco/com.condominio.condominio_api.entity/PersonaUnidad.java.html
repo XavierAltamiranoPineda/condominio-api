@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonaUnidad.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.entity</a> &gt; <span class="el_source">PersonaUnidad.java</span></div><h1>PersonaUnidad.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name = &quot;persona_unidad&quot;)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = {&quot;persona&quot;, &quot;unidad&quot;})
+public class PersonaUnidad {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;id_persona_unidad&quot;)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;id_persona&quot;, nullable = false)
+    private Persona persona;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;id_unidad&quot;, nullable = false)
+    private Unidad unidad;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;tipo&quot;, nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private TipoPersonaUnidad tipo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;estado&quot;, nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private EstadoPersonaUnidad estado = EstadoPersonaUnidad.ACTIVO;
+
+    @Column(name = &quot;fecha_inicio&quot;, nullable = false)
+    private LocalDate fechaInicio;
+
+    @Column(name = &quot;fecha_fin&quot;)
+    private LocalDate fechaFin;
+
+    @Override
+    public final boolean equals(Object o) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (!(o instanceof PersonaUnidad other)) return false;</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        return id != null &amp;&amp; id.equals(other.id);</span>
+    }
+
+    @Override
+    public final int hashCode() {
+<span class="nc" id="L59">        return getClass().hashCode();</span>
+    }
+
+<span class="fc" id="L62">    public enum TipoPersonaUnidad { PROPIETARIO, ARRENDATARIO, FAMILIAR, OTRO }</span>
+<span class="fc" id="L63">    public enum EstadoPersonaUnidad { ACTIVO, INACTIVO, HISTORICO }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
