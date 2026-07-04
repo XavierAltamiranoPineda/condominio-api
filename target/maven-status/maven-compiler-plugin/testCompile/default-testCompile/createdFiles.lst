@@ -1,2 +1,7 @@
+com/condominio/condominio_api/CondominioApiApplicationTests.class
 com/condominio/condominio_api/controller/AuthControllerTest.class
+com/condominio/condominio_api/integration/controller/CondominioControllerTest.class
+com/condominio/condominio_api/service/impl/TorreServiceImplTest.class
+com/condominio/condominio_api/service/impl/CondominioServiceImplTest.class
+com/condominio/condominio_api/integration/controller/TorreControllerTest.class
 com/condominio/condominio_api/audit/PostgresAuditInterceptorTest.class

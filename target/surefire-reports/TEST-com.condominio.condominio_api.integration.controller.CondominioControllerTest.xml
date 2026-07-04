@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="12.643" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.41" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -66,10 +66,10 @@
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[condominio-api] "/>
   </properties>
-  <testcase name="testSetUsuarioActual" classname="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="0.486">
-    <system-out><![CDATA[17:30:53.690 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.audit.PostgresAuditInterceptorTest]: PostgresAuditInterceptorTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:30:53.735 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.audit.PostgresAuditInterceptorTest
-17:30:53.746 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+  <testcase name="shouldReturn200_whenGetCondominioById" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.015">
+    <system-out><![CDATA[17:31:07.011 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.integration.controller.CondominioControllerTest]: CondominioControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:31:07.018 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.integration.controller.CondominioControllerTest
+17:31:07.023 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -80,126 +80,29 @@
 
  :: Spring Boot ::                (v3.5.3)
 
-17:30:53.838 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Starting PostgresAuditInterceptorTest using Java 25.0.3 with PID 48990 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
-17:30:53.838 DEBUG [           main] c.c.c.a.PostgresAuditInterceptorTest     : Running with Spring Boot v3.5.3, Spring v6.2.8
-17:30:53.838 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : The following 1 profile is active: "dev"
-17:30:54.291 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-17:30:54.312 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 8 JPA repository interfaces.
-17:30:54.482 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
-17:30:54.482 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@7c84929b ...
-17:30:54.482 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
-17:30:54.484 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migration' ...
-17:30:54.484 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migration using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@7c84929b ...
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning URL: file:/home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration
-17:30:54.485 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning starting at classpath root in filesystem: /home/xavo/GitHub/Personal/condominio-api/target/classes/
-17:30:54.485 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning for resources in path: /home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration (db/migration)
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V1__schema.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V2__constraints.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V3__indexes.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V4__triggers.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V5__functions.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V6__seed.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V7__views.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V8__test_auth_seed.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V9__fix_admin_password.sql
-17:30:54.485 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migration
-17:30:55.724 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V1__schema.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V5__functions.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V7__views.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V4__triggers.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V2__constraints.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V9__fix_admin_password.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V6__seed.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V3__indexes.sql
-17:30:55.725 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V8__test_auth_seed.sql
-17:30:55.726 DEBUG [           main] o.f.c.i.database.DatabaseTypeRegister    : Multiple databases found that handle url 'jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require': CockroachDB,PostgreSQL
-17:30:55.727 INFO  [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require (PostgreSQL 17.6)
-17:30:55.727 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Database Type: PostgreSQL
-17:30:55.727 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Driver: PostgreSQL JDBC Driver 42.7.7
-17:30:55.727 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: true
-17:30:55.727 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
-17:30:55.727 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
-17:30:56.740 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Scanning for script callbacks ...
-17:30:56.743 DEBUG [           main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
-17:30:56.842 DEBUG [           main] o.f.core.internal.command.DbValidate     : Validating migrations ...
-17:30:56.843 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
-17:30:56.850 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-17:30:56.851 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-17:30:56.852 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-17:30:56.852 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-17:30:56.853 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-17:30:56.854 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-17:30:57.362 INFO  [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.518s)
-17:30:57.465 DEBUG [           main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "public"
-17:30:59.214 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
-17:30:59.514 INFO  [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 9
-17:30:59.615 INFO  [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
-17:31:00.418 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Memory usage: 80 of 128M
-17:31:00.445 INFO  [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-17:31:00.449 INFO  [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-17:31:00.460 INFO  [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-17:31:00.461 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-17:31:01.551 INFO  [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@1ebec10c
-17:31:01.552 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-17:31:02.044 INFO  [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
-	Database driver: undefined/unknown
-	Database version: 17.6
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-17:31:02.192 INFO  [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-17:31:05.292 INFO  [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-17:31:05.435 INFO  [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-17:31:05.435 WARN  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-17:31:05.672 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
-17:31:05.828 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Started PostgresAuditInterceptorTest in 12.083 seconds (process running for 59.989)
-17:31:05.991 DEBUG [           main] org.hibernate.SQL                        : 
-    
-SET
-    LOCAL app.usuario_actual = '999'
-Hibernate: 
-    
-SET
-    LOCAL app.usuario_actual = '999'
-17:31:06.088 DEBUG [           main] c.c.c.audit.PostgresAuditInterceptor     : SET LOCAL app.usuario_actual = '999'
-17:31:06.095 DEBUG [           main] org.hibernate.SQL                        : 
-    SELECT
-        current_setting('app.usuario_actual', true)
-Hibernate: 
-    SELECT
-        current_setting('app.usuario_actual', true)
+17:31:07.051 INFO  [           main] c.c.c.i.c.CondominioControllerTest       : Starting CondominioControllerTest using Java 25.0.3 with PID 48990 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
+17:31:07.052 DEBUG [           main] c.c.c.i.c.CondominioControllerTest       : Running with Spring Boot v3.5.3, Spring v6.2.8
+17:31:07.052 INFO  [           main] c.c.c.i.c.CondominioControllerTest       : The following 1 profile is active: "dev"
+17:31:07.336 INFO  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+17:31:07.340 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CsrfFilter, LogoutFilter, UsernamePasswordAuthenticationFilter, DefaultResourcesFilter, DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter, BasicAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+17:31:07.344 INFO  [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+17:31:07.345 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+17:31:07.345 INFO  [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+17:31:07.348 INFO  [           main] c.c.c.i.c.CondominioControllerTest       : Started CondominioControllerTest in 0.325 seconds (process running for 61.509)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldReturn200_whenUpdateCondominio" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.018"/>
+  <testcase name="shouldReturn200_whenListingCondominios" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.008">
+    <system-out><![CDATA[17:31:07.391 WARN  [           main] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+]]></system-out>
+  </testcase>
+  <testcase name="shouldReturn204_whenDeleteCondominio" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.004"/>
+  <testcase name="shouldReturn201_whenCreateCondominio" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.008"/>
+  <testcase name="shouldReturn400_whenCreateCondominioInvalid" classname="com.condominio.condominio_api.integration.controller.CondominioControllerTest" time="0.009">
+    <system-out><![CDATA[17:31:07.415 WARN  [           main] c.c.c.exception.GlobalExceptionHandler   : Error de validación en '/api/v1/condominios': [{mensaje=El nombre es obligatorio, campo=nombre}]
 ]]></system-out>
   </testcase>
 </testsuite>
