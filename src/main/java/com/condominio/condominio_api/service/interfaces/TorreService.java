@@ -14,6 +14,9 @@ public interface TorreService {
     @Transactional(readOnly = true)
     Page<TorreResponse> findAll(Pageable pageable);
 
+    @Transactional(readOnly = true)
+    Page<TorreResponse> findByCondominioId(Long condominioId, Pageable pageable);
+
     @Transactional
     TorreResponse create(TorreRequest request);
 

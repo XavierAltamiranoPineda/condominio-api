@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">PersonaServiceImpl.java</span></div><h1>PersonaServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.PersonaRequest;
+import com.condominio.condominio_api.dto.response.PersonaResponse;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.exception.ResourceAlreadyExistsException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.PersonaMapper;
+import com.condominio.condominio_api.repository.PersonaRepository;
+import com.condominio.condominio_api.service.interfaces.PersonaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+<span class="fc" id="L19">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class PersonaServiceImpl implements PersonaService {
+
+    private final PersonaRepository personaRepository;
+    private final PersonaMapper personaMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public Page&lt;PersonaResponse&gt; findAll(Pageable pageable) {
+<span class="nc" id="L30">        return personaRepository.findAll(pageable)</span>
+<span class="nc" id="L31">                .map(personaMapper::toResponse);</span>
+    }
+
+    @Override
+    public PersonaResponse findById(Long id) {
+<span class="nc" id="L36">        Persona persona = personaRepository.findById(id)</span>
+<span class="nc" id="L37">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L38">        return personaMapper.toResponse(persona);</span>
+    }
+
+    @Override
+    public PersonaResponse create(PersonaRequest request) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (personaRepository.existsByCorreo(request.getCorreo())) {</span>
+<span class="nc" id="L44">            throw new ResourceAlreadyExistsException(&quot;Persona&quot;, &quot;correo&quot;, request.getCorreo());</span>
+        }
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (personaRepository.existsByTipoIdentificacionAndNumeroIdentificacion(</span>
+<span class="nc" id="L47">                request.getTipoIdentificacion(), request.getNumeroIdentificacion())) {</span>
+<span class="nc" id="L48">            throw new ResourceAlreadyExistsException(&quot;Persona&quot;, &quot;identificación&quot;,</span>
+<span class="nc" id="L49">                    request.getTipoIdentificacion() + &quot;:&quot; + request.getNumeroIdentificacion());</span>
+        }
+
+<span class="nc" id="L52">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L53">        Persona persona = personaMapper.toEntity(request);</span>
+<span class="nc" id="L54">        Persona saved = personaRepository.save(persona);</span>
+<span class="nc" id="L55">        log.info(&quot;Persona creada: id={}, identificación={}&quot;, saved.getId(), saved.getNumeroIdentificacion());</span>
+<span class="nc" id="L56">        return personaMapper.toResponse(saved);</span>
+    }
+
+    @Override
+    public PersonaResponse update(Long id, PersonaRequest request) {
+<span class="nc" id="L61">        Persona persona = personaRepository.findById(id)</span>
+<span class="nc" id="L62">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (!persona.getCorreo().equalsIgnoreCase(request.getCorreo())</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                &amp;&amp; personaRepository.existsByCorreo(request.getCorreo())) {</span>
+<span class="nc" id="L66">            throw new ResourceAlreadyExistsException(&quot;Persona&quot;, &quot;correo&quot;, request.getCorreo());</span>
+        }
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if ((persona.getTipoIdentificacion() != request.getTipoIdentificacion()</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                || !persona.getNumeroIdentificacion().equals(request.getNumeroIdentificacion()))</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                &amp;&amp; personaRepository.existsByTipoIdentificacionAndNumeroIdentificacion(</span>
+<span class="nc" id="L72">                        request.getTipoIdentificacion(), request.getNumeroIdentificacion())) {</span>
+<span class="nc" id="L73">            throw new ResourceAlreadyExistsException(&quot;Persona&quot;, &quot;identificación&quot;,</span>
+<span class="nc" id="L74">                    request.getTipoIdentificacion() + &quot;:&quot; + request.getNumeroIdentificacion());</span>
+        }
+
+<span class="nc" id="L77">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L78">        personaMapper.updateFromRequest(request, persona);</span>
+<span class="nc" id="L79">        Persona saved = personaRepository.save(persona);</span>
+<span class="nc" id="L80">        log.info(&quot;Persona actualizada: id={}&quot;, saved.getId());</span>
+<span class="nc" id="L81">        return personaMapper.toResponse(saved);</span>
+    }
+
+    @Override
+    public void delete(Long id) {
+<span class="nc" id="L86">        Persona persona = personaRepository.findById(id)</span>
+<span class="nc" id="L87">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L89">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L90">        persona.setEstado(Persona.EstadoPersona.INACTIVO);</span>
+<span class="nc" id="L91">        personaRepository.save(persona);</span>
+<span class="nc" id="L92">        log.info(&quot;Persona desactivada lógicamente: id={}&quot;, id);</span>
+<span class="nc" id="L93">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

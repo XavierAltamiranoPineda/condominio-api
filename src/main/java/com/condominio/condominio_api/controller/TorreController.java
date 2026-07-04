@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.condominio.condominio_api.dto.response.UnidadResponse;
+import com.condominio.condominio_api.service.interfaces.UnidadService;
+
 @RestController
 @RequestMapping("/api/v1/torres")
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class TorreController {
 
     private final TorreService torreService;
+    private final UnidadService unidadService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -31,6 +35,15 @@ public class TorreController {
             @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC)
             Pageable pageable) {
         return ResponseEntity.ok(ApiResponse.ok(torreService.findAll(pageable), "Torres obtenidas"));
+    }
+
+    @GetMapping("/{id}/unidades")
+    @PreAuthorize("hasAuthority('UNIDADES_LEER')")
+    @Operation(summary = "Obtener unidades de una torre")
+    public ResponseEntity<ApiResponse<Page<UnidadResponse>>> obtenerUnidades(
+            @PathVariable Long id,
+            @PageableDefault(size = 20, sort = "numero", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.ok(unidadService.findByTorreId(id, pageable), "Unidades obtenidas"));
     }
 
     @GetMapping("/{id}")

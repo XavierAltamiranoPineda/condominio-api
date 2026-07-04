@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.condominio.condominio_api.dto.response.TorreResponse;
+import com.condominio.condominio_api.service.interfaces.TorreService;
+
 @RestController
 @RequestMapping("/api/v1/condominios")
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class CondominioController {
 
     private final CondominioService condominioService;
+    private final TorreService torreService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -33,6 +37,14 @@ public class CondominioController {
         return ResponseEntity.ok(ApiResponse.ok(condominioService.findAll(pageable), "Condominios obtenidos"));
     }
 
+    @GetMapping("/{id}/torres")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Obtener torres de un condominio")
+    public ResponseEntity<ApiResponse<Page<TorreResponse>>> obtenerTorres(
+            @PathVariable Long id,
+            @PageableDefault(size = 20, sort = "nombre", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.ok(torreService.findByCondominioId(id, pageable), "Torres obtenidas"));
+    }
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener condominio por ID")

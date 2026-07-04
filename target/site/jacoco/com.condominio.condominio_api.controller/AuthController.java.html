@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">AuthController.java</span></div><h1>AuthController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.LoginRequest;
+import com.condominio.condominio_api.dto.request.RefreshTokenRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.AuthResponse;
+import com.condominio.condominio_api.service.interfaces.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * Endpoints públicos de autenticación.
+ * Ruta base: {@code /api/v1/auth}
+ */
+@RestController
+@RequestMapping(&quot;/api/v1/auth&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Autenticación&quot;, description = &quot;Login, renovación de token y cierre de sesión&quot;)
+public class AuthController {
+
+    private final AuthService authService;
+
+    /**
+     * POST /api/v1/auth/login
+     * Autentica al usuario y retorna access + refresh token.
+     */
+    @PostMapping(&quot;/login&quot;)
+    @Operation(
+            summary = &quot;Iniciar sesión&quot;,
+            description = &quot;Autentica con usuario y contraseña. Retorna JWT access token (15 min) y refresh token (7 días).&quot;
+    )
+    public ResponseEntity&lt;ApiResponse&lt;AuthResponse&gt;&gt; login(
+            @Valid @RequestBody LoginRequest request) {
+
+<span class="fc" id="L39">        AuthResponse authResponse = authService.login(request);</span>
+<span class="fc" id="L40">        return ResponseEntity.ok(ApiResponse.ok(authResponse, &quot;Login exitoso&quot;));</span>
+    }
+
+    /**
+     * POST /api/v1/auth/refresh
+     * Renueva el access token usando un refresh token válido.
+     */
+    @PostMapping(&quot;/refresh&quot;)
+    @Operation(
+            summary = &quot;Renovar access token&quot;,
+            description = &quot;Usa el refresh token para obtener un nuevo access token sin volver a ingresar credenciales.&quot;
+    )
+    public ResponseEntity&lt;ApiResponse&lt;AuthResponse&gt;&gt; refresh(
+            @Valid @RequestBody RefreshTokenRequest request) {
+
+<span class="fc" id="L55">        AuthResponse authResponse = authService.refreshToken(request);</span>
+<span class="fc" id="L56">        return ResponseEntity.ok(ApiResponse.ok(authResponse, &quot;Token renovado exitosamente&quot;));</span>
+    }
+
+    /**
+     * POST /api/v1/auth/logout
+     * Invalida el refresh token (el cliente debe descartar ambos tokens).
+     */
+    @PostMapping(&quot;/logout&quot;)
+    @Operation(
+            summary = &quot;Cerrar sesión&quot;,
+            description = &quot;Invalida el refresh token. El cliente debe eliminar ambos tokens de su almacenamiento.&quot;
+    )
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; logout(
+            @RequestHeader(value = &quot;X-Refresh-Token&quot;, required = false) String refreshToken) {
+
+<span class="nc" id="L71">        authService.logout(refreshToken);</span>
+<span class="nc" id="L72">        return ResponseEntity.ok(ApiResponse.noContent());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

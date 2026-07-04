@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CondominioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">CondominioController.java</span></div><h1>CondominioController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.CondominioRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.CondominioResponse;
+import com.condominio.condominio_api.service.interfaces.CondominioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import com.condominio.condominio_api.dto.response.TorreResponse;
+import com.condominio.condominio_api.service.interfaces.TorreService;
+
+@RestController
+@RequestMapping(&quot;/api/v1/condominios&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Condominios&quot;, description = &quot;Gestión de condominios&quot;)
+public class CondominioController {
+
+    private final CondominioService condominioService;
+    private final TorreService torreService;
+
+    @GetMapping
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Listar condominios paginados&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;CondominioResponse&gt;&gt;&gt; listar(
+            @PageableDefault(size = 20, sort = &quot;id&quot;, direction = Sort.Direction.ASC)
+            Pageable pageable) {
+<span class="fc" id="L37">        return ResponseEntity.ok(ApiResponse.ok(condominioService.findAll(pageable), &quot;Condominios obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/{id}/torres&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Obtener torres de un condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;TorreResponse&gt;&gt;&gt; obtenerTorres(
+            @PathVariable Long id,
+            @PageableDefault(size = 20, sort = &quot;nombre&quot;, direction = Sort.Direction.ASC) Pageable pageable) {
+<span class="nc" id="L46">        return ResponseEntity.ok(ApiResponse.ok(torreService.findByCondominioId(id, pageable), &quot;Torres obtenidas&quot;));</span>
+    }
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Obtener condominio por ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;CondominioResponse&gt;&gt; obtenerPorId(@PathVariable Long id) {
+<span class="fc" id="L52">        return ResponseEntity.ok(ApiResponse.ok(condominioService.findById(id), &quot;Condominio encontrado&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Crear un nuevo condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;CondominioResponse&gt;&gt; crear(@Valid @RequestBody CondominioRequest request) {
+<span class="fc" id="L59">        return ResponseEntity.status(201)</span>
+<span class="fc" id="L60">                .body(ApiResponse.created(condominioService.create(request), &quot;Condominio creado exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Actualizar un condominio existente&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;CondominioResponse&gt;&gt; actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody CondominioRequest request) {
+<span class="fc" id="L69">        return ResponseEntity.ok(ApiResponse.ok(condominioService.update(id, request), &quot;Condominio actualizado&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Eliminar un condominio&quot;)
+    public ResponseEntity&lt;Void&gt; eliminar(@PathVariable Long id) {
+<span class="fc" id="L76">        condominioService.delete(id);</span>
+<span class="fc" id="L77">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

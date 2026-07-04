@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RolController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">RolController.java</span></div><h1>RolController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.RolRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.RolDetalleResponse;
+import com.condominio.condominio_api.dto.response.RolResponse;
+import com.condominio.condominio_api.service.interfaces.RolService;
+import com.condominio.condominio_api.util.ApiResponseUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/v1/roles&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Roles&quot;, description = &quot;Gestión de roles del sistema&quot;)
+public class RolController {
+
+    private final RolService rolService;
+
+    @GetMapping
+    @PreAuthorize(&quot;hasAuthority('USUARIOS_LEER')&quot;)
+    @Operation(summary = &quot;Listar todos los roles&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;List&lt;RolResponse&gt;&gt;&gt; listar() {
+<span class="fc" id="L31">        return ResponseEntity.ok(ApiResponse.ok(rolService.findAll(), &quot;Roles obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('USUARIOS_LEER')&quot;)
+    @Operation(summary = &quot;Obtener rol por ID con sus permisos&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;RolDetalleResponse&gt;&gt; obtenerPorId(@PathVariable Long id) {
+<span class="nc" id="L38">        return ResponseEntity.ok(ApiResponse.ok(rolService.findById(id), &quot;Rol encontrado&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Crear un nuevo rol&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;RolResponse&gt;&gt; crear(@Valid @RequestBody RolRequest request) {
+<span class="nc" id="L45">        return ResponseEntity.status(201)</span>
+<span class="nc" id="L46">                .body(ApiResponse.created(rolService.create(request), &quot;Rol creado exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Actualizar un rol existente&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;RolResponse&gt;&gt; actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody RolRequest request) {
+<span class="nc" id="L55">        return ResponseEntity.ok(ApiResponse.ok(rolService.update(id, request), &quot;Rol actualizado&quot;));</span>
+    }
+
+    @PostMapping(&quot;/{rolId}/permisos/{permisoId}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Asignar un permiso a un rol&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; asignarPermiso(
+            @PathVariable Long rolId,
+            @PathVariable Long permisoId) {
+<span class="nc" id="L64">        rolService.assignPermiso(rolId, permisoId);</span>
+<span class="nc" id="L65">        return ResponseEntity.ok(ApiResponse.ok(null, &quot;Permiso asignado&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{rolId}/permisos/{permisoId}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @Operation(summary = &quot;Revocar un permiso de un rol&quot;)
+    public ResponseEntity&lt;Void&gt; revocarPermiso(
+            @PathVariable Long rolId,
+            @PathVariable Long permisoId) {
+<span class="nc" id="L74">        rolService.revokePermiso(rolId, permisoId);</span>
+<span class="nc" id="L75">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RolMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">RolMapperImpl.java</span></div><h1>RolMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.RolRequest;
+import com.condominio.condominio_api.dto.response.PermisoResponse;
+import com.condominio.condominio_api.dto.response.RolDetalleResponse;
+import com.condominio.condominio_api.dto.response.RolResponse;
+import com.condominio.condominio_api.entity.Permiso;
+import com.condominio.condominio_api.entity.Rol;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T17:44:23-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L18">public class RolMapperImpl implements RolMapper {</span>
+
+    @Override
+    public RolResponse toResponse(Rol rol) {
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if ( rol == null ) {</span>
+<span class="nc" id="L23">            return null;</span>
+        }
+
+<span class="fc" id="L26">        RolResponse.RolResponseBuilder rolResponse = RolResponse.builder();</span>
+
+<span class="fc" id="L28">        rolResponse.id( rol.getId() );</span>
+<span class="fc" id="L29">        rolResponse.nombre( rol.getNombre() );</span>
+<span class="fc" id="L30">        rolResponse.descripcion( rol.getDescripcion() );</span>
+
+<span class="fc" id="L32">        return rolResponse.build();</span>
+    }
+
+    @Override
+    public RolDetalleResponse toDetalleResponse(Rol rol) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if ( rol == null ) {</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+
+<span class="nc" id="L41">        RolDetalleResponse.RolDetalleResponseBuilder rolDetalleResponse = RolDetalleResponse.builder();</span>
+
+<span class="nc" id="L43">        rolDetalleResponse.id( rol.getId() );</span>
+<span class="nc" id="L44">        rolDetalleResponse.nombre( rol.getNombre() );</span>
+<span class="nc" id="L45">        rolDetalleResponse.descripcion( rol.getDescripcion() );</span>
+
+<span class="nc" id="L47">        rolDetalleResponse.permisos( toPermisoList(rol.getRolPermisos()) );</span>
+
+<span class="nc" id="L49">        return rolDetalleResponse.build();</span>
+    }
+
+    @Override
+    public Rol toEntity(RolRequest request) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L55">            return null;</span>
+        }
+
+<span class="nc" id="L58">        Rol rol = new Rol();</span>
+
+<span class="nc" id="L60">        rol.setNombre( request.getNombre() );</span>
+<span class="nc" id="L61">        rol.setDescripcion( request.getDescripcion() );</span>
+
+<span class="nc" id="L63">        return rol;</span>
+    }
+
+    @Override
+    public void updateFromRequest(RolRequest request, Rol rol) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L69">            return;</span>
+        }
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if ( request.getNombre() != null ) {</span>
+<span class="nc" id="L73">            rol.setNombre( request.getNombre() );</span>
+        }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if ( request.getDescripcion() != null ) {</span>
+<span class="nc" id="L76">            rol.setDescripcion( request.getDescripcion() );</span>
+        }
+<span class="nc" id="L78">    }</span>
+
+    @Override
+    public PermisoResponse toPermisoResponse(Permiso permiso) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if ( permiso == null ) {</span>
+<span class="nc" id="L83">            return null;</span>
+        }
+
+<span class="nc" id="L86">        PermisoResponse.PermisoResponseBuilder permisoResponse = PermisoResponse.builder();</span>
+
+<span class="nc" id="L88">        permisoResponse.id( permiso.getId() );</span>
+<span class="nc" id="L89">        permisoResponse.nombre( permiso.getNombre() );</span>
+<span class="nc" id="L90">        permisoResponse.modulo( permiso.getModulo() );</span>
+<span class="nc" id="L91">        permisoResponse.accion( permiso.getAccion() );</span>
+
+<span class="nc" id="L93">        return permisoResponse.build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

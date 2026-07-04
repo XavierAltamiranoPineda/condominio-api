@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">AuthServiceImpl.java</span></div><h1>AuthServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.dto.request.LoginRequest;
+import com.condominio.condominio_api.dto.request.RefreshTokenRequest;
+import com.condominio.condominio_api.dto.response.AuthResponse;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.security.JwtTokenProvider;
+import com.condominio.condominio_api.service.interfaces.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Implementación del servicio de autenticación.
+ *
+ * &lt;p&gt;Nota: el manejo de refresh tokens en base de datos (blacklist / rotación)
+ * se implementará en la Fase 4 junto con la entidad {@code RefreshToken}.
+ * Por ahora, la invalidación es stateless (el token expira solo).
+ */
+<span class="fc" id="L29">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailsService userDetailsService;
+
+    @Value(&quot;${app.jwt.access-token-expiration-ms}&quot;)
+    private long accessTokenExpirationMs;
+
+    // ─── Login ────────────────────────────────────────────────────────────────
+
+    @Override
+    public AuthResponse login(LoginRequest request) {
+        // 1. Autenticar credenciales (lanza excepción si son inválidas)
+<span class="fc" id="L46">        Authentication auth = authenticationManager.authenticate(</span>
+<span class="fc" id="L47">                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())</span>
+        );
+
+<span class="fc" id="L50">        UserDetails userDetails = (UserDetails) auth.getPrincipal();</span>
+<span class="fc" id="L51">        log.info(&quot;Login exitoso para usuario: {}&quot;, userDetails.getUsername());</span>
+
+        // 2. Generar tokens
+<span class="fc" id="L54">        String accessToken = jwtTokenProvider.generateAccessToken(userDetails);</span>
+<span class="fc" id="L55">        String refreshToken = jwtTokenProvider.generateRefreshToken(userDetails);</span>
+
+<span class="fc" id="L57">        List&lt;String&gt; roles = userDetails.getAuthorities().stream()</span>
+<span class="fc" id="L58">                .map(GrantedAuthority::getAuthority)</span>
+<span class="fc" id="L59">                .toList();</span>
+
+<span class="fc" id="L61">        return AuthResponse.builder()</span>
+<span class="fc" id="L62">                .accessToken(accessToken)</span>
+<span class="fc" id="L63">                .refreshToken(refreshToken)</span>
+<span class="fc" id="L64">                .tokenType(&quot;Bearer&quot;)</span>
+<span class="fc" id="L65">                .expiresIn(accessTokenExpirationMs)</span>
+<span class="fc" id="L66">                .username(userDetails.getUsername())</span>
+<span class="fc" id="L67">                .roles(roles)</span>
+<span class="fc" id="L68">                .build();</span>
+    }
+
+    // ─── Refresh Token ────────────────────────────────────────────────────────
+
+    @Override
+    public AuthResponse refreshToken(RefreshTokenRequest request) {
+<span class="fc" id="L75">        String token = request.getRefreshToken();</span>
+
+        // 1. Validar firma y expiración
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (!jwtTokenProvider.isTokenValid(token)) {</span>
+<span class="fc" id="L79">            throw new org.springframework.security.authentication.BadCredentialsException(&quot;El refresh token ha expirado o es inválido.&quot;);</span>
+        }
+
+        // 2. Verificar que es efectivamente un refresh token
+<span class="fc" id="L83">        String tokenType = jwtTokenProvider.extractTokenType(token);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (!&quot;refresh&quot;.equals(tokenType)) {</span>
+<span class="nc" id="L85">            throw new org.springframework.security.authentication.BadCredentialsException(&quot;El token proporcionado no es un refresh token.&quot;);</span>
+        }
+
+        // 3. Cargar usuario y generar nuevo access token
+<span class="fc" id="L89">        String username = jwtTokenProvider.extractUsername(token);</span>
+<span class="fc" id="L90">        UserDetails userDetails = userDetailsService.loadUserByUsername(username);</span>
+
+<span class="fc" id="L92">        String newAccessToken = jwtTokenProvider.generateAccessToken(userDetails);</span>
+
+<span class="fc" id="L94">        List&lt;String&gt; roles = userDetails.getAuthorities().stream()</span>
+<span class="fc" id="L95">                .map(GrantedAuthority::getAuthority)</span>
+<span class="fc" id="L96">                .toList();</span>
+
+<span class="fc" id="L98">        log.info(&quot;Access token renovado para usuario: {}&quot;, username);</span>
+
+<span class="fc" id="L100">        return AuthResponse.builder()</span>
+<span class="fc" id="L101">                .accessToken(newAccessToken)</span>
+<span class="fc" id="L102">                .refreshToken(token)          // El refresh token se reutiliza (sin rotación por ahora)</span>
+<span class="fc" id="L103">                .tokenType(&quot;Bearer&quot;)</span>
+<span class="fc" id="L104">                .expiresIn(accessTokenExpirationMs)</span>
+<span class="fc" id="L105">                .username(userDetails.getUsername())</span>
+<span class="fc" id="L106">                .roles(roles)</span>
+<span class="fc" id="L107">                .build();</span>
+    }
+
+    // ─── Logout ───────────────────────────────────────────────────────────────
+
+    @Override
+    public void logout(String refreshToken) {
+        // TODO Fase 4: guardar el token en una tabla blacklist o eliminarlo de BD
+        // Por ahora, el cliente simplemente descarta el token
+<span class="nc" id="L116">        log.info(&quot;Logout solicitado. Token invalidado del lado del cliente.&quot;);</span>
+<span class="nc" id="L117">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

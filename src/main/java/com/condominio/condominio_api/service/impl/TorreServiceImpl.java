@@ -41,6 +41,12 @@ public class TorreServiceImpl implements TorreService {
     }
 
     @Override
+    public Page<TorreResponse> findByCondominioId(Long condominioId, Pageable pageable) {
+        return torreRepository.findByCondominioIdWithCondominio(condominioId, pageable)
+                .map(torreMapper::toResponse);
+    }
+
+    @Override
     public TorreResponse create(TorreRequest request) {
         Condominio condominio = condominioRepository.findById(request.getCondominioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Condominio", "id", request.getCondominioId()));

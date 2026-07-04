@@ -42,6 +42,9 @@ class CondominioControllerTest {
     @MockBean
     private CondominioService condominioService;
 
+    @MockBean
+    private com.condominio.condominio_api.service.interfaces.TorreService torreService;
+
     // Se mockean beans de seguridad requeridos por el contexto web de Spring Security
     @MockBean
     private JwtTokenProvider jwtTokenProvider;

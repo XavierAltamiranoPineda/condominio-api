@@ -42,6 +42,9 @@ class TorreControllerTest {
     @MockBean
     private TorreService torreService;
 
+    @MockBean
+    private com.condominio.condominio_api.service.interfaces.UnidadService unidadService;
+
     // Se mockean beans de seguridad requeridos por el contexto web de Spring Security
     @MockBean
     private JwtTokenProvider jwtTokenProvider;

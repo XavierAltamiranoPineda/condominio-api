@@ -20,6 +20,10 @@ public interface TorreRepository extends JpaRepository<Torre, Long> {
            countQuery = "SELECT count(t) FROM Torre t")
     Page<Torre> findAllWithCondominio(Pageable pageable);
 
+    @Query(value = "SELECT t FROM Torre t JOIN FETCH t.condominio WHERE t.condominio.id = :condominioId",
+           countQuery = "SELECT count(t) FROM Torre t WHERE t.condominio.id = :condominioId")
+    Page<Torre> findByCondominioIdWithCondominio(@Param("condominioId") Long condominioId, Pageable pageable);
+
     boolean existsByNombreIgnoreCaseAndCondominioId(String nombre, Long condominioId);
     boolean existsByNombreIgnoreCaseAndCondominioIdAndIdNot(String nombre, Long condominioId, Long id);
 }

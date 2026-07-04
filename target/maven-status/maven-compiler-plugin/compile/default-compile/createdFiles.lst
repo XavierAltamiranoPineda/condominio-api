@@ -1,3 +1,4 @@
+com/condominio/condominio_api/mapper/UnidadMapper.class
 com/condominio/condominio_api/repository/UsuarioRolRepository.class
 com/condominio/condominio_api/mapper/TorreMapper.class
 com/condominio/condominio_api/controller/RolController.class
@@ -15,7 +16,10 @@ com/condominio/condominio_api/service/impl/PersonaServiceImpl.class
 com/condominio/condominio_api/mapper/PersonaMapper.class
 com/condominio/condominio_api/controller/CondominioController.class
 com/condominio/condominio_api/mapper/PersonaMapperImpl.class
+com/condominio/condominio_api/entity/enums/TipoUnidadEnum.class
 com/condominio/condominio_api/controller/UsuarioController.class
+com/condominio/condominio_api/dto/response/UnidadResponse.class
+com/condominio/condominio_api/service/impl/UnidadServiceImpl.class
 com/condominio/condominio_api/dto/response/UsuarioResponse$UsuarioResponseBuilder.class
 com/condominio/condominio_api/mapper/UsuarioMapper.class
 com/condominio/condominio_api/dto/request/PersonaRequest.class
@@ -29,9 +33,14 @@ com/condominio/condominio_api/audit/BaseAuditEntity.class
 com/condominio/condominio_api/service/impl/RolServiceImpl.class
 com/condominio/condominio_api/security/JwtAuthenticationFilter.class
 com/condominio/condominio_api/service/interfaces/TorreService.class
+com/condominio/condominio_api/entity/EstadoUnidad.class
+com/condominio/condominio_api/mapper/UnidadMapperImpl.class
+com/condominio/condominio_api/service/interfaces/UnidadService.class
 com/condominio/condominio_api/dto/response/TorreResponse.class
+com/condominio/condominio_api/dto/request/UnidadRequest.class
 com/condominio/condominio_api/service/interfaces/PersonaService.class
 com/condominio/condominio_api/dto/response/TorreResponse$TorreResponseBuilder.class
+com/condominio/condominio_api/repository/UnidadRepository.class
 com/condominio/condominio_api/security/JwtAuthenticationEntryPoint.class
 com/condominio/condominio_api/service/impl/TorreServiceImpl.class
 com/condominio/condominio_api/dto/request/TorreRequest.class
@@ -64,6 +73,8 @@ com/condominio/condominio_api/dto/response/RolResponse$RolResponseBuilder.class
 com/condominio/condominio_api/entity/Persona$TipoIdentificacion.class
 com/condominio/condominio_api/security/UserDetailsServiceImpl.class
 com/condominio/condominio_api/exception/ResourceNotFoundException.class
+com/condominio/condominio_api/controller/UnidadController.class
+com/condominio/condominio_api/entity/Unidad.class
 com/condominio/condominio_api/dto/response/RolResponse.class
 com/condominio/condominio_api/entity/Torre.class
 com/condominio/condominio_api/dto/request/RefreshTokenRequest.class
@@ -78,6 +89,8 @@ com/condominio/condominio_api/repository/UsuarioRepository.class
 com/condominio/condominio_api/repository/RolPermisoRepository.class
 com/condominio/condominio_api/controller/PersonaController.class
 com/condominio/condominio_api/service/interfaces/UsuarioService.class
+com/condominio/condominio_api/dto/response/UnidadResponse$UnidadResponseBuilder.class
+com/condominio/condominio_api/repository/EstadoUnidadRepository.class
 com/condominio/condominio_api/mapper/CondominioMapper.class
 com/condominio/condominio_api/entity/Persona.class
 com/condominio/condominio_api/controller/AuthController.class
