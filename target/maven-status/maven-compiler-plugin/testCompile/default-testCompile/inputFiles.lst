@@ -6,6 +6,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/PagoControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/PersonaControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/PersonaUnidadControllerTest.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/ReciboControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/TorreControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/integration/controller/UnidadControllerTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/CondominioServiceImplTest.java
@@ -13,5 +14,6 @@
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/PagoServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/PersonaServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/PersonaUnidadServiceImplTest.java
+/home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/ReciboServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/TorreServiceImplTest.java
 /home/xavo/GitHub/Personal/condominio-api/src/test/java/com/condominio/condominio_api/unit/service/UnidadServiceImplTest.java

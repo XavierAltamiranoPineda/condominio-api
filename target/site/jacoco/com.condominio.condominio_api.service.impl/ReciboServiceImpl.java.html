@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReciboServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">ReciboServiceImpl.java</span></div><h1>ReciboServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.ReciboRequest;
+import com.condominio.condominio_api.dto.response.ReciboResponse;
+import com.condominio.condominio_api.entity.Archivo;
+import com.condominio.condominio_api.entity.Pago;
+import com.condominio.condominio_api.entity.Recibo;
+import com.condominio.condominio_api.exception.ResourceAlreadyExistsException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.ReciboMapper;
+import com.condominio.condominio_api.repository.ArchivoRepository;
+import com.condominio.condominio_api.repository.PagoRepository;
+import com.condominio.condominio_api.repository.ReciboRepository;
+import com.condominio.condominio_api.service.interfaces.ReciboService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+<span class="fc" id="L22">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class ReciboServiceImpl implements ReciboService {
+
+    private final ReciboRepository reciboRepository;
+    private final PagoRepository pagoRepository;
+    private final ArchivoRepository archivoRepository;
+    private final ReciboMapper reciboMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public ReciboResponse findById(Long id) {
+<span class="nc" id="L35">        return reciboRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L36">                .map(reciboMapper::toResponse)</span>
+<span class="nc" id="L37">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Recibo&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public Page&lt;ReciboResponse&gt; findAll(Pageable pageable) {
+<span class="nc" id="L42">        return reciboRepository.findAllWithDetails(pageable)</span>
+<span class="nc" id="L43">                .map(reciboMapper::toResponse);</span>
+    }
+
+    @Override
+    public Page&lt;ReciboResponse&gt; findByPagoId(Long pagoId, Pageable pageable) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (!pagoRepository.existsById(pagoId)) {</span>
+<span class="nc" id="L49">            throw new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, pagoId);</span>
+        }
+<span class="nc" id="L51">        return reciboRepository.findByPagoIdWithDetails(pagoId, pageable)</span>
+<span class="nc" id="L52">                .map(reciboMapper::toResponse);</span>
+    }
+
+    @Override
+    public ReciboResponse create(ReciboRequest request) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (reciboRepository.existsByNumeroIgnoreCase(request.getNumero())) {</span>
+<span class="fc" id="L58">            throw new ResourceAlreadyExistsException(&quot;Recibo&quot;, &quot;numero&quot;, request.getNumero());</span>
+        }
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (reciboRepository.existsByPagoId(request.getPagoId())) {</span>
+<span class="fc" id="L62">            throw new ResourceAlreadyExistsException(&quot;Recibo&quot;, &quot;pagoId&quot;, request.getPagoId().toString());</span>
+        }
+
+<span class="fc" id="L65">        Pago pago = pagoRepository.findById(request.getPagoId())</span>
+<span class="pc" id="L66">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, request.getPagoId()));</span>
+
+<span class="fc" id="L68">        Archivo archivo = null;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (request.getArchivoId() != null) {</span>
+<span class="fc" id="L70">            archivo = archivoRepository.findById(request.getArchivoId())</span>
+<span class="pc" id="L71">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Archivo&quot;, &quot;id&quot;, request.getArchivoId()));</span>
+        }
+
+<span class="fc" id="L74">        auditInterceptor.setUsuarioActual();</span>
+<span class="fc" id="L75">        Recibo recibo = reciboMapper.toEntity(request);</span>
+<span class="fc" id="L76">        recibo.setPago(pago);</span>
+<span class="fc" id="L77">        recibo.setArchivo(archivo);</span>
+<span class="fc" id="L78">        recibo = reciboRepository.save(recibo);</span>
+
+<span class="fc" id="L80">        log.info(&quot;Recibo creado: id={}, numero={}&quot;, recibo.getId(), recibo.getNumero());</span>
+<span class="fc" id="L81">        return reciboMapper.toResponse(recibo);</span>
+    }
+
+    @Override
+    public ReciboResponse update(Long id, ReciboRequest request) {
+<span class="nc" id="L86">        Recibo recibo = reciboRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L87">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Recibo&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (reciboRepository.existsByNumeroIgnoreCaseAndIdNot(request.getNumero(), id)) {</span>
+<span class="nc" id="L90">            throw new ResourceAlreadyExistsException(&quot;Recibo&quot;, &quot;numero&quot;, request.getNumero());</span>
+        }
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (reciboRepository.existsByPagoIdAndIdNot(request.getPagoId(), id)) {</span>
+<span class="nc" id="L94">            throw new ResourceAlreadyExistsException(&quot;Recibo&quot;, &quot;pagoId&quot;, request.getPagoId().toString());</span>
+        }
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (!recibo.getPago().getId().equals(request.getPagoId())) {</span>
+<span class="nc" id="L98">            Pago pago = pagoRepository.findById(request.getPagoId())</span>
+<span class="nc" id="L99">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, request.getPagoId()));</span>
+<span class="nc" id="L100">            recibo.setPago(pago);</span>
+        }
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (request.getArchivoId() != null) {</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">            if (recibo.getArchivo() == null || !recibo.getArchivo().getId().equals(request.getArchivoId())) {</span>
+<span class="nc" id="L105">                Archivo archivo = archivoRepository.findById(request.getArchivoId())</span>
+<span class="nc" id="L106">                        .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Archivo&quot;, &quot;id&quot;, request.getArchivoId()));</span>
+<span class="nc" id="L107">                recibo.setArchivo(archivo);</span>
+<span class="nc" id="L108">            }</span>
+        } else {
+<span class="nc" id="L110">            recibo.setArchivo(null);</span>
+        }
+
+<span class="nc" id="L113">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L114">        reciboMapper.updateEntityFromRequest(request, recibo);</span>
+<span class="nc" id="L115">        recibo = reciboRepository.save(recibo);</span>
+
+<span class="nc" id="L117">        log.info(&quot;Recibo actualizado: id={}, numero={}&quot;, recibo.getId(), recibo.getNumero());</span>
+<span class="nc" id="L118">        return reciboMapper.toResponse(recibo);</span>
+    }
+
+    @Override
+    public void delete(Long id) {
+<span class="nc" id="L123">        Recibo recibo = reciboRepository.findById(id)</span>
+<span class="nc" id="L124">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Recibo&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L126">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L127">        reciboRepository.delete(recibo);</span>
+
+<span class="nc" id="L129">        log.info(&quot;Recibo eliminado: id={}&quot;, id);</span>
+<span class="nc" id="L130">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
