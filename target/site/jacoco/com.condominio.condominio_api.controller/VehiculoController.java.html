@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehiculoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">VehiculoController.java</span></div><h1>VehiculoController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.VehiculoRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.VehiculoResponse;
+import com.condominio.condominio_api.service.interfaces.VehiculoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/v1/vehiculos&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Vehículos&quot;, description = &quot;Gestión de vehículos de unidades y residentes&quot;)
+public class VehiculoController {
+
+    private final VehiculoService service;
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
+    @Operation(summary = &quot;Obtener vehículo por ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VehiculoResponse&gt;&gt; getById(@PathVariable Long id) {
+<span class="nc" id="L32">        return ResponseEntity.ok(ApiResponse.ok(service.findById(id), &quot;Vehículo encontrado&quot;));</span>
+    }
+
+    @GetMapping(&quot;/unidad/{unidadId}&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
+    @Operation(summary = &quot;Obtener vehículos de una unidad&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;List&lt;VehiculoResponse&gt;&gt;&gt; getByUnidadId(@PathVariable Long unidadId) {
+<span class="nc" id="L39">        return ResponseEntity.ok(ApiResponse.ok(service.findByUnidadId(unidadId), &quot;Vehículos obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/condominio/{condominioId}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Obtener vehículos paginados por condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;VehiculoResponse&gt;&gt;&gt; getByCondominioId(
+            @PathVariable Long condominioId, Pageable pageable) {
+<span class="nc" id="L47">        return ResponseEntity.ok(ApiResponse.ok(service.findByCondominioId(condominioId, pageable), &quot;Vehículos obtenidos&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasAuthority('ADMIN') or hasAuthority('RESIDENTE')&quot;)
+    @Operation(summary = &quot;Registrar nuevo vehículo&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VehiculoResponse&gt;&gt; create(@Valid @RequestBody VehiculoRequest request) {
+<span class="nc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="nc" id="L55">                .body(ApiResponse.created(service.create(request), &quot;Vehículo registrado exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN') or hasAuthority('RESIDENTE')&quot;)
+    @Operation(summary = &quot;Actualizar vehículo&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VehiculoResponse&gt;&gt; update(
+            @PathVariable Long id, @Valid @RequestBody VehiculoRequest request) {
+<span class="nc" id="L63">        return ResponseEntity.ok(ApiResponse.ok(service.update(id, request), &quot;Vehículo actualizado&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN') or hasAuthority('RESIDENTE')&quot;)
+    @Operation(summary = &quot;Eliminar vehículo&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; delete(@PathVariable Long id) {
+<span class="nc" id="L70">        service.delete(id);</span>
+<span class="nc" id="L71">        return ResponseEntity.ok(ApiResponse.ok(null, &quot;Vehículo eliminado&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

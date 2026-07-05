@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehiculoMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">VehiculoMapperImpl.java</span></div><h1>VehiculoMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.VehiculoRequest;
+import com.condominio.condominio_api.dto.response.VehiculoResponse;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.entity.Unidad;
+import com.condominio.condominio_api.entity.Vehiculo;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T22:39:50-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L19">public class VehiculoMapperImpl implements VehiculoMapper {</span>
+
+    @Override
+    public VehiculoResponse toResponse(Vehiculo entity) {
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if ( entity == null ) {</span>
+<span class="nc" id="L24">            return null;</span>
+        }
+
+<span class="nc" id="L27">        VehiculoResponse.VehiculoResponseBuilder vehiculoResponse = VehiculoResponse.builder();</span>
+
+<span class="nc" id="L29">        vehiculoResponse.unidadId( entityUnidadId( entity ) );</span>
+<span class="nc" id="L30">        vehiculoResponse.unidadNumero( entityUnidadNumero( entity ) );</span>
+<span class="nc" id="L31">        vehiculoResponse.personaId( entityPersonaActualId( entity ) );</span>
+<span class="nc" id="L32">        vehiculoResponse.personaNombres( entityPersonaActualNombres( entity ) );</span>
+<span class="nc" id="L33">        vehiculoResponse.personaApellidos( entityPersonaActualApellidos( entity ) );</span>
+<span class="nc" id="L34">        vehiculoResponse.id( entity.getId() );</span>
+<span class="nc" id="L35">        vehiculoResponse.tipo( entity.getTipo() );</span>
+<span class="nc" id="L36">        vehiculoResponse.placa( entity.getPlaca() );</span>
+<span class="nc" id="L37">        vehiculoResponse.marca( entity.getMarca() );</span>
+<span class="nc" id="L38">        vehiculoResponse.modelo( entity.getModelo() );</span>
+<span class="nc" id="L39">        vehiculoResponse.color( entity.getColor() );</span>
+
+<span class="nc" id="L41">        return vehiculoResponse.build();</span>
+    }
+
+    @Override
+    public Vehiculo toEntity(VehiculoRequest request) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L47">            return null;</span>
+        }
+
+<span class="nc" id="L50">        Vehiculo vehiculo = new Vehiculo();</span>
+
+<span class="nc" id="L52">        vehiculo.setTipo( request.getTipo() );</span>
+<span class="nc" id="L53">        vehiculo.setPlaca( request.getPlaca() );</span>
+<span class="nc" id="L54">        vehiculo.setMarca( request.getMarca() );</span>
+<span class="nc" id="L55">        vehiculo.setModelo( request.getModelo() );</span>
+<span class="nc" id="L56">        vehiculo.setColor( request.getColor() );</span>
+
+<span class="nc" id="L58">        return vehiculo;</span>
+    }
+
+    @Override
+    public List&lt;VehiculoResponse&gt; toResponseList(List&lt;Vehiculo&gt; entities) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if ( entities == null ) {</span>
+<span class="nc" id="L64">            return null;</span>
+        }
+
+<span class="nc" id="L67">        List&lt;VehiculoResponse&gt; list = new ArrayList&lt;VehiculoResponse&gt;( entities.size() );</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for ( Vehiculo vehiculo : entities ) {</span>
+<span class="nc" id="L69">            list.add( toResponse( vehiculo ) );</span>
+<span class="nc" id="L70">        }</span>
+
+<span class="nc" id="L72">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(VehiculoRequest request, Vehiculo entity) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L78">            return;</span>
+        }
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if ( request.getTipo() != null ) {</span>
+<span class="nc" id="L82">            entity.setTipo( request.getTipo() );</span>
+        }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if ( request.getPlaca() != null ) {</span>
+<span class="nc" id="L85">            entity.setPlaca( request.getPlaca() );</span>
+        }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if ( request.getMarca() != null ) {</span>
+<span class="nc" id="L88">            entity.setMarca( request.getMarca() );</span>
+        }
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if ( request.getModelo() != null ) {</span>
+<span class="nc" id="L91">            entity.setModelo( request.getModelo() );</span>
+        }
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if ( request.getColor() != null ) {</span>
+<span class="nc" id="L94">            entity.setColor( request.getColor() );</span>
+        }
+<span class="nc" id="L96">    }</span>
+
+    private Long entityUnidadId(Vehiculo vehiculo) {
+<span class="nc" id="L99">        Unidad unidad = vehiculo.getUnidad();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L101">            return null;</span>
+        }
+<span class="nc" id="L103">        return unidad.getId();</span>
+    }
+
+    private String entityUnidadNumero(Vehiculo vehiculo) {
+<span class="nc" id="L107">        Unidad unidad = vehiculo.getUnidad();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L109">            return null;</span>
+        }
+<span class="nc" id="L111">        return unidad.getNumero();</span>
+    }
+
+    private Long entityPersonaActualId(Vehiculo vehiculo) {
+<span class="nc" id="L115">        Persona personaActual = vehiculo.getPersonaActual();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if ( personaActual == null ) {</span>
+<span class="nc" id="L117">            return null;</span>
+        }
+<span class="nc" id="L119">        return personaActual.getId();</span>
+    }
+
+    private String entityPersonaActualNombres(Vehiculo vehiculo) {
+<span class="nc" id="L123">        Persona personaActual = vehiculo.getPersonaActual();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if ( personaActual == null ) {</span>
+<span class="nc" id="L125">            return null;</span>
+        }
+<span class="nc" id="L127">        return personaActual.getNombres();</span>
+    }
+
+    private String entityPersonaActualApellidos(Vehiculo vehiculo) {
+<span class="nc" id="L131">        Persona personaActual = vehiculo.getPersonaActual();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if ( personaActual == null ) {</span>
+<span class="nc" id="L133">            return null;</span>
+        }
+<span class="nc" id="L135">        return personaActual.getApellidos();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
