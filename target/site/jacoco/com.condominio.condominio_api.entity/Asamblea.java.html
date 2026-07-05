@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Asamblea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.entity</a> &gt; <span class="el_source">Asamblea.java</span></div><h1>Asamblea.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+
+@Entity
+@Table(name = &quot;asamblea&quot;)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = {&quot;condominio&quot;})
+public class Asamblea {
+
+<span class="fc" id="L22">    public enum TipoAsamblea {</span>
+<span class="fc" id="L23">        ORDINARIA, EXTRAORDINARIA</span>
+    }
+
+<span class="fc" id="L26">    public enum EstadoAsamblea {</span>
+<span class="fc" id="L27">        PROGRAMADA, EN_CURSO, FINALIZADA, CANCELADA</span>
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;id_asamblea&quot;)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;id_condominio&quot;, nullable = false)
+    private Condominio condominio;
+
+    @Column(name = &quot;fecha&quot;, nullable = false)
+    private OffsetDateTime fecha;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;tipo&quot;, nullable = false, columnDefinition = &quot;tipo_asamblea_enum&quot;)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private TipoAsamblea tipo;
+
+    @Column(name = &quot;quorum_requerido&quot;, precision = 5, scale = 2)
+    private BigDecimal quorumRequerido;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;estado&quot;, nullable = false, columnDefinition = &quot;estado_asamblea_enum&quot;)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private EstadoAsamblea estado = EstadoAsamblea.PROGRAMADA;
+
+    @Override
+    public final boolean equals(Object o) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (!(o instanceof Asamblea other)) return false;</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">        return id != null &amp;&amp; id.equals(other.id);</span>
+    }
+
+    @Override
+    public final int hashCode() {
+<span class="nc" id="L64">        return getClass().hashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

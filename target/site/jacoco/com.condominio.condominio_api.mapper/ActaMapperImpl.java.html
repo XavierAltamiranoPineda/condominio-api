@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActaMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">ActaMapperImpl.java</span></div><h1>ActaMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.ActaRequest;
+import com.condominio.condominio_api.dto.response.ActaResponse;
+import com.condominio.condominio_api.entity.Acta;
+import com.condominio.condominio_api.entity.Asamblea;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T22:12:45-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L20">public class ActaMapperImpl implements ActaMapper {</span>
+
+    @Autowired
+    private ArchivoMapper archivoMapper;
+
+    @Override
+    public ActaResponse toResponse(Acta acta) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if ( acta == null ) {</span>
+<span class="nc" id="L28">            return null;</span>
+        }
+
+<span class="nc" id="L31">        ActaResponse.ActaResponseBuilder actaResponse = ActaResponse.builder();</span>
+
+<span class="nc" id="L33">        actaResponse.asambleaId( actaAsambleaId( acta ) );</span>
+<span class="nc" id="L34">        actaResponse.asambleaFecha( actaAsambleaFecha( acta ) );</span>
+<span class="nc" id="L35">        actaResponse.id( acta.getId() );</span>
+<span class="nc" id="L36">        actaResponse.contenido( acta.getContenido() );</span>
+<span class="nc" id="L37">        actaResponse.archivos( archivoMapper.toResponseList( acta.getArchivos() ) );</span>
+
+<span class="nc" id="L39">        return actaResponse.build();</span>
+    }
+
+    @Override
+    public Acta toEntity(ActaRequest request) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L45">            return null;</span>
+        }
+
+<span class="nc" id="L48">        Acta acta = new Acta();</span>
+
+<span class="nc" id="L50">        acta.setContenido( request.getContenido() );</span>
+
+<span class="nc" id="L52">        return acta;</span>
+    }
+
+    @Override
+    public List&lt;ActaResponse&gt; toResponseList(List&lt;Acta&gt; actas) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if ( actas == null ) {</span>
+<span class="nc" id="L58">            return null;</span>
+        }
+
+<span class="nc" id="L61">        List&lt;ActaResponse&gt; list = new ArrayList&lt;ActaResponse&gt;( actas.size() );</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        for ( Acta acta : actas ) {</span>
+<span class="nc" id="L63">            list.add( toResponse( acta ) );</span>
+<span class="nc" id="L64">        }</span>
+
+<span class="nc" id="L66">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(ActaRequest request, Acta acta) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L72">            return;</span>
+        }
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if ( request.getContenido() != null ) {</span>
+<span class="nc" id="L76">            acta.setContenido( request.getContenido() );</span>
+        }
+<span class="nc" id="L78">    }</span>
+
+    private Long actaAsambleaId(Acta acta) {
+<span class="nc" id="L81">        Asamblea asamblea = acta.getAsamblea();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if ( asamblea == null ) {</span>
+<span class="nc" id="L83">            return null;</span>
+        }
+<span class="nc" id="L85">        return asamblea.getId();</span>
+    }
+
+    private OffsetDateTime actaAsambleaFecha(Acta acta) {
+<span class="nc" id="L89">        Asamblea asamblea = acta.getAsamblea();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if ( asamblea == null ) {</span>
+<span class="nc" id="L91">            return null;</span>
+        }
+<span class="nc" id="L93">        return asamblea.getFecha();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

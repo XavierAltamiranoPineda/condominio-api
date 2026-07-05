@@ -6,7 +6,9 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/config/JpaConfig.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/config/OpenApiConfig.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/AccesoController.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/ActaController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/AreaComunController.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/AsambleaController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/AuthController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/CondominioController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/CuotaController.java
@@ -24,8 +26,11 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/UsuarioController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/VisitanteController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/VisitantePreautorizadoController.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/controller/VotacionController.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/AccesoRequest.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/ActaRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/AreaComunRequest.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/AsambleaRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/CondominioRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/CuotaRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/LoginRequest.java
@@ -43,9 +48,13 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/UsuarioRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/VisitantePreautorizadoRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/VisitanteRequest.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/request/VotacionRequest.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/AccesoResponse.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ActaResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ApiResponse.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ArchivoResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/AreaComunResponse.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/AsambleaResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/AuthResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/CondominioResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/CuotaResponse.java
@@ -58,6 +67,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/RecaudacionMensualDTO.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ReciboResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ReservaResponse.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/ResultadosVotacionResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/RolDetalleResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/RolResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/TicketComentarioResponse.java
@@ -67,9 +77,12 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/UsuarioResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/VisitantePreautorizadoResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/VisitanteResponse.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/dto/response/VotacionResponse.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Acceso.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Acta.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Archivo.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/AreaComun.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Asamblea.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Categoria.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Condominio.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Cuota.java
@@ -95,6 +108,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/UsuarioRol.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Visitante.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/VisitantePreautorizado.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/Votacion.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/entity/enums/TipoUnidadEnum.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/event/TicketEvent.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/event/listener/NotificationEventListener.java
@@ -103,7 +117,10 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/exception/ResourceAlreadyExistsException.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/exception/ResourceNotFoundException.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/AccesoMapper.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/ActaMapper.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/ArchivoMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/AreaComunMapper.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/AsambleaMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/CondominioMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/CuotaMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/HistorialTicketMapper.java
@@ -120,9 +137,12 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/UsuarioMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/VisitanteMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/VisitantePreautorizadoMapper.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/mapper/VotacionMapper.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/AccesoRepository.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/ActaRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/ArchivoRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/AreaComunRepository.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/AsambleaRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/CategoriaRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/CondominioRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/CuotaRepository.java
@@ -148,6 +168,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/UsuarioRolRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/VisitantePreautorizadoRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/VisitanteRepository.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/VotacionRepository.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/repository/projection/RecaudacionMensualProjection.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/security/CustomUserDetails.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/security/JwtAccessDeniedHandler.java
@@ -157,7 +178,9 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/security/SecurityConfig.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/security/UserDetailsServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/AccesoServiceImpl.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/ActaServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/AreaComunServiceImpl.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/AsambleaServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/AuthServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/CondominioServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/CuotaServiceImpl.java
@@ -176,8 +199,11 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/UsuarioServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/VisitantePreautorizadoServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/VisitanteServiceImpl.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/VotacionServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/AccesoService.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/ActaService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/AreaComunService.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/AsambleaService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/AuthService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/CondominioService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/CuotaService.java
@@ -196,4 +222,5 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/UsuarioService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/VisitantePreautorizadoService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/VisitanteService.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/VotacionService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/util/ApiResponseUtil.java
