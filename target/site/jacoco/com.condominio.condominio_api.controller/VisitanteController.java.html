@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitanteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">VisitanteController.java</span></div><h1>VisitanteController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.VisitanteRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.VisitanteResponse;
+import com.condominio.condominio_api.service.interfaces.VisitanteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/api/v1/visitantes&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Visitantes&quot;, description = &quot;Gestión del catálogo de visitantes (personas externas)&quot;)
+public class VisitanteController {
+
+    private final VisitanteService visitanteService;
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_LEER')&quot;)
+    @Operation(summary = &quot;Obtener visitante por ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VisitanteResponse&gt;&gt; getById(@PathVariable Long id) {
+<span class="nc" id="L30">        return ResponseEntity.ok(ApiResponse.ok(visitanteService.findById(id), &quot;Visitante encontrado&quot;));</span>
+    }
+
+    @GetMapping(&quot;/cedula/{cedula}&quot;)
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_LEER')&quot;)
+    @Operation(summary = &quot;Obtener visitante por cédula&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VisitanteResponse&gt;&gt; getByCedula(@PathVariable String cedula) {
+<span class="nc" id="L37">        return ResponseEntity.ok(ApiResponse.ok(visitanteService.findByCedula(cedula), &quot;Visitante encontrado&quot;));</span>
+    }
+
+    @GetMapping
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_LEER')&quot;)
+    @Operation(summary = &quot;Listar todos los visitantes&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;VisitanteResponse&gt;&gt;&gt; getAll(Pageable pageable) {
+<span class="nc" id="L44">        return ResponseEntity.ok(ApiResponse.ok(visitanteService.findAll(pageable), &quot;Visitantes obtenidos&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_CREAR')&quot;)
+    @Operation(summary = &quot;Registrar nuevo visitante en el catálogo&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VisitanteResponse&gt;&gt; create(@Valid @RequestBody VisitanteRequest request) {
+<span class="nc" id="L51">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="nc" id="L52">                .body(ApiResponse.created(visitanteService.create(request), &quot;Visitante registrado exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_EDITAR')&quot;)
+    @Operation(summary = &quot;Actualizar datos de un visitante&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;VisitanteResponse&gt;&gt; update(
+            @PathVariable Long id, @Valid @RequestBody VisitanteRequest request) {
+<span class="nc" id="L60">        return ResponseEntity.ok(ApiResponse.ok(visitanteService.update(id, request), &quot;Visitante actualizado exitosamente&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('SEGURIDAD_ELIMINAR')&quot;)
+    @Operation(summary = &quot;Eliminar visitante del catálogo&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; delete(@PathVariable Long id) {
+<span class="nc" id="L67">        visitanteService.delete(id);</span>
+<span class="nc" id="L68">        return ResponseEntity.ok(ApiResponse.ok(null, &quot;Visitante eliminado exitosamente&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

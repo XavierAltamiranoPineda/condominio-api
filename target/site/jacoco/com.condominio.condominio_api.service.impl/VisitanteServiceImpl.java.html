@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitanteServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">VisitanteServiceImpl.java</span></div><h1>VisitanteServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.VisitanteRequest;
+import com.condominio.condominio_api.dto.response.VisitanteResponse;
+import com.condominio.condominio_api.entity.Visitante;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.VisitanteMapper;
+import com.condominio.condominio_api.repository.VisitanteRepository;
+import com.condominio.condominio_api.service.interfaces.VisitanteService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+<span class="fc" id="L21">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class VisitanteServiceImpl implements VisitanteService {
+
+    private final VisitanteRepository visitanteRepository;
+    private final VisitanteMapper visitanteMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public VisitanteResponse findById(Long id) {
+<span class="nc" id="L32">        return visitanteRepository.findById(id)</span>
+<span class="nc" id="L33">                .map(visitanteMapper::toResponse)</span>
+<span class="nc" id="L34">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Visitante&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public VisitanteResponse findByCedula(String cedula) {
+<span class="nc" id="L39">        return visitanteRepository.findByCedula(cedula)</span>
+<span class="nc" id="L40">                .map(visitanteMapper::toResponse)</span>
+<span class="nc" id="L41">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Visitante&quot;, &quot;cedula&quot;, cedula));</span>
+    }
+
+    @Override
+    public Page&lt;VisitanteResponse&gt; findAll(Pageable pageable) {
+<span class="nc" id="L46">        return visitanteRepository.findAll(pageable)</span>
+<span class="nc" id="L47">                .map(visitanteMapper::toResponse);</span>
+    }
+
+    @Override
+    @Transactional
+    public VisitanteResponse create(VisitanteRequest request) {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (request.getCedula() != null) {</span>
+<span class="nc" id="L54">            Optional&lt;Visitante&gt; existente = visitanteRepository.findByCedula(request.getCedula());</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (existente.isPresent()) {</span>
+<span class="nc" id="L56">                throw new BusinessException(&quot;Ya existe un visitante con la cédula &quot; + request.getCedula());</span>
+            }
+        }
+
+<span class="nc" id="L60">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L61">        Visitante visitante = visitanteMapper.toEntity(request);</span>
+<span class="nc" id="L62">        visitante = visitanteRepository.save(visitante);</span>
+<span class="nc" id="L63">        log.info(&quot;Visitante creado: id={}, nombre={}&quot;, visitante.getId(), visitante.getNombre());</span>
+<span class="nc" id="L64">        return visitanteMapper.toResponse(visitante);</span>
+    }
+
+    @Override
+    @Transactional
+    public VisitanteResponse update(Long id, VisitanteRequest request) {
+<span class="nc" id="L70">        Visitante visitante = visitanteRepository.findById(id)</span>
+<span class="nc" id="L71">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Visitante&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L73" title="All 4 branches missed.">        if (request.getCedula() != null &amp;&amp; !request.getCedula().equals(visitante.getCedula())) {</span>
+<span class="nc" id="L74">            Optional&lt;Visitante&gt; existente = visitanteRepository.findByCedula(request.getCedula());</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">            if (existente.isPresent() &amp;&amp; !existente.get().getId().equals(id)) {</span>
+<span class="nc" id="L76">                throw new BusinessException(&quot;Ya existe otro visitante con la cédula &quot; + request.getCedula());</span>
+            }
+        }
+
+<span class="nc" id="L80">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L81">        visitanteMapper.updateEntityFromRequest(request, visitante);</span>
+<span class="nc" id="L82">        visitante = visitanteRepository.save(visitante);</span>
+<span class="nc" id="L83">        log.info(&quot;Visitante actualizado: id={}&quot;, visitante.getId());</span>
+<span class="nc" id="L84">        return visitanteMapper.toResponse(visitante);</span>
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+<span class="nc" id="L90">        Visitante visitante = visitanteRepository.findById(id)</span>
+<span class="nc" id="L91">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Visitante&quot;, &quot;id&quot;, id));</span>
+        
+<span class="nc" id="L93">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L94">        visitanteRepository.delete(visitante);</span>
+<span class="nc" id="L95">        log.info(&quot;Visitante eliminado: id={}&quot;, id);</span>
+<span class="nc" id="L96">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

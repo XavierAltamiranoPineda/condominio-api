@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitantePreautorizado.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.entity</a> &gt; <span class="el_source">VisitantePreautorizado.java</span></div><h1>VisitantePreautorizado.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.OffsetDateTime;
+
+@Entity
+@Table(name = &quot;visitante_preautorizado&quot;)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = {&quot;visitante&quot;, &quot;unidad&quot;, &quot;autorizadoPor&quot;})
+public class VisitantePreautorizado {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;id_preautorizacion&quot;)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;id_visitante&quot;, nullable = false)
+    private Visitante visitante;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;id_unidad&quot;, nullable = false)
+    private Unidad unidad;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = &quot;autorizado_por&quot;, nullable = false)
+    private Persona autorizadoPor;
+
+    @Column(name = &quot;fecha_autorizada&quot;, insertable = false, updatable = false)
+    private OffsetDateTime fechaAutorizada;
+
+    @Override
+    public final boolean equals(Object o) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (!(o instanceof VisitantePreautorizado other)) return false;</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        return id != null &amp;&amp; id.equals(other.id);</span>
+    }
+
+    @Override
+    public final int hashCode() {
+<span class="nc" id="L48">        return getClass().hashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

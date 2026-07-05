@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccesoMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">AccesoMapperImpl.java</span></div><h1>AccesoMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.AccesoRequest;
+import com.condominio.condominio_api.dto.response.AccesoResponse;
+import com.condominio.condominio_api.entity.Acceso;
+import com.condominio.condominio_api.entity.EstadoAcceso;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.entity.Unidad;
+import com.condominio.condominio_api.entity.Visitante;
+import com.condominio.condominio_api.entity.VisitantePreautorizado;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T21:55:54-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L22">public class AccesoMapperImpl implements AccesoMapper {</span>
+
+    @Override
+    public AccesoResponse toResponse(Acceso acceso) {
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if ( acceso == null ) {</span>
+<span class="nc" id="L27">            return null;</span>
+        }
+
+<span class="nc" id="L30">        AccesoResponse.AccesoResponseBuilder accesoResponse = AccesoResponse.builder();</span>
+
+<span class="nc" id="L32">        accesoResponse.visitanteId( accesoVisitanteId( acceso ) );</span>
+<span class="nc" id="L33">        accesoResponse.visitanteNombre( accesoVisitanteNombre( acceso ) );</span>
+<span class="nc" id="L34">        accesoResponse.visitanteCedula( accesoVisitanteCedula( acceso ) );</span>
+<span class="nc" id="L35">        accesoResponse.unidadId( accesoUnidadId( acceso ) );</span>
+<span class="nc" id="L36">        accesoResponse.unidadNumero( accesoUnidadNumero( acceso ) );</span>
+<span class="nc" id="L37">        accesoResponse.guardiaId( accesoGuardiaId( acceso ) );</span>
+<span class="nc" id="L38">        accesoResponse.guardiaNombres( accesoGuardiaNombres( acceso ) );</span>
+<span class="nc" id="L39">        accesoResponse.preautorizacionId( accesoPreautorizacionId( acceso ) );</span>
+<span class="nc" id="L40">        accesoResponse.estadoId( accesoEstadoId( acceso ) );</span>
+<span class="nc" id="L41">        accesoResponse.estadoNombre( accesoEstadoNombre( acceso ) );</span>
+<span class="nc" id="L42">        accesoResponse.id( acceso.getId() );</span>
+<span class="nc" id="L43">        accesoResponse.vehiculoId( acceso.getVehiculoId() );</span>
+<span class="nc" id="L44">        accesoResponse.horaIngreso( acceso.getHoraIngreso() );</span>
+<span class="nc" id="L45">        accesoResponse.horaSalida( acceso.getHoraSalida() );</span>
+<span class="nc" id="L46">        accesoResponse.foto( acceso.getFoto() );</span>
+
+<span class="nc" id="L48">        return accesoResponse.build();</span>
+    }
+
+    @Override
+    public Acceso toEntity(AccesoRequest request) {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L54">            return null;</span>
+        }
+
+<span class="nc" id="L57">        Acceso acceso = new Acceso();</span>
+
+<span class="nc" id="L59">        acceso.setVehiculoId( request.getVehiculoId() );</span>
+<span class="nc" id="L60">        acceso.setFoto( request.getFoto() );</span>
+
+<span class="nc" id="L62">        return acceso;</span>
+    }
+
+    @Override
+    public List&lt;AccesoResponse&gt; toResponseList(List&lt;Acceso&gt; accesos) {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if ( accesos == null ) {</span>
+<span class="nc" id="L68">            return null;</span>
+        }
+
+<span class="nc" id="L71">        List&lt;AccesoResponse&gt; list = new ArrayList&lt;AccesoResponse&gt;( accesos.size() );</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        for ( Acceso acceso : accesos ) {</span>
+<span class="nc" id="L73">            list.add( toResponse( acceso ) );</span>
+<span class="nc" id="L74">        }</span>
+
+<span class="nc" id="L76">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(AccesoRequest request, Acceso acceso) {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L82">            return;</span>
+        }
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if ( request.getVehiculoId() != null ) {</span>
+<span class="nc" id="L86">            acceso.setVehiculoId( request.getVehiculoId() );</span>
+        }
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if ( request.getFoto() != null ) {</span>
+<span class="nc" id="L89">            acceso.setFoto( request.getFoto() );</span>
+        }
+<span class="nc" id="L91">    }</span>
+
+    private Long accesoVisitanteId(Acceso acceso) {
+<span class="nc" id="L94">        Visitante visitante = acceso.getVisitante();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L96">            return null;</span>
+        }
+<span class="nc" id="L98">        return visitante.getId();</span>
+    }
+
+    private String accesoVisitanteNombre(Acceso acceso) {
+<span class="nc" id="L102">        Visitante visitante = acceso.getVisitante();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L104">            return null;</span>
+        }
+<span class="nc" id="L106">        return visitante.getNombre();</span>
+    }
+
+    private String accesoVisitanteCedula(Acceso acceso) {
+<span class="nc" id="L110">        Visitante visitante = acceso.getVisitante();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L112">            return null;</span>
+        }
+<span class="nc" id="L114">        return visitante.getCedula();</span>
+    }
+
+    private Long accesoUnidadId(Acceso acceso) {
+<span class="nc" id="L118">        Unidad unidad = acceso.getUnidad();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L120">            return null;</span>
+        }
+<span class="nc" id="L122">        return unidad.getId();</span>
+    }
+
+    private String accesoUnidadNumero(Acceso acceso) {
+<span class="nc" id="L126">        Unidad unidad = acceso.getUnidad();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L128">            return null;</span>
+        }
+<span class="nc" id="L130">        return unidad.getNumero();</span>
+    }
+
+    private Long accesoGuardiaId(Acceso acceso) {
+<span class="nc" id="L134">        Persona guardia = acceso.getGuardia();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if ( guardia == null ) {</span>
+<span class="nc" id="L136">            return null;</span>
+        }
+<span class="nc" id="L138">        return guardia.getId();</span>
+    }
+
+    private String accesoGuardiaNombres(Acceso acceso) {
+<span class="nc" id="L142">        Persona guardia = acceso.getGuardia();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if ( guardia == null ) {</span>
+<span class="nc" id="L144">            return null;</span>
+        }
+<span class="nc" id="L146">        return guardia.getNombres();</span>
+    }
+
+    private Long accesoPreautorizacionId(Acceso acceso) {
+<span class="nc" id="L150">        VisitantePreautorizado preautorizacion = acceso.getPreautorizacion();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        if ( preautorizacion == null ) {</span>
+<span class="nc" id="L152">            return null;</span>
+        }
+<span class="nc" id="L154">        return preautorizacion.getId();</span>
+    }
+
+    private Long accesoEstadoId(Acceso acceso) {
+<span class="nc" id="L158">        EstadoAcceso estado = acceso.getEstado();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if ( estado == null ) {</span>
+<span class="nc" id="L160">            return null;</span>
+        }
+<span class="nc" id="L162">        return estado.getId();</span>
+    }
+
+    private String accesoEstadoNombre(Acceso acceso) {
+<span class="nc" id="L166">        EstadoAcceso estado = acceso.getEstado();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if ( estado == null ) {</span>
+<span class="nc" id="L168">            return null;</span>
+        }
+<span class="nc" id="L170">        return estado.getNombre();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

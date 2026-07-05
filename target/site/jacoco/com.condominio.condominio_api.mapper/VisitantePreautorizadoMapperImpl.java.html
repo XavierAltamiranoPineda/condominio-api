@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitantePreautorizadoMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">VisitantePreautorizadoMapperImpl.java</span></div><h1>VisitantePreautorizadoMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.VisitantePreautorizadoRequest;
+import com.condominio.condominio_api.dto.response.VisitantePreautorizadoResponse;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.entity.Unidad;
+import com.condominio.condominio_api.entity.Visitante;
+import com.condominio.condominio_api.entity.VisitantePreautorizado;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T21:55:53-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L20">public class VisitantePreautorizadoMapperImpl implements VisitantePreautorizadoMapper {</span>
+
+    @Override
+    public VisitantePreautorizadoResponse toResponse(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if ( visitantePreautorizado == null ) {</span>
+<span class="nc" id="L25">            return null;</span>
+        }
+
+<span class="nc" id="L28">        VisitantePreautorizadoResponse.VisitantePreautorizadoResponseBuilder visitantePreautorizadoResponse = VisitantePreautorizadoResponse.builder();</span>
+
+<span class="nc" id="L30">        visitantePreautorizadoResponse.visitanteId( visitantePreautorizadoVisitanteId( visitantePreautorizado ) );</span>
+<span class="nc" id="L31">        visitantePreautorizadoResponse.visitanteNombre( visitantePreautorizadoVisitanteNombre( visitantePreautorizado ) );</span>
+<span class="nc" id="L32">        visitantePreautorizadoResponse.visitanteCedula( visitantePreautorizadoVisitanteCedula( visitantePreautorizado ) );</span>
+<span class="nc" id="L33">        visitantePreautorizadoResponse.unidadId( visitantePreautorizadoUnidadId( visitantePreautorizado ) );</span>
+<span class="nc" id="L34">        visitantePreautorizadoResponse.unidadNumero( visitantePreautorizadoUnidadNumero( visitantePreautorizado ) );</span>
+<span class="nc" id="L35">        visitantePreautorizadoResponse.autorizadoPorId( visitantePreautorizadoAutorizadoPorId( visitantePreautorizado ) );</span>
+<span class="nc" id="L36">        visitantePreautorizadoResponse.autorizadoPorNombres( visitantePreautorizadoAutorizadoPorNombres( visitantePreautorizado ) );</span>
+<span class="nc" id="L37">        visitantePreautorizadoResponse.autorizadoPorApellidos( visitantePreautorizadoAutorizadoPorApellidos( visitantePreautorizado ) );</span>
+<span class="nc" id="L38">        visitantePreautorizadoResponse.id( visitantePreautorizado.getId() );</span>
+<span class="nc" id="L39">        visitantePreautorizadoResponse.fechaAutorizada( visitantePreautorizado.getFechaAutorizada() );</span>
+
+<span class="nc" id="L41">        return visitantePreautorizadoResponse.build();</span>
+    }
+
+    @Override
+    public VisitantePreautorizado toEntity(VisitantePreautorizadoRequest request) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L47">            return null;</span>
+        }
+
+<span class="nc" id="L50">        VisitantePreautorizado visitantePreautorizado = new VisitantePreautorizado();</span>
+
+<span class="nc" id="L52">        return visitantePreautorizado;</span>
+    }
+
+    @Override
+    public List&lt;VisitantePreautorizadoResponse&gt; toResponseList(List&lt;VisitantePreautorizado&gt; visitantesPreautorizados) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if ( visitantesPreautorizados == null ) {</span>
+<span class="nc" id="L58">            return null;</span>
+        }
+
+<span class="nc" id="L61">        List&lt;VisitantePreautorizadoResponse&gt; list = new ArrayList&lt;VisitantePreautorizadoResponse&gt;( visitantesPreautorizados.size() );</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        for ( VisitantePreautorizado visitantePreautorizado : visitantesPreautorizados ) {</span>
+<span class="nc" id="L63">            list.add( toResponse( visitantePreautorizado ) );</span>
+<span class="nc" id="L64">        }</span>
+
+<span class="nc" id="L66">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(VisitantePreautorizadoRequest request, VisitantePreautorizado visitantePreautorizado) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L72">            return;</span>
+        }
+<span class="nc" id="L74">    }</span>
+
+    private Long visitantePreautorizadoVisitanteId(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L77">        Visitante visitante = visitantePreautorizado.getVisitante();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L79">            return null;</span>
+        }
+<span class="nc" id="L81">        return visitante.getId();</span>
+    }
+
+    private String visitantePreautorizadoVisitanteNombre(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L85">        Visitante visitante = visitantePreautorizado.getVisitante();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L87">            return null;</span>
+        }
+<span class="nc" id="L89">        return visitante.getNombre();</span>
+    }
+
+    private String visitantePreautorizadoVisitanteCedula(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L93">        Visitante visitante = visitantePreautorizado.getVisitante();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if ( visitante == null ) {</span>
+<span class="nc" id="L95">            return null;</span>
+        }
+<span class="nc" id="L97">        return visitante.getCedula();</span>
+    }
+
+    private Long visitantePreautorizadoUnidadId(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L101">        Unidad unidad = visitantePreautorizado.getUnidad();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L103">            return null;</span>
+        }
+<span class="nc" id="L105">        return unidad.getId();</span>
+    }
+
+    private String visitantePreautorizadoUnidadNumero(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L109">        Unidad unidad = visitantePreautorizado.getUnidad();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if ( unidad == null ) {</span>
+<span class="nc" id="L111">            return null;</span>
+        }
+<span class="nc" id="L113">        return unidad.getNumero();</span>
+    }
+
+    private Long visitantePreautorizadoAutorizadoPorId(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L117">        Persona autorizadoPor = visitantePreautorizado.getAutorizadoPor();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if ( autorizadoPor == null ) {</span>
+<span class="nc" id="L119">            return null;</span>
+        }
+<span class="nc" id="L121">        return autorizadoPor.getId();</span>
+    }
+
+    private String visitantePreautorizadoAutorizadoPorNombres(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L125">        Persona autorizadoPor = visitantePreautorizado.getAutorizadoPor();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if ( autorizadoPor == null ) {</span>
+<span class="nc" id="L127">            return null;</span>
+        }
+<span class="nc" id="L129">        return autorizadoPor.getNombres();</span>
+    }
+
+    private String visitantePreautorizadoAutorizadoPorApellidos(VisitantePreautorizado visitantePreautorizado) {
+<span class="nc" id="L133">        Persona autorizadoPor = visitantePreautorizado.getAutorizadoPor();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if ( autorizadoPor == null ) {</span>
+<span class="nc" id="L135">            return null;</span>
+        }
+<span class="nc" id="L137">        return autorizadoPor.getApellidos();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
