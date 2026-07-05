@@ -1,163 +1,117 @@
-# condominio-db
+# Condominio API
 
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?logo=spring-boot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%2B-336791?logo=postgresql&logoColor=white)
 ![Flyway](https://img.shields.io/badge/Flyway-10%2B-CC0200?logo=flyway&logoColor=white)
-![License](https://img.shields.io/badge/license-privado-lightgrey)
-![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow)
+![Swagger](https://img.shields.io/badge/Swagger-OAS_3-85EA2D?logo=swagger&logoColor=black)
+![JWT](https://img.shields.io/badge/JWT-Security-black?logo=jsonwebtokens)
 
-Diseño y migraciones de la base de datos del Sistema de Gestión de
-Condominios. Repositorio independiente de `condominio-api`,
-`condominio-web`, `condominio-escritorio` y `condominio-movil`.
+API RESTful para el Sistema de Gestión de Condominios. Provee todos los servicios de negocio (Autenticación, Gestión de Residentes, Pagos, Multas, Asambleas, Comunicación y Seguridad en Garita) para ser consumidos por los clientes Web, Móvil y de Escritorio.
 
-## Requisitos
+## Tecnologías Utilizadas
 
-- PostgreSQL 16 o superior
-- `psql`
-- Flyway 10+ (opcional, si no se integra vía Spring Boot)
-- Java 21 + Spring Boot 3.x (si se usa Flyway integrado en `condominio-api`)
+- **Lenguaje**: Java 21
+- **Framework Core**: Spring Boot 3.x
+- **Persistencia**: Spring Data JPA / Hibernate
+- **Base de Datos**: PostgreSQL 16+
+- **Migraciones**: Flyway
+- **Seguridad**: Spring Security con JWT (JSON Web Tokens)
+- **Mapeo de DTOs**: MapStruct
+- **Documentación API**: OpenAPI 3 (Swagger UI)
+- **Pruebas**: JUnit 5, Mockito, JaCoCo (Cobertura de Código)
 
-## Flujo del proyecto
+## Requisitos Previos
 
-```
-condominio-web
-        │
-condominio-escritorio
-        │
-condominio-movil
-        │
-        ▼
-condominio-api
-        │
-        ▼
-condominio-db   ← este repositorio
-        │
-        ▼
- PostgreSQL
-```
+- **Java 21** instalado en la máquina (JDK).
+- **Maven 3.8+** instalado.
+- **PostgreSQL 16+** corriendo en el puerto 5432.
 
-Ningún cliente (web, escritorio, móvil) accede directo a PostgreSQL.
-Todo pasa por `condominio-api`.
+## Configuración y Ejecución
 
-## Estructura
+### 1. Crear la Base de Datos
 
-```
-condominio-db/
-│
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── .gitignore
-│
-├── docs/
-│   ├── MER.puml
-│   ├── DER.pdf              (pendiente, ver Roadmap)
-│   └── Arquitectura.pdf     (pendiente, ver Roadmap)
-│
-├── migrations/
-│   ├── V1__schema.sql
-│   ├── V2__constraints.sql
-│   ├── V3__indexes.sql
-│   ├── V4__triggers.sql
-│   ├── V5__functions.sql
-│   ├── V6__seed.sql
-│   └── V7__views.sql
-│
-└── dev-scripts/
-    ├── test_data.sql
-    └── drop_all.sql
+Entra a tu servidor local de PostgreSQL (`psql` o pgAdmin) y crea una base de datos vacía:
+
+```sql
+CREATE DATABASE condominio_db;
 ```
 
-## Cómo levantar la base de datos localmente
+### 2. Configurar Variables de Entorno
+
+El proyecto usa variables de entorno para su configuración. Crea un archivo `.env` en la raíz del proyecto (puedes basarte en `.env.example` si existe) o exporta las siguientes variables en tu terminal:
 
 ```bash
-createdb condominio_dev
-
-for f in migrations/V1__schema.sql migrations/V2__constraints.sql \
-         migrations/V3__indexes.sql migrations/V4__triggers.sql \
-         migrations/V5__functions.sql migrations/V6__seed.sql \
-         migrations/V7__views.sql; do
-  psql -d condominio_dev -v ON_ERROR_STOP=1 -f "$f"
-done
-
-# Opcional: cargar datos ficticios para probar la API
-psql -d condominio_dev -f dev-scripts/test_data.sql
+export DB_URL=jdbc:postgresql://localhost:5432/condominio_db
+export DB_USERNAME=tu_usuario_postgres
+export DB_PASSWORD=tu_password_postgres
+export JWT_SECRET=una_clave_secreta_muy_larga_y_segura_para_firmar_tokens_jwt
+export JWT_EXPIRATION=86400000
+export JWT_REFRESH_EXPIRATION=604800000
 ```
 
-## Cómo resetear todo durante el desarrollo
+> **Nota:** Si ejecutas desde un IDE (IntelliJ, VSCode), asegúrate de inyectar estas variables en la configuración de ejecución (Run Configuration).
+
+### 3. Ejecutar Migraciones (Flyway) y Semillas
+
+Flyway está integrado en el ciclo de vida de Spring Boot. Al arrancar la aplicación, automáticamente ejecutará todos los scripts SQL ubicados en `src/main/resources/db/migration/`. 
+
+Esto incluye:
+- `V1__schema.sql`: Estructura completa de la base de datos (más de 30 tablas).
+- Archivos `V2` a `V5`: Constraints, Índices, Triggers y Funciones de PostgreSQL.
+- Archivos Seed (`V6__seed.sql`, `V8__test_auth_seed.sql`, etc.): Datos iniciales y usuarios administradores por defecto.
+
+No necesitas correr scripts SQL manualmente.
+
+### 4. Levantar el Proyecto
+
+Abre tu terminal en la raíz del proyecto y ejecuta:
 
 ```bash
-psql -d condominio_dev -f dev-scripts/drop_all.sql
-# y volver a aplicar migrations/V1..V7 (+ test_data.sql si se quiere)
+mvn clean install
+mvn spring-boot:run
 ```
 
-## Con Flyway + Spring Boot
+El servidor arrancará en `http://localhost:8080`.
 
-1. Copiar el contenido de `migrations/` a
-   `src/main/resources/db/migration/` en `condominio-api` (Flyway
-   busca ahí por convención; el nombre de carpeta `migrations/` de
-   este repo es solo para claridad al navegarlo en GitHub).
-2. Configurar en `application.yml`:
-   ```yaml
-   spring:
-     flyway:
-       enabled: true
-       locations: classpath:db/migration
-     datasource:
-       url: jdbc:postgresql://localhost:5432/condominio_dev
-   ```
-3. Al arrancar la app, Flyway aplica automáticamente las migraciones
-   pendientes. **Nunca** copiar `test_data.sql` ni `drop_all.sql` a esa
-   carpeta.
+## Documentación y Swagger
 
-## Versionado
+Toda la API está documentada dinámicamente con OpenAPI 3. Una vez levantado el servidor, accede a la interfaz gráfica de Swagger en:
 
-Las migraciones siguen el esquema de versiones de Flyway:
+👉 **[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**
 
-- `V1__schema.sql`
-- `V2__constraints.sql`
-- `V3__indexes.sql`
-- `V4__triggers.sql`
-- `V5__functions.sql`
-- `V6__seed.sql`
-- `V7__views.sql`
+Desde ahí puedes explorar todos los módulos (Auth, Residentes, Departamentos, Pagos, Multas, Tickets, Asambleas, Actas, Comunicados, etc.) y probar los endpoints.
 
-**Las migraciones ya aplicadas nunca se modifican.** Cualquier cambio
-posterior se implementa mediante una nueva migración (`V8__`, `V9__`,
-etc.), documentada en `CHANGELOG.md`. Ver `CONTRIBUTING.md` para el
-flujo completo.
+## Credenciales Iniciales (Seed)
 
-Releases del repo se marcan con tags (`v1.0.0-db`, `v1.1.0-db`, ...)
-cuando se cierra un conjunto estable de migraciones — por ejemplo,
-`v1.0.0-db` al completar V1-V7.
+El script de semilla carga un súper-administrador por defecto para que puedas entrar al sistema inmediatamente y obtener tu token JWT.
 
-## Convenciones del esquema
+- **Correo**: `admin@condominio.com`
+- **Contraseña**: `Admin123!`
 
-- PKs: `BIGSERIAL`, nombradas `id_<tabla>`.
-- Snake_case en todo (tablas, columnas, constraints).
-- Estados de bajo crecimiento (2-4 valores fijos) → `ENUM` nativo de
-  Postgres. Estados administrables desde la app → tabla catálogo
-  (`estado_unidad`, `estado_reserva`, `estado_pago`, `estado_acceso`,
-  `estado_ticket`).
-- Toda columna de auditoría (`fecha`, `fecha_creacion`) usa
-  `TIMESTAMPTZ`, nunca `TIMESTAMP`.
-- Triggers solo para: integridad crítica, auditoría, y estado
-  derivado/historial. Toda la lógica de negocio de cálculo vive en
-  `migrations/V5__functions.sql` o en la API — no en más triggers.
+**Para probar los endpoints protegidos en Swagger:**
+1. Ve al endpoint de Auth (`POST /api/v1/auth/login`) y usa las credenciales de arriba.
+2. Copia el `accessToken` que te devuelve.
+3. En la parte superior de la página de Swagger, dale click al botón verde **"Authorize"**.
+4. Pega tu token en el formato: `Bearer tu_token_largo_aqui` y dale a "Authorize".
+5. ¡Listo! Ya tienes acceso a todos los endpoints bloqueados como `ADMIN`.
 
-## Roadmap
+## Arquitectura Limpia
 
-- [x] Modelo conceptual
-- [x] Modelo lógico
-- [x] Modelo físico
-- [x] Implementación PostgreSQL (V1-V7 probadas de punta a punta)
-- [ ] Integración Flyway en `condominio-api`
-- [ ] Integración Spring Boot (entidades JPA)
-- [ ] API REST
-- [ ] Web
-- [ ] Escritorio
-- [ ] Móvil
+El proyecto sigue una estructura limpia dividida por capas para asegurar mantenibilidad y escalabilidad:
 
-## Licencia
+- `controller/`: Expone las rutas RESTful. Solo recibe DTOs y devuelve DTOs (nada de entidades).
+- `service/`: Contiene `interfaces/` y sus implementaciones (`impl/`). Aquí reside toda la lógica de negocio y las validaciones.
+- `repository/`: Interfaces de Spring Data JPA (consultas a base de datos).
+- `entity/`: Clases de dominio mapeadas a las tablas de PostgreSQL mediante anotaciones JPA (`@Entity`).
+- `dto/`: Objetos de transferencia de datos (`request/` y `response/`), asegurando que no sobre-exponemos el dominio interno.
+- `mapper/`: Interfaces de MapStruct que transforman de Entity a DTO y viceversa automáticamente.
+- `security/`: Configuración de Spring Security, filtros de validación de JWT, etc.
+- `audit/`: Interceptores de Hibernate/Postgres (`PostgresAuditInterceptor`) para inyectar automáticamente el usuario logueado en la base de datos durante las inserciones.
+- `exception/`: Manejador global de excepciones (`GlobalExceptionHandler`) para devolver siempre un formato JSON estándar de error (`ApiResponse`).
+- `config/`: Clases de configuración (Swagger, CORS, JPA).
 
-Ver [`LICENSE`](./LICENSE). Proyecto privado de uso académico.
+## Contribuir y Desarrollar
+
+- **No comitees archivos basura:** Asegúrate de respetar el `.gitignore` (no subir `target/`, archivos del IDE como `.idea/` o `.vscode/`, ni logs locales).
+- **Pruebas (Tests):** El proyecto cuenta con pruebas unitarias robustas que cubren capas de servicio. Ejecútalas con `mvn test`. Jacoco generará reportes de cobertura en `target/site/jacoco/index.html`.
