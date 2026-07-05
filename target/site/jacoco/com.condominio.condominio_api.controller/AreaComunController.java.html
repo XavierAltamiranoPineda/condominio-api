@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AreaComunController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">AreaComunController.java</span></div><h1>AreaComunController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.AreaComunRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.AreaComunResponse;
+import com.condominio.condominio_api.service.interfaces.AreaComunService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/api/v1/areas-comunes&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Áreas Comunes&quot;, description = &quot;CRUD de las amenidades del condominio&quot;)
+public class AreaComunController {
+
+    private final AreaComunService areaComunService;
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('RESERVAS_LEER')&quot;)
+    @Operation(summary = &quot;Obtener un área común por su ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;AreaComunResponse&gt;&gt; getById(@PathVariable Long id) {
+<span class="nc" id="L30">        return ResponseEntity.ok(ApiResponse.ok(areaComunService.findById(id), &quot;Área común encontrada&quot;));</span>
+    }
+
+    @GetMapping(&quot;/condominio/{condominioId}&quot;)
+    @PreAuthorize(&quot;hasAuthority('RESERVAS_LEER')&quot;)
+    @Operation(summary = &quot;Listar áreas comunes por condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;AreaComunResponse&gt;&gt;&gt; getByCondominioId(
+            @PathVariable Long condominioId, Pageable pageable) {
+<span class="nc" id="L38">        return ResponseEntity.ok(ApiResponse.ok(areaComunService.findByCondominioId(condominioId, pageable), &quot;Áreas comunes obtenidas&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasAuthority('RESERVAS_CREAR')&quot;) // O un permiso más específico si se requiere (ej. AREAS_CREAR)
+    @Operation(summary = &quot;Crear nueva área común&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;AreaComunResponse&gt;&gt; create(@Valid @RequestBody AreaComunRequest request) {
+<span class="nc" id="L45">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="nc" id="L46">                .body(ApiResponse.created(areaComunService.create(request), &quot;Área común creada exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('RESERVAS_EDITAR')&quot;)
+    @Operation(summary = &quot;Actualizar área común&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;AreaComunResponse&gt;&gt; update(
+            @PathVariable Long id, @Valid @RequestBody AreaComunRequest request) {
+<span class="nc" id="L54">        return ResponseEntity.ok(ApiResponse.ok(areaComunService.update(id, request), &quot;Área común actualizada exitosamente&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('RESERVAS_ELIMINAR')&quot;)
+    @Operation(summary = &quot;Eliminar área común&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; delete(@PathVariable Long id) {
+<span class="nc" id="L61">        areaComunService.delete(id);</span>
+<span class="nc" id="L62">        return ResponseEntity.ok(ApiResponse.ok(null, &quot;Área común eliminada exitosamente&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

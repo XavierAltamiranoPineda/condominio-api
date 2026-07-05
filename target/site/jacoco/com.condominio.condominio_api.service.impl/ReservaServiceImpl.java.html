@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">ReservaServiceImpl.java</span></div><h1>ReservaServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.ReservaRequest;
+import com.condominio.condominio_api.dto.response.ReservaResponse;
+import com.condominio.condominio_api.entity.*;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.ReservaMapper;
+import com.condominio.condominio_api.repository.*;
+import com.condominio.condominio_api.service.interfaces.ReservaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+
+<span class="fc" id="L21">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class ReservaServiceImpl implements ReservaService {
+
+    private final ReservaRepository reservaRepository;
+    private final AreaComunRepository areaComunRepository;
+    private final PersonaRepository personaRepository;
+    private final EstadoReservaRepository estadoReservaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final ReservaMapper reservaMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public ReservaResponse findById(Long id) {
+<span class="nc" id="L36">        return reservaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L37">                .map(reservaMapper::toResponse)</span>
+<span class="nc" id="L38">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Reserva&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public Page&lt;ReservaResponse&gt; findByCondominioId(Long condominioId, Pageable pageable) {
+<span class="nc" id="L43">        return reservaRepository.findByCondominioIdWithDetails(condominioId, pageable)</span>
+<span class="nc" id="L44">                .map(reservaMapper::toResponse);</span>
+    }
+
+    @Override
+    public Page&lt;ReservaResponse&gt; findByAreaId(Long areaId, Pageable pageable) {
+<span class="nc" id="L49">        return reservaRepository.findByAreaIdWithDetails(areaId, pageable)</span>
+<span class="nc" id="L50">                .map(reservaMapper::toResponse);</span>
+    }
+
+    @Override
+    @Transactional
+    public ReservaResponse create(ReservaRequest request) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (!request.getHoraFin().isAfter(request.getHoraInicio())) {</span>
+<span class="nc" id="L57">            throw new BusinessException(&quot;La hora de fin debe ser posterior a la hora de inicio&quot;);</span>
+        }
+        
+<span class="nc" id="L60">        LocalDate fechaActual = LocalDate.now();</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (request.getFecha().isBefore(fechaActual)) {</span>
+<span class="nc" id="L62">            throw new BusinessException(&quot;No se pueden crear reservas en el pasado&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L65" title="All 4 branches missed.">        if (request.getFecha().isEqual(fechaActual) &amp;&amp; request.getHoraInicio().isBefore(java.time.LocalTime.now())) {</span>
+<span class="nc" id="L66">            throw new BusinessException(&quot;La hora de inicio de la reserva no puede estar en el pasado&quot;);</span>
+        }
+
+<span class="nc" id="L69">        AreaComun area = areaComunRepository.findById(request.getAreaId())</span>
+<span class="nc" id="L70">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;AreaComun&quot;, &quot;id&quot;, request.getAreaId()));</span>
+
+<span class="nc" id="L72">        Persona persona = personaRepository.findById(request.getPersonaId())</span>
+<span class="nc" id="L73">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, request.getPersonaId()));</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (Boolean.TRUE.equals(request.getBloqueaHorario())) {</span>
+<span class="nc" id="L76">            long superposiciones = reservaRepository.countSuperposiciones(</span>
+<span class="nc" id="L77">                    area.getId(), request.getFecha(), request.getHoraInicio(), request.getHoraFin());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            if (superposiciones &gt; 0) {</span>
+<span class="nc" id="L79">                throw new BusinessException(&quot;Ya existe una reserva que se cruza con este horario&quot;);</span>
+            }
+        }
+
+<span class="nc" id="L83">        EstadoReserva estadoPendiente = estadoReservaRepository.findByNombreIgnoreCase(&quot;PENDIENTE_APROBACION&quot;)</span>
+<span class="nc" id="L84">                .orElseThrow(() -&gt; new BusinessException(&quot;Estado PENDIENTE_APROBACION no encontrado&quot;));</span>
+
+<span class="nc" id="L86">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L87">        Reserva reserva = reservaMapper.toEntity(request);</span>
+<span class="nc" id="L88">        reserva.setArea(area);</span>
+<span class="nc" id="L89">        reserva.setPersona(persona);</span>
+<span class="nc" id="L90">        reserva.setEstado(estadoPendiente);</span>
+        
+<span class="nc" id="L92">        reserva = reservaRepository.save(reserva);</span>
+<span class="nc" id="L93">        log.info(&quot;Reserva creada: id={}, area={}&quot;, reserva.getId(), area.getNombre());</span>
+<span class="nc" id="L94">        return reservaMapper.toResponse(reserva);</span>
+    }
+
+    @Override
+    @Transactional
+    public ReservaResponse update(Long id, ReservaRequest request) {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (!request.getHoraFin().isAfter(request.getHoraInicio())) {</span>
+<span class="nc" id="L101">            throw new BusinessException(&quot;La hora de fin debe ser posterior a la hora de inicio&quot;);</span>
+        }
+        
+<span class="nc" id="L104">        LocalDate fechaActual = LocalDate.now();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (request.getFecha().isBefore(fechaActual)) {</span>
+<span class="nc" id="L106">            throw new BusinessException(&quot;No se pueden reprogramar reservas para una fecha en el pasado&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L109" title="All 4 branches missed.">        if (request.getFecha().isEqual(fechaActual) &amp;&amp; request.getHoraInicio().isBefore(java.time.LocalTime.now())) {</span>
+<span class="nc" id="L110">            throw new BusinessException(&quot;La hora de inicio de la reserva no puede estar en el pasado&quot;);</span>
+        }
+
+<span class="nc" id="L113">        Reserva reserva = reservaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L114">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Reserva&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (Boolean.TRUE.equals(request.getBloqueaHorario())) {</span>
+<span class="nc" id="L117">            long superposiciones = reservaRepository.countSuperposicionesExcluyendo(</span>
+<span class="nc" id="L118">                    request.getAreaId(), request.getFecha(), request.getHoraInicio(), request.getHoraFin(), id);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (superposiciones &gt; 0) {</span>
+<span class="nc" id="L120">                throw new BusinessException(&quot;El horario actualizado se cruza con otra reserva&quot;);</span>
+            }
+        }
+
+<span class="nc" id="L124">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L125">        reservaMapper.updateEntityFromRequest(request, reserva);</span>
+        
+<span class="nc bnc" id="L127" title="All 4 branches missed.">        if (request.getAreaId() != null &amp;&amp; !reserva.getArea().getId().equals(request.getAreaId())) {</span>
+<span class="nc" id="L128">            AreaComun area = areaComunRepository.findById(request.getAreaId())</span>
+<span class="nc" id="L129">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;AreaComun&quot;, &quot;id&quot;, request.getAreaId()));</span>
+<span class="nc" id="L130">            reserva.setArea(area);</span>
+        }
+
+<span class="nc bnc" id="L133" title="All 4 branches missed.">        if (request.getPersonaId() != null &amp;&amp; !reserva.getPersona().getId().equals(request.getPersonaId())) {</span>
+<span class="nc" id="L134">            Persona persona = personaRepository.findById(request.getPersonaId())</span>
+<span class="nc" id="L135">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, request.getPersonaId()));</span>
+<span class="nc" id="L136">            reserva.setPersona(persona);</span>
+        }
+
+<span class="nc" id="L139">        reserva = reservaRepository.save(reserva);</span>
+<span class="nc" id="L140">        log.info(&quot;Reserva actualizada: id={}&quot;, reserva.getId());</span>
+<span class="nc" id="L141">        return reservaMapper.toResponse(reserva);</span>
+    }
+
+    @Override
+    @Transactional
+    public ReservaResponse cambiarEstado(Long id, Long estadoId, Long usuarioAprobadorId) {
+<span class="nc" id="L147">        Reserva reserva = reservaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L148">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Reserva&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L150">        EstadoReserva nuevoEstado = estadoReservaRepository.findById(estadoId)</span>
+<span class="nc" id="L151">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoReserva&quot;, &quot;id&quot;, estadoId));</span>
+
+<span class="nc" id="L153">        Usuario aprobador = null;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if (usuarioAprobadorId != null) {</span>
+<span class="nc" id="L155">            aprobador = usuarioRepository.findById(usuarioAprobadorId)</span>
+<span class="nc" id="L156">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Usuario&quot;, &quot;id&quot;, usuarioAprobadorId));</span>
+        }
+
+<span class="nc" id="L159">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L160">        reserva.setEstado(nuevoEstado);</span>
+<span class="nc" id="L161">        reserva.setUsuarioAprobador(aprobador);</span>
+        
+<span class="nc" id="L163">        reserva = reservaRepository.save(reserva);</span>
+<span class="nc" id="L164">        log.info(&quot;Estado de reserva cambiado: id={}, nuevoEstado={}&quot;, reserva.getId(), nuevoEstado.getNombre());</span>
+<span class="nc" id="L165">        return reservaMapper.toResponse(reserva);</span>
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+<span class="nc" id="L171">        Reserva reserva = reservaRepository.findById(id)</span>
+<span class="nc" id="L172">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Reserva&quot;, &quot;id&quot;, id));</span>
+        
+<span class="nc" id="L174">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L175">        reservaRepository.delete(reserva);</span>
+<span class="nc" id="L176">        log.info(&quot;Reserva eliminada: id={}&quot;, id);</span>
+<span class="nc" id="L177">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
