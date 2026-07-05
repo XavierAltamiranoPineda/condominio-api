@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="11.109" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="12.527" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="/home/xavo/.config/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/25/lib"/>
-    <property name="sun.java.command" value="/home/xavo/GitHub/Personal/condominio-api/target/surefire/surefirebooter-20260704180353328_3.jar /home/xavo/GitHub/Personal/condominio-api/target/surefire 2026-07-04T18-03-53_220-jvmRun1 surefire-20260704180353328_1tmp surefire_0-20260704180353328_2tmp"/>
+    <property name="sun.java.command" value="/home/xavo/GitHub/Personal/condominio-api/target/surefire/surefirebooter-20260704195145019_3.jar /home/xavo/GitHub/Personal/condominio-api/target/surefire 2026-07-04T19-51-44_941-jvmRun1 surefire-20260704195145019_1tmp surefire_0-20260704195145019_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/xavo/GitHub/Personal/condominio-api/target/test-classes:/home/xavo/GitHub/Personal/condominio-api/target/classes:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.3/spring-boot-starter-web-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.3/spring-boot-starter-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.3/spring-boot-starter-logging-3.5.3.jar:/home/xavo/.m2/repository/ch/qos/logback/logback-classic/1.5.18/logback-classic-1.5.18.jar:/home/xavo/.m2/repository/ch/qos/logback/logback-core/1.5.18/logback-core-1.5.18.jar:/home/xavo/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar:/home/xavo/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/home/xavo/.m2/repository/org/slf4j/jul-to-slf4j/2.0.17/jul-to-slf4j-2.0.17.jar:/home/xavo/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/home/xavo/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.3/spring-boot-starter-json-3.5.3.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.19.1/jackson-datatype-jdk8-2.19.1.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.19.1/jackson-module-parameter-names-2.19.1.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.3/spring-boot-starter-tomcat-3.5.3.jar:/home/xavo/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.42/tomcat-embed-core-10.1.42.jar:/home/xavo/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.42/tomcat-embed-websocket-10.1.42.jar:/home/xavo/.m2/repository/org/springframework/spring-web/6.2.8/spring-web-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-beans/6.2.8/spring-beans-6.2.8.jar:/home/xavo/.m2/repository/io/micrometer/micrometer-observation/1.15.1/micrometer-observation-1.15.1.jar:/home/xavo/.m2/repository/io/micrometer/micrometer-commons/1.15.1/micrometer-commons-1.15.1.jar:/home/xavo/.m2/repository/org/springframework/spring-webmvc/6.2.8/spring-webmvc-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-context/6.2.8/spring-context-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-expression/6.2.8/spring-expression-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.5.3/spring-boot-starter-data-jpa-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.5.3/spring-boot-starter-jdbc-3.5.3.jar:/home/xavo/.m2/repository/com/zaxxer/HikariCP/6.3.0/HikariCP-6.3.0.jar:/home/xavo/.m2/repository/org/springframework/spring-jdbc/6.2.8/spring-jdbc-6.2.8.jar:/home/xavo/.m2/repository/org/hibernate/orm/hibernate-core/6.6.18.Final/hibernate-core-6.6.18.Final.jar:/home/xavo/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/home/xavo/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/home/xavo/.m2/repository/org/jboss/logging/jboss-logging/3.6.1.Final/jboss-logging-3.6.1.Final.jar:/home/xavo/.m2/repository/org/hibernate/common/hibernate-commons-annotations/7.0.3.Final/hibernate-commons-annotations-7.0.3.Final.jar:/home/xavo/.m2/repository/io/smallrye/jandex/3.2.0/jandex-3.2.0.jar:/home/xavo/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/home/xavo/.m2/repository/net/bytebuddy/byte-buddy/1.17.6/byte-buddy-1.17.6.jar:/home/xavo/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/home/xavo/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/home/xavo/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/home/xavo/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/home/xavo/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/home/xavo/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/home/xavo/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/home/xavo/.m2/repository/org/springframework/data/spring-data-jpa/3.5.1/spring-data-jpa-3.5.1.jar:/home/xavo/.m2/repository/org/springframework/data/spring-data-commons/3.5.1/spring-data-commons-3.5.1.jar:/home/xavo/.m2/repository/org/springframework/spring-orm/6.2.8/spring-orm-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-tx/6.2.8/spring-tx-6.2.8.jar:/home/xavo/.m2/repository/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/home/xavo/.m2/repository/org/springframework/spring-aspects/6.2.8/spring-aspects-6.2.8.jar:/home/xavo/.m2/repository/org/aspectj/aspectjweaver/1.9.24/aspectjweaver-1.9.24.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.5.3/spring-boot-starter-security-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/spring-aop/6.2.8/spring-aop-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/security/spring-security-config/6.5.1/spring-security-config-6.5.1.jar:/home/xavo/.m2/repository/org/springframework/security/spring-security-web/6.5.1/spring-security-web-6.5.1.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.5.3/spring-boot-starter-validation-3.5.3.jar:/home/xavo/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.42/tomcat-embed-el-10.1.42.jar:/home/xavo/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.2.Final/hibernate-validator-8.0.2.Final.jar:/home/xavo/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/home/xavo/.m2/repository/org/flywaydb/flyway-core/11.7.2/flyway-core-11.7.2.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.19.1/jackson-dataformat-toml-2.19.1.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.1/jackson-core-2.19.1.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.1/jackson-datatype-jsr310-2.19.1.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.1/jackson-annotations-2.19.1.jar:/home/xavo/.m2/repository/org/flywaydb/flyway-database-postgresql/11.7.2/flyway-database-postgresql-11.7.2.jar:/home/xavo/.m2/repository/org/postgresql/postgresql/42.7.7/postgresql-42.7.7.jar:/home/xavo/.m2/repository/org/checkerframework/checker-qual/3.49.3/checker-qual-3.49.3.jar:/home/xavo/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.6/jjwt-api-0.12.6.jar:/home/xavo/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.6/jjwt-impl-0.12.6.jar:/home/xavo/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.12.6/jjwt-jackson-0.12.6.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.1/jackson-databind-2.19.1.jar:/home/xavo/.m2/repository/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar:/home/xavo/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-ui/2.8.6/springdoc-openapi-starter-webmvc-ui-2.8.6.jar:/home/xavo/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-api/2.8.6/springdoc-openapi-starter-webmvc-api-2.8.6.jar:/home/xavo/.m2/repository/org/springdoc/springdoc-openapi-starter-common/2.8.6/springdoc-openapi-starter-common-2.8.6.jar:/home/xavo/.m2/repository/io/swagger/core/v3/swagger-core-jakarta/2.2.29/swagger-core-jakarta-2.2.29.jar:/home/xavo/.m2/repository/org/apache/commons/commons-lang3/3.17.0/commons-lang3-3.17.0.jar:/home/xavo/.m2/repository/io/swagger/core/v3/swagger-annotations-jakarta/2.2.29/swagger-annotations-jakarta-2.2.29.jar:/home/xavo/.m2/repository/io/swagger/core/v3/swagger-models-jakarta/2.2.29/swagger-models-jakarta-2.2.29.jar:/home/xavo/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.19.1/jackson-dataformat-yaml-2.19.1.jar:/home/xavo/.m2/repository/org/webjars/swagger-ui/5.20.1/swagger-ui-5.20.1.jar:/home/xavo/.m2/repository/org/webjars/webjars-locator-lite/1.1.0/webjars-locator-lite-1.1.0.jar:/home/xavo/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/home/xavo/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-devtools/3.5.3/spring-boot-devtools-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot/3.5.3/spring-boot-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.3/spring-boot-autoconfigure-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.5.3/spring-boot-starter-test-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-test/3.5.3/spring-boot-test-3.5.3.jar:/home/xavo/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.5.3/spring-boot-test-autoconfigure-3.5.3.jar:/home/xavo/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/home/xavo/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/home/xavo/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/home/xavo/.m2/repository/net/minidev/json-smart/2.5.2/json-smart-2.5.2.jar:/home/xavo/.m2/repository/net/minidev/accessors-smart/2.5.2/accessors-smart-2.5.2.jar:/home/xavo/.m2/repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar:/home/xavo/.m2/repository/org/assertj/assertj-core/3.27.3/assertj-core-3.27.3.jar:/home/xavo/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/home/xavo/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/home/xavo/.m2/repository/org/junit/jupiter/junit-jupiter/5.12.2/junit-jupiter-5.12.2.jar:/home/xavo/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.12.2/junit-jupiter-api-5.12.2.jar:/home/xavo/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/xavo/.m2/repository/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar:/home/xavo/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/xavo/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.12.2/junit-jupiter-params-5.12.2.jar:/home/xavo/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.12.2/junit-jupiter-engine-5.12.2.jar:/home/xavo/.m2/repository/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar:/home/xavo/.m2/repository/org/mockito/mockito-core/5.17.0/mockito-core-5.17.0.jar:/home/xavo/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.6/byte-buddy-agent-1.17.6.jar:/home/xavo/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/xavo/.m2/repository/org/mockito/mockito-junit-jupiter/5.17.0/mockito-junit-jupiter-5.17.0.jar:/home/xavo/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/home/xavo/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/home/xavo/.m2/repository/org/springframework/spring-core/6.2.8/spring-core-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-jcl/6.2.8/spring-jcl-6.2.8.jar:/home/xavo/.m2/repository/org/springframework/spring-test/6.2.8/spring-test-6.2.8.jar:/home/xavo/.m2/repository/org/xmlunit/xmlunit-core/2.10.2/xmlunit-core-2.10.2.jar:/home/xavo/.m2/repository/org/springframework/security/spring-security-test/6.5.1/spring-security-test-6.5.1.jar:/home/xavo/.m2/repository/org/springframework/security/spring-security-core/6.5.1/spring-security-core-6.5.1.jar:/home/xavo/.m2/repository/org/springframework/security/spring-security-crypto/6.5.1/spring-security-crypto-6.5.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="/home/xavo/GitHub/Personal/condominio-api/target/surefire/surefirebooter-20260704180353328_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/xavo/GitHub/Personal/condominio-api/target/surefire/surefirebooter-20260704195145019_3.jar"/>
     <property name="polyglot.engine.WarnInterpreterOnly" value="false"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.3+9-LTS"/>
@@ -52,7 +52,7 @@
     <property name="user.dir" value="/home/xavo/GitHub/Personal/condominio-api"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="54883"/>
+    <property name="PID" value="60285"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
@@ -66,10 +66,10 @@
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[condominio-api] "/>
   </properties>
-  <testcase name="testSetUsuarioActual" classname="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="0.366">
-    <system-out><![CDATA[18:04:36.061 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.audit.PostgresAuditInterceptorTest]: PostgresAuditInterceptorTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-18:04:36.088 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.audit.PostgresAuditInterceptorTest
-18:04:36.096 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+  <testcase name="testSetUsuarioActual" classname="com.condominio.condominio_api.audit.PostgresAuditInterceptorTest" time="0.527">
+    <system-out><![CDATA[19:52:41.980 INFO  [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.condominio.condominio_api.audit.PostgresAuditInterceptorTest]: PostgresAuditInterceptorTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:52:42.017 INFO  [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.condominio.condominio_api.CondominioApiApplication for test class com.condominio.condominio_api.audit.PostgresAuditInterceptorTest
+19:52:42.027 INFO  [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -80,98 +80,98 @@
 
  :: Spring Boot ::                (v3.5.3)
 
-18:04:36.145 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Starting PostgresAuditInterceptorTest using Java 25.0.3 with PID 54883 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
-18:04:36.145 DEBUG [           main] c.c.c.a.PostgresAuditInterceptorTest     : Running with Spring Boot v3.5.3, Spring v6.2.8
-18:04:36.145 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : The following 1 profile is active: "dev"
-18:04:36.354 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-18:04:36.376 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 11 JPA repository interfaces.
-18:04:36.551 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
-18:04:36.551 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc ...
-18:04:36.552 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
-18:04:36.553 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migration' ...
-18:04:36.553 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migration using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc ...
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning URL: file:/home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration
-18:04:36.554 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning starting at classpath root in filesystem: /home/xavo/GitHub/Personal/condominio-api/target/classes/
-18:04:36.554 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning for resources in path: /home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration (db/migration)
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V1__schema.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V2__constraints.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V3__indexes.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V4__triggers.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V5__functions.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V6__seed.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V7__views.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V8__test_auth_seed.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V9__fix_admin_password.sql
-18:04:36.554 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migration
-18:04:37.400 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V1__schema.sql
-18:04:37.400 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V5__functions.sql
-18:04:37.400 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V7__views.sql
-18:04:37.400 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V4__triggers.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V2__constraints.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V9__fix_admin_password.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V6__seed.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V3__indexes.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V8__test_auth_seed.sql
-18:04:37.401 DEBUG [           main] o.f.c.i.database.DatabaseTypeRegister    : Multiple databases found that handle url 'jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require': CockroachDB,PostgreSQL
-18:04:37.401 INFO  [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require (PostgreSQL 17.6)
-18:04:37.401 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Database Type: PostgreSQL
-18:04:37.401 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Driver: PostgreSQL JDBC Driver 42.7.7
-18:04:37.401 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: true
-18:04:37.401 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
-18:04:37.401 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
-18:04:38.306 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Scanning for script callbacks ...
-18:04:38.308 DEBUG [           main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
-18:04:38.408 DEBUG [           main] o.f.core.internal.command.DbValidate     : Validating migrations ...
-18:04:38.408 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
-18:04:38.414 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
-18:04:38.842 INFO  [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.433s)
-18:04:38.940 DEBUG [           main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "public"
-18:04:40.516 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
-18:04:40.823 INFO  [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 9
-18:04:40.922 INFO  [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
-18:04:41.748 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Memory usage: 106 of 174M
-18:04:41.768 INFO  [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-18:04:41.769 INFO  [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-18:04:41.773 INFO  [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-18:04:41.774 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-18:04:42.695 INFO  [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@1d21d2ea
-18:04:42.696 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-18:04:43.191 INFO  [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+19:52:42.090 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Starting PostgresAuditInterceptorTest using Java 25.0.3 with PID 60285 (started by xavo in /home/xavo/GitHub/Personal/condominio-api)
+19:52:42.090 DEBUG [           main] c.c.c.a.PostgresAuditInterceptorTest     : Running with Spring Boot v3.5.3, Spring v6.2.8
+19:52:42.090 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : The following 1 profile is active: "dev"
+19:52:42.557 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+19:52:42.623 INFO  [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 12 JPA repository interfaces.
+19:52:42.944 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+19:52:42.944 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc ...
+19:52:42.945 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migration' ...
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migration using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc ...
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning URL: file:/home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration
+19:52:42.948 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning starting at classpath root in filesystem: /home/xavo/GitHub/Personal/condominio-api/target/classes/
+19:52:42.948 DEBUG [           main] i.s.c.FileSystemClassPathLocationScanner : Scanning for resources in path: /home/xavo/GitHub/Personal/condominio-api/target/classes/db/migration (db/migration)
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V1__schema.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V2__constraints.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V3__indexes.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V4__triggers.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V5__functions.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V6__seed.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V7__views.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V8__test_auth_seed.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V9__fix_admin_password.sql
+19:52:42.948 DEBUG [           main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migration
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V1__schema.sql
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V5__functions.sql
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V7__views.sql
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V4__triggers.sql
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V2__constraints.sql
+19:52:43.770 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V9__fix_admin_password.sql
+19:52:43.771 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V6__seed.sql
+19:52:43.771 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V3__indexes.sql
+19:52:43.771 DEBUG [           main] o.f.c.i.resource.ResourceNameValidator   : Validating V8__test_auth_seed.sql
+19:52:43.771 DEBUG [           main] o.f.c.i.database.DatabaseTypeRegister    : Multiple databases found that handle url 'jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require': CockroachDB,PostgreSQL
+19:52:43.771 INFO  [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://db.uegmjdakzkjatjctmmdw.supabase.co:5432/postgres?sslmode=require (PostgreSQL 17.6)
+19:52:43.771 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Database Type: PostgreSQL
+19:52:43.771 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Driver: PostgreSQL JDBC Driver 42.7.7
+19:52:43.771 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: true
+19:52:43.771 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+19:52:43.771 DEBUG [           main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+19:52:44.704 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Scanning for script callbacks ...
+19:52:44.705 DEBUG [           main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+19:52:44.804 DEBUG [           main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+19:52:44.804 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
+19:52:44.809 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
+19:52:44.810 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__schema.sql (filename: V1__schema.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V5__functions.sql (filename: V5__functions.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V7__views.sql (filename: V7__views.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V4__triggers.sql (filename: V4__triggers.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V2__constraints.sql (filename: V2__constraints.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V9__fix_admin_password.sql (filename: V9__fix_admin_password.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V6__seed.sql (filename: V6__seed.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V3__indexes.sql (filename: V3__indexes.sql)
+19:52:44.811 DEBUG [           main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V8__test_auth_seed.sql (filename: V8__test_auth_seed.sql)
+19:52:45.208 INFO  [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.403s)
+19:52:45.304 DEBUG [           main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "public"
+19:52:46.783 DEBUG [           main] o.f.c.a.c.ClassicConfiguration           : CherryPickConfigurationExtension not found
+19:52:47.080 INFO  [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 9
+19:52:47.176 INFO  [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+19:52:47.938 DEBUG [           main] org.flywaydb.core.FlywayExecutor         : Memory usage: 149 of 194M
+19:52:47.957 INFO  [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+19:52:47.959 INFO  [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+19:52:47.967 INFO  [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+19:52:47.968 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+19:52:48.885 INFO  [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@4d3a80e8
+19:52:48.886 INFO  [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+19:52:49.416 INFO  [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
 	Database driver: undefined/unknown
 	Database version: 17.6
@@ -179,13 +179,13 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-18:04:43.268 INFO  [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-18:04:46.501 INFO  [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-18:04:46.560 INFO  [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-18:04:46.560 WARN  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-18:04:46.726 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
-18:04:46.795 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Started PostgresAuditInterceptorTest in 10.7 seconds (process running for 53.396)
-18:04:46.834 DEBUG [           main] org.hibernate.SQL                        : 
+19:52:49.669 INFO  [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+19:52:52.797 INFO  [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+19:52:53.118 INFO  [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+19:52:53.118 WARN  [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+19:52:53.701 DEBUG [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+19:52:53.964 INFO  [           main] c.c.c.a.PostgresAuditInterceptorTest     : Started PostgresAuditInterceptorTest in 11.937 seconds (process running for 68.867)
+19:52:54.151 DEBUG [           main] org.hibernate.SQL                        : 
     
 SET
     LOCAL app.usuario_actual = '999'
@@ -193,8 +193,8 @@ Hibernate:
     
 SET
     LOCAL app.usuario_actual = '999'
-18:04:46.937 DEBUG [           main] c.c.c.audit.PostgresAuditInterceptor     : SET LOCAL app.usuario_actual = '999'
-18:04:46.943 DEBUG [           main] org.hibernate.SQL                        : 
+19:52:54.248 DEBUG [           main] c.c.c.audit.PostgresAuditInterceptor     : SET LOCAL app.usuario_actual = '999'
+19:52:54.269 DEBUG [           main] org.hibernate.SQL                        : 
     SELECT
         current_setting('app.usuario_actual', true)
 Hibernate: 
