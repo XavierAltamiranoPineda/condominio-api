@@ -72,8 +72,6 @@ class TicketServiceImplTest {
         ticket.setEstadoActual(estado);
 
         request = new TicketRequest();
-        request.setPersonaId(1L);
-        request.setUnidadId(1L);
         request.setTitulo("Fuga de agua");
         request.setPrioridad("ALTA");
         request.setDescripcion("Hay una fuga de agua en el baño");
