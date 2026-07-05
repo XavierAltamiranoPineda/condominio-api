@@ -16,11 +16,13 @@ public interface PersonaMapper {
     PersonaResponse toResponse(Persona persona);
 
     @org.mapstruct.Mapping(target = "id", ignore = true)
+    @org.mapstruct.Mapping(target = "usuario", ignore = true)
     Persona toEntity(PersonaRequest request);
 
     List<PersonaResponse> toResponseList(List<Persona> personas);
 
     @org.mapstruct.Mapping(target = "id", ignore = true)
+    @org.mapstruct.Mapping(target = "usuario", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromRequest(PersonaRequest request, @MappingTarget Persona persona);
 }

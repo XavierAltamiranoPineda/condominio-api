@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketComentarioMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">TicketComentarioMapperImpl.java</span></div><h1>TicketComentarioMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.TicketComentarioRequest;
+import com.condominio.condominio_api.dto.response.TicketComentarioResponse;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.entity.Ticket;
+import com.condominio.condominio_api.entity.TicketComentario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T21:07:43-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L19">public class TicketComentarioMapperImpl implements TicketComentarioMapper {</span>
+
+    @Override
+    public TicketComentarioResponse toResponse(TicketComentario ticketComentario) {
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if ( ticketComentario == null ) {</span>
+<span class="nc" id="L24">            return null;</span>
+        }
+
+<span class="nc" id="L27">        TicketComentarioResponse.TicketComentarioResponseBuilder ticketComentarioResponse = TicketComentarioResponse.builder();</span>
+
+<span class="nc" id="L29">        ticketComentarioResponse.ticketId( ticketComentarioTicketId( ticketComentario ) );</span>
+<span class="nc" id="L30">        ticketComentarioResponse.personaId( ticketComentarioPersonaId( ticketComentario ) );</span>
+<span class="nc" id="L31">        ticketComentarioResponse.personaNombre( ticketComentarioPersonaNombres( ticketComentario ) );</span>
+<span class="nc" id="L32">        ticketComentarioResponse.id( ticketComentario.getId() );</span>
+<span class="nc" id="L33">        ticketComentarioResponse.comentario( ticketComentario.getComentario() );</span>
+<span class="nc" id="L34">        ticketComentarioResponse.fecha( ticketComentario.getFecha() );</span>
+
+<span class="nc" id="L36">        return ticketComentarioResponse.build();</span>
+    }
+
+    @Override
+    public TicketComentario toEntity(TicketComentarioRequest request) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L42">            return null;</span>
+        }
+
+<span class="nc" id="L45">        TicketComentario ticketComentario = new TicketComentario();</span>
+
+<span class="nc" id="L47">        ticketComentario.setComentario( request.getComentario() );</span>
+
+<span class="nc" id="L49">        return ticketComentario;</span>
+    }
+
+    @Override
+    public List&lt;TicketComentarioResponse&gt; toResponseList(List&lt;TicketComentario&gt; comentarios) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if ( comentarios == null ) {</span>
+<span class="nc" id="L55">            return null;</span>
+        }
+
+<span class="nc" id="L58">        List&lt;TicketComentarioResponse&gt; list = new ArrayList&lt;TicketComentarioResponse&gt;( comentarios.size() );</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for ( TicketComentario ticketComentario : comentarios ) {</span>
+<span class="nc" id="L60">            list.add( toResponse( ticketComentario ) );</span>
+<span class="nc" id="L61">        }</span>
+
+<span class="nc" id="L63">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(TicketComentarioRequest request, TicketComentario comentario) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L69">            return;</span>
+        }
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if ( request.getComentario() != null ) {</span>
+<span class="nc" id="L73">            comentario.setComentario( request.getComentario() );</span>
+        }
+<span class="nc" id="L75">    }</span>
+
+    private Long ticketComentarioTicketId(TicketComentario ticketComentario) {
+<span class="nc" id="L78">        Ticket ticket = ticketComentario.getTicket();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if ( ticket == null ) {</span>
+<span class="nc" id="L80">            return null;</span>
+        }
+<span class="nc" id="L82">        return ticket.getId();</span>
+    }
+
+    private Long ticketComentarioPersonaId(TicketComentario ticketComentario) {
+<span class="nc" id="L86">        Persona persona = ticketComentario.getPersona();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if ( persona == null ) {</span>
+<span class="nc" id="L88">            return null;</span>
+        }
+<span class="nc" id="L90">        return persona.getId();</span>
+    }
+
+    private String ticketComentarioPersonaNombres(TicketComentario ticketComentario) {
+<span class="nc" id="L94">        Persona persona = ticketComentario.getPersona();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if ( persona == null ) {</span>
+<span class="nc" id="L96">            return null;</span>
+        }
+<span class="nc" id="L98">        return persona.getNombres();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

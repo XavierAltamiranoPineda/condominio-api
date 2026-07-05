@@ -11,6 +11,7 @@ com/condominio/condominio_api/integration/controller/UnidadControllerTest.class
 com/condominio/condominio_api/controller/AuthControllerTest.class
 com/condominio/condominio_api/service/impl/PersonaServiceImplTest.class
 com/condominio/condominio_api/service/impl/UnidadServiceImplTest.class
+com/condominio/condominio_api/unit/service/TicketServiceImplTest.class
 com/condominio/condominio_api/integration/controller/PersonaUnidadControllerTest.class
 com/condominio/condominio_api/integration/controller/CuotaControllerTest.class
 com/condominio/condominio_api/service/impl/TorreServiceImplTest.class

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">TicketController.java</span></div><h1>TicketController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.TicketRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.HistorialTicketResponse;
+import com.condominio.condominio_api.dto.response.TicketResponse;
+import com.condominio.condominio_api.service.interfaces.TicketService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/v1/tickets&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Tickets&quot;, description = &quot;Gestión de tickets, incidencias y mantenimiento&quot;)
+public class TicketController {
+
+    private final TicketService ticketService;
+
+    @GetMapping
+    @PreAuthorize(&quot;hasAuthority('TICKETS_LEER')&quot;)
+    @Operation(summary = &quot;Listar tickets paginados&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;TicketResponse&gt;&gt;&gt; listar(
+            @PageableDefault(size = 20, sort = &quot;fechaCreacion&quot;, direction = Sort.Direction.DESC)
+            Pageable pageable) {
+<span class="nc" id="L38">        return ResponseEntity.ok(ApiResponse.ok(ticketService.findAll(pageable), &quot;Tickets obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/condominio/{condominioId}&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_LEER')&quot;)
+    @Operation(summary = &quot;Listar tickets por condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;TicketResponse&gt;&gt;&gt; listarPorCondominio(
+            @PathVariable Long condominioId,
+            @PageableDefault(size = 20, sort = &quot;fechaCreacion&quot;, direction = Sort.Direction.DESC)
+            Pageable pageable) {
+<span class="nc" id="L48">        return ResponseEntity.ok(ApiResponse.ok(ticketService.findByCondominioId(condominioId, pageable), &quot;Tickets del condominio obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_LEER')&quot;)
+    @Operation(summary = &quot;Obtener ticket por ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; obtenerPorId(@PathVariable Long id) {
+<span class="nc" id="L55">        return ResponseEntity.ok(ApiResponse.ok(ticketService.findById(id), &quot;Ticket encontrado&quot;));</span>
+    }
+
+    @GetMapping(&quot;/{id}/historial&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_LEER')&quot;)
+    @Operation(summary = &quot;Obtener historial de estados de un ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;List&lt;HistorialTicketResponse&gt;&gt;&gt; obtenerHistorial(@PathVariable Long id) {
+<span class="nc" id="L62">        return ResponseEntity.ok(ApiResponse.ok(ticketService.getHistorial(id), &quot;Historial del ticket obtenido&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasAuthority('TICKETS_CREAR')&quot;)
+    @Operation(summary = &quot;Crear un nuevo ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; crear(@Valid @RequestBody TicketRequest request) {
+<span class="nc" id="L69">        return ResponseEntity.status(201)</span>
+<span class="nc" id="L70">                .body(ApiResponse.created(ticketService.create(request), &quot;Ticket creado exitosamente&quot;));</span>
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_CREAR')&quot;)
+    @Operation(summary = &quot;Crear un ticket con archivos adjuntos&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; crearConArchivos(
+            @Valid @RequestPart(&quot;request&quot;) TicketRequest request,
+            @RequestPart(&quot;files&quot;) List&lt;MultipartFile&gt; files) {
+<span class="nc" id="L79">        return ResponseEntity.status(201)</span>
+<span class="nc" id="L80">                .body(ApiResponse.created(ticketService.createWithArchivos(request, files), &quot;Ticket con archivos creado&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_EDITAR')&quot;)
+    @Operation(summary = &quot;Actualizar información básica del ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody TicketRequest request) {
+<span class="nc" id="L89">        return ResponseEntity.ok(ApiResponse.ok(ticketService.update(id, request), &quot;Ticket actualizado&quot;));</span>
+    }
+
+    @PatchMapping(&quot;/{id}/estado&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_EDITAR')&quot;)
+    @Operation(summary = &quot;Cambiar el estado de un ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; cambiarEstado(
+            @PathVariable Long id,
+            @RequestParam Long nuevoEstadoId,
+            @RequestParam(required = false) String comentario) {
+<span class="nc" id="L99">        return ResponseEntity.ok(ApiResponse.ok(ticketService.updateEstado(id, nuevoEstadoId, comentario), &quot;Estado del ticket actualizado&quot;));</span>
+    }
+
+    @PatchMapping(&quot;/{id}/tecnico&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_EDITAR')&quot;)
+    @Operation(summary = &quot;Asignar o cambiar el técnico de un ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; asignarTecnico(
+            @PathVariable Long id,
+            @RequestParam Long tecnicoId) {
+<span class="nc" id="L108">        return ResponseEntity.ok(ApiResponse.ok(ticketService.updateTecnico(id, tecnicoId), &quot;Técnico asignado al ticket&quot;));</span>
+    }
+
+    @PostMapping(value = &quot;/{id}/adjuntos&quot;, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_EDITAR')&quot;)
+    @Operation(summary = &quot;Añadir un archivo adjunto al ticket&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;TicketResponse&gt;&gt; adjuntarArchivo(
+            @PathVariable Long id,
+            @RequestPart(&quot;file&quot;) MultipartFile file) {
+<span class="nc" id="L117">        return ResponseEntity.ok(ApiResponse.ok(ticketService.attachFile(id, file), &quot;Archivo adjuntado exitosamente&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('TICKETS_ELIMINAR')&quot;)
+    @Operation(summary = &quot;Eliminar un ticket&quot;)
+    public ResponseEntity&lt;Void&gt; eliminar(@PathVariable Long id) {
+<span class="nc" id="L124">        ticketService.delete(id);</span>
+<span class="nc" id="L125">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
