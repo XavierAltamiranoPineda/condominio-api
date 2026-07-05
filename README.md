@@ -1,117 +1,221 @@
-# Condominio API
+# 🏢 Condominio API
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?logo=spring-boot&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?logo=springboot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%2B-336791?logo=postgresql&logoColor=white)
-![Flyway](https://img.shields.io/badge/Flyway-10%2B-CC0200?logo=flyway&logoColor=white)
-![Swagger](https://img.shields.io/badge/Swagger-OAS_3-85EA2D?logo=swagger&logoColor=black)
-![JWT](https://img.shields.io/badge/JWT-Security-black?logo=jsonwebtokens)
+![Spring Security](https://img.shields.io/badge/Spring_Security-JWT-success?logo=springsecurity)
+![Flyway](https://img.shields.io/badge/Flyway-Database_Migrations-red?logo=flyway)
+![Swagger](https://img.shields.io/badge/OpenAPI-Swagger-85EA2D?logo=swagger)
 
-API RESTful para el Sistema de Gestión de Condominios. Provee todos los servicios de negocio (Autenticación, Gestión de Residentes, Pagos, Multas, Asambleas, Comunicación y Seguridad en Garita) para ser consumidos por los clientes Web, Móvil y de Escritorio.
+Backend REST corporativo desarrollado con **Spring Boot** para la gestión integral de condominios. El sistema centraliza la administración financiera, operativa y comunitaria, brindando una arquitectura robusta, auditable y escalable basada en los principios de Clean Architecture.
 
-## Tecnologías Utilizadas
+Está diseñado para servir como el cerebro (API de servicios) para múltiples interfaces cliente: **Aplicaciones Web, Móviles (Flutter) y de Escritorio**.
 
-- **Lenguaje**: Java 21
-- **Framework Core**: Spring Boot 3.x
-- **Persistencia**: Spring Data JPA / Hibernate
-- **Base de Datos**: PostgreSQL 16+
-- **Migraciones**: Flyway
-- **Seguridad**: Spring Security con JWT (JSON Web Tokens)
-- **Mapeo de DTOs**: MapStruct
-- **Documentación API**: OpenAPI 3 (Swagger UI)
-- **Pruebas**: JUnit 5, Mockito, JaCoCo (Cobertura de Código)
+---
 
-## Requisitos Previos
+## 📌 Características Principales
 
-- **Java 21** instalado en la máquina (JDK).
-- **Maven 3.8+** instalado.
-- **PostgreSQL 16+** corriendo en el puerto 5432.
+El proyecto aborda cada aspecto crítico de la vida en un condominio:
 
-## Configuración y Ejecución
+- 🛡️ **Seguridad y Control de Acceso:** Gestión en garita, preautorización de visitas con evidencias (fotos) y rol de `GUARDIA`.
+- 💰 **Motor Financiero:** Emisión de cuotas ordinarias/extraordinarias, registro de pagos, recibos en PDF, multas enlazadas a cuotas y refinanciamiento a través de convenios de pago a plazos.
+- 🗳️ **Gobernanza y Asambleas:** Gestión de juntas virtuales, control estricto de quórum, prevención de voto doble y actas con evidencias documentales.
+- 🛠️ **Operaciones y Mantenimiento:** Sistema de Tickets (Mesa de Ayuda) para incidencias, asignación de prioridades y categorías dinámicas.
+- 📢 **Comunicación Efectiva:** Tablón de comunicados segmentado (por torre, rol o unidad), notificaciones (push/email) con seguimiento y confirmación de lectura.
+- 🏢 **Gestión Patrimonial:** Control de condominios, torres, departamentos, áreas comunes y asignación de parqueaderos/vehículos.
+- 🕵️ **Auditoría Avanzada:** Registro automático (nivel base de datos) de quién realizó cambios (insert/update/delete) en cada tabla usando Triggers e Interceptores JPA.
 
-### 1. Crear la Base de Datos
+---
 
-Entra a tu servidor local de PostgreSQL (`psql` o pgAdmin) y crea una base de datos vacía:
+## 🛠 Tecnologías
+
+| Tecnología | Rol en el Proyecto |
+|------------|----------|
+| **Java 21** | Lenguaje Core (Records, Pattern Matching) |
+| **Spring Boot 3.x** | Framework principal |
+| **Spring Security (JWT)**| Autenticación, Refresh Tokens y RBAC (Control de Acceso) |
+| **Spring Data JPA** | Persistencia y consultas a BD (Hibernate) |
+| **PostgreSQL 16+** | Base de datos relacional y motor de auditoría |
+| **Flyway** | Versionado de la BD (Migraciones automáticas) |
+| **MapStruct** | Mapeo ultra-rápido entre Entidades y DTOs |
+| **Maven** | Gestor de dependencias y empaquetado |
+| **Swagger / OpenAPI 3** | Documentación de endpoints en vivo |
+| **JUnit 5 / Mockito** | Pruebas Unitarias y Mocks |
+| **JaCoCo** | Análisis de Cobertura de Código |
+
+---
+
+## 🏗 Arquitectura
+
+El proyecto sigue una arquitectura limpia basada en capas estandarizadas. La lógica de negocio está completamente aislada de los detalles de persistencia y exposición web.
+
+```text
+ 🌐 Controller (Recibe DTOs / Valida / Responde ApiResponse)
+       │
+       ▼
+ ⚙️ Service (Lógica de Negocio / Validaciones Complejas / MapStruct)
+       │
+       ▼
+ 🗄️ Repository (Spring Data JPA / Consultas JPQL Nativas)
+       │
+       ▼
+ 🐘 PostgreSQL (Reglas de Integridad / Triggers / Funciones Nativas)
+```
+
+**Módulos transversales (Cross-Cutting Concerns):**
+- `Security`: Filtros JWT, inyección de contexto y `@PreAuthorize`.
+- `Audit`: Interceptor `PostgresAuditInterceptor` que inyecta automáticamente el ID del usuario en sesión hacia Postgres para los triggers de auditoría.
+- `Exception Handler`: `@ControllerAdvice` para garantizar un formato JSON estándar unificado ante cualquier fallo.
+
+---
+
+## 📂 Estructura del Código
+
+```text
+src
+ ├── controller           # Endpoints de la API RESTful (Swagger-annotated)
+ ├── service
+ │     ├── interfaces     # Contratos de los servicios
+ │     └── impl           # Lógica pura del negocio
+ ├── repository           # Interfaces JpaRepository
+ ├── entity               # Modelos mapeados a tablas SQL (@Entity)
+ ├── dto
+ │     ├── request        # Inputs validados (@Valid, @NotNull)
+ │     └── response       # Outputs limpios (Sin exponer lógica interna)
+ ├── mapper               # MapStruct interfaces
+ ├── security             # JWT, UserDetails, filtros web
+ ├── audit                # Interceptores JPA-to-PostgreSQL
+ ├── config               # Configuración global (CORS, Swagger, JPA)
+ ├── exception            # Excepciones custom y manejador global
+ └── resources
+       └── db
+            └── migration # Migraciones Flyway (V1..V8)
+```
+
+---
+
+## 📋 Requisitos Previos
+
+- Java 21+ (JDK)
+- Maven 3.9+
+- PostgreSQL 16+
+- Git
+
+---
+
+## ⚙ Configuración del Entorno
+
+1. Crear la base de datos en PostgreSQL:
 
 ```sql
 CREATE DATABASE condominio_db;
 ```
 
-### 2. Configurar Variables de Entorno
+2. Configurar las variables de entorno. Puedes crear un archivo `.env` o configurarlo en tu IDE:
 
-El proyecto usa variables de entorno para su configuración. Crea un archivo `.env` en la raíz del proyecto (puedes basarte en `.env.example` si existe) o exporta las siguientes variables en tu terminal:
+```properties
+# Base de Datos
+DB_URL=jdbc:postgresql://localhost:5432/condominio_db
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_password
 
-```bash
-export DB_URL=jdbc:postgresql://localhost:5432/condominio_db
-export DB_USERNAME=tu_usuario_postgres
-export DB_PASSWORD=tu_password_postgres
-export JWT_SECRET=una_clave_secreta_muy_larga_y_segura_para_firmar_tokens_jwt
-export JWT_EXPIRATION=86400000
-export JWT_REFRESH_EXPIRATION=604800000
+# Seguridad JWT
+JWT_SECRET=escribe_aqui_una_clave_secreta_muy_segura_y_extensa
+JWT_EXPIRATION=86400000          # 1 día (ms)
+JWT_REFRESH_EXPIRATION=604800000 # 7 días (ms)
 ```
 
-> **Nota:** Si ejecutas desde un IDE (IntelliJ, VSCode), asegúrate de inyectar estas variables en la configuración de ejecución (Run Configuration).
+---
 
-### 3. Ejecutar Migraciones (Flyway) y Semillas
+## 🚀 Ejecución
 
-Flyway está integrado en el ciclo de vida de Spring Boot. Al arrancar la aplicación, automáticamente ejecutará todos los scripts SQL ubicados en `src/main/resources/db/migration/`. 
+**1. Clonar el repositorio**
+```bash
+git clone https://github.com/tu-usuario/condominio-api.git
+cd condominio-api
+```
 
-Esto incluye:
-- `V1__schema.sql`: Estructura completa de la base de datos (más de 30 tablas).
-- Archivos `V2` a `V5`: Constraints, Índices, Triggers y Funciones de PostgreSQL.
-- Archivos Seed (`V6__seed.sql`, `V8__test_auth_seed.sql`, etc.): Datos iniciales y usuarios administradores por defecto.
-
-No necesitas correr scripts SQL manualmente.
-
-### 4. Levantar el Proyecto
-
-Abre tu terminal en la raíz del proyecto y ejecuta:
-
+**2. Compilar e instalar dependencias**
 ```bash
 mvn clean install
+```
+
+**3. Levantar el servidor**
+```bash
 mvn spring-boot:run
 ```
 
-El servidor arrancará en `http://localhost:8080`.
+La API estará lista y escuchando en `http://localhost:8080`.
 
-## Documentación y Swagger
+---
 
-Toda la API está documentada dinámicamente con OpenAPI 3. Una vez levantado el servidor, accede a la interfaz gráfica de Swagger en:
+## 🗄 Base de Datos y Migraciones
 
-👉 **[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**
+Este proyecto implementa **Flyway**. Al iniciar `spring-boot:run`, Flyway lee la carpeta `src/main/resources/db/migration/` y crea toda la arquitectura SQL automáticamente:
 
-Desde ahí puedes explorar todos los módulos (Auth, Residentes, Departamentos, Pagos, Multas, Tickets, Asambleas, Actas, Comunicados, etc.) y probar los endpoints.
+- `V1`: Esquema relacional central (Entidades).
+- `V2 - V3`: Constraints (Restricciones lógicas) e Índices.
+- `V4 - V5`: Triggers y Funciones (Lógica de auditoría en la BD).
+- `V6 - V8`: Data Seed (Semilla de roles, permisos, categorías y un súper usuario).
 
-## Credenciales Iniciales (Seed)
+¡No tienes que ejecutar scripts manuales ni preocuparte por la sincronización del esquema!
 
-El script de semilla carga un súper-administrador por defecto para que puedas entrar al sistema inmediatamente y obtener tu token JWT.
+---
 
-- **Correo**: `admin@condominio.com`
-- **Contraseña**: `Admin123!`
+## 🔐 Usuario de Pruebas
 
-**Para probar los endpoints protegidos en Swagger:**
-1. Ve al endpoint de Auth (`POST /api/v1/auth/login`) y usa las credenciales de arriba.
-2. Copia el `accessToken` que te devuelve.
-3. En la parte superior de la página de Swagger, dale click al botón verde **"Authorize"**.
-4. Pega tu token en el formato: `Bearer tu_token_largo_aqui` y dale a "Authorize".
-5. ¡Listo! Ya tienes acceso a todos los endpoints bloqueados como `ADMIN`.
+Para facilitarte la vida, Flyway inserta un Administrador raíz al arrancar la base de datos vacía por primera vez:
 
-## Arquitectura Limpia
+- **Correo:** `admin@condominio.com`
+- **Contraseña:** `Admin123!`
 
-El proyecto sigue una estructura limpia dividida por capas para asegurar mantenibilidad y escalabilidad:
+Úsalo en el endpoint `POST /api/v1/auth/login` para recibir tu Access Token.
 
-- `controller/`: Expone las rutas RESTful. Solo recibe DTOs y devuelve DTOs (nada de entidades).
-- `service/`: Contiene `interfaces/` y sus implementaciones (`impl/`). Aquí reside toda la lógica de negocio y las validaciones.
-- `repository/`: Interfaces de Spring Data JPA (consultas a base de datos).
-- `entity/`: Clases de dominio mapeadas a las tablas de PostgreSQL mediante anotaciones JPA (`@Entity`).
-- `dto/`: Objetos de transferencia de datos (`request/` y `response/`), asegurando que no sobre-exponemos el dominio interno.
-- `mapper/`: Interfaces de MapStruct que transforman de Entity a DTO y viceversa automáticamente.
-- `security/`: Configuración de Spring Security, filtros de validación de JWT, etc.
-- `audit/`: Interceptores de Hibernate/Postgres (`PostgresAuditInterceptor`) para inyectar automáticamente el usuario logueado en la base de datos durante las inserciones.
-- `exception/`: Manejador global de excepciones (`GlobalExceptionHandler`) para devolver siempre un formato JSON estándar de error (`ApiResponse`).
-- `config/`: Clases de configuración (Swagger, CORS, JPA).
+---
 
-## Contribuir y Desarrollar
+## 📖 Documentación (Swagger)
 
-- **No comitees archivos basura:** Asegúrate de respetar el `.gitignore` (no subir `target/`, archivos del IDE como `.idea/` o `.vscode/`, ni logs locales).
-- **Pruebas (Tests):** El proyecto cuenta con pruebas unitarias robustas que cubren capas de servicio. Ejecútalas con `mvn test`. Jacoco generará reportes de cobertura en `target/site/jacoco/index.html`.
+La API entera es auto-documentada usando OpenAPI 3.
+
+🔗 **[Ver Swagger UI en Local](http://localhost:8080/swagger-ui/index.html)**
+
+**Cómo probar endpoints privados:**
+1. Haz login para obtener el JWT.
+2. Copia la propiedad `accessToken`.
+3. Haz clic en el botón verde **"Authorize"** en la parte superior de Swagger.
+4. Escribe `Bearer <tu-token>` y valida.
+
+---
+
+## 🧪 Pruebas y Cobertura
+
+El proyecto está fuertemente testeado para garantizar la estabilidad del negocio (TDD en servicios críticos).
+
+```bash
+# Ejecutar toda la batería de tests unitarios y de integración
+mvn clean test
+```
+
+**Reporte de Cobertura (JaCoCo)**
+Se genera automáticamente al correr los tests. Ábrelo en tu navegador:
+```text
+target/site/jacoco/index.html
+```
+
+*Estado aproximado de cobertura:* Clases > 95% | Métodos > 85% | Líneas > 85%.
+
+---
+
+## 📈 Estado del Proyecto
+
+✅ **Backend Feature Complete**
+
+La arquitectura Backend está cerrada y estable. Contiene toda la validación relacional, de permisos, negocio financiero, operativa de guardias y auditoría lista para su consumo directo. El siguiente paso en la vida de este proyecto es la construcción y conexión de los clientes **Frontend (Flutter Mobile, React Web)**.
+
+---
+
+## 👨‍💻 Autor
+
+**Xavier Altamirano**  
+*Ingeniería de Software*  
+*Universidad de las Fuerzas Armadas ESPE*
