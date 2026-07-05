@@ -33,6 +33,7 @@ spring:
 # ── Servidor ────────────────────────────────────────────────
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: native
   error:
     include-message: never
     include-stacktrace: never

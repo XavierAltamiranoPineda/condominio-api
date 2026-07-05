@@ -42,7 +42,10 @@ public class SecurityConfig {
             // Swagger / OpenAPI
             "/swagger-ui/**",
             "/swagger-ui.html",
+            "/v3/api-docs",
             "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**",
             // Health
             "/actuator/health"
     };
