@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComunicadoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">ComunicadoServiceImpl.java</span></div><h1>ComunicadoServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.ComunicadoLecturaRequest;
+import com.condominio.condominio_api.dto.request.ComunicadoRequest;
+import com.condominio.condominio_api.dto.response.ComunicadoResponse;
+import com.condominio.condominio_api.entity.Comunicado;
+import com.condominio.condominio_api.entity.ComunicadoLectura;
+import com.condominio.condominio_api.entity.ComunicadoLecturaId;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.ComunicadoMapper;
+import com.condominio.condominio_api.repository.ComunicadoLecturaRepository;
+import com.condominio.condominio_api.repository.ComunicadoRepository;
+import com.condominio.condominio_api.repository.PersonaRepository;
+import com.condominio.condominio_api.service.interfaces.ComunicadoService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+<span class="fc" id="L25">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class ComunicadoServiceImpl implements ComunicadoService {
+
+    private final ComunicadoRepository comunicadoRepository;
+    private final ComunicadoLecturaRepository lecturaRepository;
+    private final PersonaRepository personaRepository;
+    private final ComunicadoMapper comunicadoMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public ComunicadoResponse findById(Long id) {
+<span class="nc" id="L38">        return comunicadoRepository.findByIdWithAutor(id)</span>
+<span class="nc" id="L39">                .map(comunicadoMapper::toResponse)</span>
+<span class="nc" id="L40">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comunicado&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public Page&lt;ComunicadoResponse&gt; findAll(Pageable pageable) {
+<span class="nc" id="L45">        return comunicadoRepository.findAllWithAutor(pageable)</span>
+<span class="nc" id="L46">                .map(comunicadoMapper::toResponse);</span>
+    }
+
+    @Override
+    @Transactional
+    public ComunicadoResponse create(ComunicadoRequest request) {
+<span class="nc" id="L52">        Persona autor = personaRepository.findById(request.getAutorId())</span>
+<span class="nc" id="L53">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona (Autor)&quot;, &quot;id&quot;, request.getAutorId()));</span>
+
+<span class="nc" id="L55">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L56">        Comunicado comunicado = comunicadoMapper.toEntity(request);</span>
+<span class="nc" id="L57">        comunicado.setAutor(autor);</span>
+        
+<span class="nc" id="L59">        comunicado = comunicadoRepository.save(comunicado);</span>
+<span class="nc" id="L60">        log.info(&quot;Comunicado publicado: id={}, titulo={}&quot;, comunicado.getId(), comunicado.getTitulo());</span>
+<span class="nc" id="L61">        return comunicadoMapper.toResponse(comunicado);</span>
+    }
+
+    @Override
+    @Transactional
+    public ComunicadoResponse update(Long id, ComunicadoRequest request) {
+<span class="nc" id="L67">        Comunicado comunicado = comunicadoRepository.findById(id)</span>
+<span class="nc" id="L68">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comunicado&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L70">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L71">        comunicadoMapper.updateEntityFromRequest(request, comunicado);</span>
+        
+<span class="nc bnc" id="L73" title="All 4 branches missed.">        if (request.getAutorId() != null &amp;&amp; !comunicado.getAutor().getId().equals(request.getAutorId())) {</span>
+<span class="nc" id="L74">            Persona autor = personaRepository.findById(request.getAutorId())</span>
+<span class="nc" id="L75">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona (Autor)&quot;, &quot;id&quot;, request.getAutorId()));</span>
+<span class="nc" id="L76">            comunicado.setAutor(autor);</span>
+        }
+
+<span class="nc" id="L79">        comunicado = comunicadoRepository.save(comunicado);</span>
+<span class="nc" id="L80">        log.info(&quot;Comunicado actualizado: id={}&quot;, comunicado.getId());</span>
+<span class="nc" id="L81">        return comunicadoMapper.toResponse(comunicado);</span>
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+<span class="nc" id="L87">        Comunicado comunicado = comunicadoRepository.findById(id)</span>
+<span class="nc" id="L88">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comunicado&quot;, &quot;id&quot;, id));</span>
+        
+<span class="nc" id="L90">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L91">        comunicadoRepository.delete(comunicado);</span>
+<span class="nc" id="L92">        log.info(&quot;Comunicado eliminado: id={}&quot;, id);</span>
+<span class="nc" id="L93">    }</span>
+
+    @Override
+    @Transactional
+    public void marcarComoLeido(ComunicadoLecturaRequest request) {
+<span class="nc" id="L98">        Comunicado comunicado = comunicadoRepository.findById(request.getComunicadoId())</span>
+<span class="nc" id="L99">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Comunicado&quot;, &quot;id&quot;, request.getComunicadoId()));</span>
+                
+<span class="nc" id="L101">        Persona persona = personaRepository.findById(request.getPersonaId())</span>
+<span class="nc" id="L102">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, request.getPersonaId()));</span>
+
+<span class="nc" id="L104">        ComunicadoLecturaId lecturaId = new ComunicadoLecturaId(comunicado.getId(), persona.getId());</span>
+        
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (lecturaRepository.existsById(lecturaId)) {</span>
+<span class="nc" id="L107">            throw new BusinessException(&quot;El comunicado ya fue marcado como leído por esta persona&quot;);</span>
+        }
+
+<span class="nc" id="L110">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L111">        ComunicadoLectura lectura = new ComunicadoLectura();</span>
+<span class="nc" id="L112">        lectura.setId(lecturaId);</span>
+<span class="nc" id="L113">        lectura.setComunicado(comunicado);</span>
+<span class="nc" id="L114">        lectura.setPersona(persona);</span>
+        
+<span class="nc" id="L116">        lecturaRepository.save(lectura);</span>
+<span class="nc" id="L117">        log.info(&quot;Comunicado leído: comunicadoId={}, personaId={}&quot;, comunicado.getId(), persona.getId());</span>
+<span class="nc" id="L118">    }</span>
+
+    @Override
+    public boolean estaLeido(Long comunicadoId, Long personaId) {
+<span class="nc" id="L122">        return lecturaRepository.existsByIdComunicadoAndIdPersona(comunicadoId, personaId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

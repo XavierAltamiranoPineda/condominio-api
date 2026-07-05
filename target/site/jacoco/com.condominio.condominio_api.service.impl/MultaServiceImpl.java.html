@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MultaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">MultaServiceImpl.java</span></div><h1>MultaServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.MultaRequest;
+import com.condominio.condominio_api.dto.response.MultaResponse;
+import com.condominio.condominio_api.entity.Cuota;
+import com.condominio.condominio_api.entity.Multa;
+import com.condominio.condominio_api.entity.Persona;
+import com.condominio.condominio_api.entity.Unidad;
+import com.condominio.condominio_api.exception.BusinessException;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.MultaMapper;
+import com.condominio.condominio_api.repository.CuotaRepository;
+import com.condominio.condominio_api.repository.MultaRepository;
+import com.condominio.condominio_api.repository.PersonaRepository;
+import com.condominio.condominio_api.repository.UnidadRepository;
+import com.condominio.condominio_api.service.interfaces.MultaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+<span class="fc" id="L25">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class MultaServiceImpl implements MultaService {
+
+    private final MultaRepository multaRepository;
+    private final UnidadRepository unidadRepository;
+    private final PersonaRepository personaRepository;
+    private final CuotaRepository cuotaRepository;
+    private final MultaMapper multaMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public MultaResponse findById(Long id) {
+<span class="nc" id="L39">        return multaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L40">                .map(multaMapper::toResponse)</span>
+<span class="nc" id="L41">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Multa&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public Page&lt;MultaResponse&gt; findByCondominioId(Long condominioId, Pageable pageable) {
+<span class="nc" id="L46">        return multaRepository.findByCondominioIdWithDetails(condominioId, pageable)</span>
+<span class="nc" id="L47">                .map(multaMapper::toResponse);</span>
+    }
+
+    @Override
+    public Page&lt;MultaResponse&gt; findByPersonaId(Long personaId, Pageable pageable) {
+<span class="nc" id="L52">        return multaRepository.findByPersonaIdWithDetails(personaId, pageable)</span>
+<span class="nc" id="L53">                .map(multaMapper::toResponse);</span>
+    }
+
+    @Override
+    @Transactional
+    public MultaResponse create(MultaRequest request) {
+<span class="nc" id="L59">        Unidad unidad = unidadRepository.findById(request.getUnidadId())</span>
+<span class="nc" id="L60">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Unidad&quot;, &quot;id&quot;, request.getUnidadId()));</span>
+
+<span class="nc" id="L62">        Persona persona = personaRepository.findById(request.getPersonaId())</span>
+<span class="nc" id="L63">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, request.getPersonaId()));</span>
+
+<span class="nc" id="L65">        Cuota cuota = null;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (request.getCuotaId() != null) {</span>
+<span class="nc" id="L67">            cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="nc" id="L68">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
+        }
+
+<span class="nc" id="L71">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L72">        Multa multa = multaMapper.toEntity(request);</span>
+<span class="nc" id="L73">        multa.setUnidad(unidad);</span>
+<span class="nc" id="L74">        multa.setPersona(persona);</span>
+<span class="nc" id="L75">        multa.setCuota(cuota);</span>
+<span class="nc" id="L76">        multa.setEstado(Multa.EstadoMulta.REGISTRADA);</span>
+        
+<span class="nc" id="L78">        multa = multaRepository.save(multa);</span>
+<span class="nc" id="L79">        log.info(&quot;Multa creada: id={}, valor={}&quot;, multa.getId(), multa.getValor());</span>
+<span class="nc" id="L80">        return multaMapper.toResponse(multa);</span>
+    }
+
+    @Override
+    @Transactional
+    public MultaResponse update(Long id, MultaRequest request) {
+<span class="nc" id="L86">        Multa multa = multaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L87">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Multa&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        if (multa.getEstado() == Multa.EstadoMulta.FACTURADA || multa.getEstado() == Multa.EstadoMulta.ANULADA) {</span>
+<span class="nc" id="L90">            throw new BusinessException(&quot;No se puede editar una multa FACTURADA o ANULADA&quot;);</span>
+        }
+
+<span class="nc" id="L93">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L94">        multaMapper.updateEntityFromRequest(request, multa);</span>
+
+<span class="nc bnc" id="L96" title="All 4 branches missed.">        if (request.getUnidadId() != null &amp;&amp; !multa.getUnidad().getId().equals(request.getUnidadId())) {</span>
+<span class="nc" id="L97">            Unidad unidad = unidadRepository.findById(request.getUnidadId())</span>
+<span class="nc" id="L98">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Unidad&quot;, &quot;id&quot;, request.getUnidadId()));</span>
+<span class="nc" id="L99">            multa.setUnidad(unidad);</span>
+        }
+
+<span class="nc bnc" id="L102" title="All 4 branches missed.">        if (request.getPersonaId() != null &amp;&amp; !multa.getPersona().getId().equals(request.getPersonaId())) {</span>
+<span class="nc" id="L103">            Persona persona = personaRepository.findById(request.getPersonaId())</span>
+<span class="nc" id="L104">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Persona&quot;, &quot;id&quot;, request.getPersonaId()));</span>
+<span class="nc" id="L105">            multa.setPersona(persona);</span>
+        }
+
+<span class="nc bnc" id="L108" title="All 6 branches missed.">        if (request.getCuotaId() != null &amp;&amp; (multa.getCuota() == null || !multa.getCuota().getId().equals(request.getCuotaId()))) {</span>
+<span class="nc" id="L109">            Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="nc" id="L110">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
+<span class="nc" id="L111">            multa.setCuota(cuota);</span>
+        }
+
+<span class="nc" id="L114">        multa = multaRepository.save(multa);</span>
+<span class="nc" id="L115">        log.info(&quot;Multa actualizada: id={}&quot;, multa.getId());</span>
+<span class="nc" id="L116">        return multaMapper.toResponse(multa);</span>
+    }
+
+    @Override
+    @Transactional
+    public MultaResponse cambiarEstado(Long id, Multa.EstadoMulta nuevoEstado) {
+<span class="nc" id="L122">        Multa multa = multaRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L123">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Multa&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L125">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L126">        multa.setEstado(nuevoEstado);</span>
+        
+<span class="nc" id="L128">        multa = multaRepository.save(multa);</span>
+<span class="nc" id="L129">        log.info(&quot;Estado de multa cambiado: id={}, nuevoEstado={}&quot;, multa.getId(), nuevoEstado);</span>
+<span class="nc" id="L130">        return multaMapper.toResponse(multa);</span>
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+<span class="nc" id="L136">        Multa multa = multaRepository.findById(id)</span>
+<span class="nc" id="L137">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Multa&quot;, &quot;id&quot;, id));</span>
+        
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (multa.getEstado() != Multa.EstadoMulta.REGISTRADA) {</span>
+<span class="nc" id="L140">            throw new BusinessException(&quot;Solo se pueden eliminar multas en estado REGISTRADA. Si ya fue facturada, use anulación.&quot;);</span>
+        }
+
+<span class="nc" id="L143">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L144">        multaRepository.delete(multa);</span>
+<span class="nc" id="L145">        log.info(&quot;Multa eliminada: id={}&quot;, id);</span>
+<span class="nc" id="L146">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConvenioPagoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.controller</a> &gt; <span class="el_source">ConvenioPagoController.java</span></div><h1>ConvenioPagoController.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.controller;
+
+import com.condominio.condominio_api.dto.request.ConvenioPagoRequest;
+import com.condominio.condominio_api.dto.response.ApiResponse;
+import com.condominio.condominio_api.dto.response.ConvenioPagoResponse;
+import com.condominio.condominio_api.entity.ConvenioPago;
+import com.condominio.condominio_api.service.interfaces.ConvenioPagoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/api/v1/convenios&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Convenios de Pago&quot;, description = &quot;Gestión de convenios de pago a plazos&quot;)
+public class ConvenioPagoController {
+
+    private final ConvenioPagoService convenioService;
+
+    @GetMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN') or hasAuthority('RESIDENTE')&quot;)
+    @Operation(summary = &quot;Obtener convenio por ID&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ConvenioPagoResponse&gt;&gt; getById(@PathVariable Long id) {
+<span class="nc" id="L31">        return ResponseEntity.ok(ApiResponse.ok(convenioService.findById(id), &quot;Convenio encontrado&quot;));</span>
+    }
+
+    @GetMapping(&quot;/condominio/{condominioId}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Listar convenios del condominio&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;ConvenioPagoResponse&gt;&gt;&gt; getByCondominioId(
+            @PathVariable Long condominioId, Pageable pageable) {
+<span class="nc" id="L39">        return ResponseEntity.ok(ApiResponse.ok(convenioService.findByCondominioId(condominioId, pageable), &quot;Convenios obtenidos&quot;));</span>
+    }
+
+    @GetMapping(&quot;/persona/{personaId}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN') or hasAuthority('RESIDENTE')&quot;)
+    @Operation(summary = &quot;Listar convenios de una persona&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Page&lt;ConvenioPagoResponse&gt;&gt;&gt; getByPersonaId(
+            @PathVariable Long personaId, Pageable pageable) {
+<span class="nc" id="L47">        return ResponseEntity.ok(ApiResponse.ok(convenioService.findByPersonaId(personaId, pageable), &quot;Convenios obtenidos&quot;));</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Crear nuevo convenio de pago&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ConvenioPagoResponse&gt;&gt; create(@Valid @RequestBody ConvenioPagoRequest request) {
+<span class="nc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="nc" id="L55">                .body(ApiResponse.created(convenioService.create(request), &quot;Convenio creado exitosamente&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Actualizar convenio de pago&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ConvenioPagoResponse&gt;&gt; update(
+            @PathVariable Long id, @Valid @RequestBody ConvenioPagoRequest request) {
+<span class="nc" id="L63">        return ResponseEntity.ok(ApiResponse.ok(convenioService.update(id, request), &quot;Convenio actualizado&quot;));</span>
+    }
+
+    @PatchMapping(&quot;/{id}/estado&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Cambiar estado del convenio (COMPLETADO, INCUMPLIDO)&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ConvenioPagoResponse&gt;&gt; cambiarEstado(
+            @PathVariable Long id, @RequestParam ConvenioPago.EstadoConvenio estado) {
+<span class="nc" id="L71">        return ResponseEntity.ok(ApiResponse.ok(convenioService.cambiarEstado(id, estado), &quot;Estado del convenio actualizado&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('ADMIN')&quot;)
+    @Operation(summary = &quot;Eliminar convenio (solo ACTIVO)&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; delete(@PathVariable Long id) {
+<span class="nc" id="L78">        convenioService.delete(id);</span>
+<span class="nc" id="L79">        return ResponseEntity.ok(ApiResponse.ok(null, &quot;Convenio eliminado&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

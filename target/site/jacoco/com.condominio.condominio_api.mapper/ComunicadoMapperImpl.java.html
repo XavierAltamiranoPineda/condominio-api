@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComunicadoMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">ComunicadoMapperImpl.java</span></div><h1>ComunicadoMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.ComunicadoRequest;
+import com.condominio.condominio_api.dto.response.ComunicadoResponse;
+import com.condominio.condominio_api.entity.Comunicado;
+import com.condominio.condominio_api.entity.Persona;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T22:28:25-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L18">public class ComunicadoMapperImpl implements ComunicadoMapper {</span>
+
+    @Override
+    public ComunicadoResponse toResponse(Comunicado comunicado) {
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if ( comunicado == null ) {</span>
+<span class="nc" id="L23">            return null;</span>
+        }
+
+<span class="nc" id="L26">        ComunicadoResponse.ComunicadoResponseBuilder comunicadoResponse = ComunicadoResponse.builder();</span>
+
+<span class="nc" id="L28">        comunicadoResponse.autorId( comunicadoAutorId( comunicado ) );</span>
+<span class="nc" id="L29">        comunicadoResponse.autorNombres( comunicadoAutorNombres( comunicado ) );</span>
+<span class="nc" id="L30">        comunicadoResponse.autorApellidos( comunicadoAutorApellidos( comunicado ) );</span>
+<span class="nc" id="L31">        comunicadoResponse.id( comunicado.getId() );</span>
+<span class="nc" id="L32">        comunicadoResponse.titulo( comunicado.getTitulo() );</span>
+<span class="nc" id="L33">        comunicadoResponse.mensaje( comunicado.getMensaje() );</span>
+<span class="nc" id="L34">        comunicadoResponse.fecha( comunicado.getFecha() );</span>
+<span class="nc" id="L35">        comunicadoResponse.destinatarioTipo( comunicado.getDestinatarioTipo() );</span>
+<span class="nc" id="L36">        comunicadoResponse.destinatarioId( comunicado.getDestinatarioId() );</span>
+
+<span class="nc" id="L38">        return comunicadoResponse.build();</span>
+    }
+
+    @Override
+    public Comunicado toEntity(ComunicadoRequest request) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L44">            return null;</span>
+        }
+
+<span class="nc" id="L47">        Comunicado comunicado = new Comunicado();</span>
+
+<span class="nc" id="L49">        comunicado.setTitulo( request.getTitulo() );</span>
+<span class="nc" id="L50">        comunicado.setMensaje( request.getMensaje() );</span>
+<span class="nc" id="L51">        comunicado.setDestinatarioTipo( request.getDestinatarioTipo() );</span>
+<span class="nc" id="L52">        comunicado.setDestinatarioId( request.getDestinatarioId() );</span>
+
+<span class="nc" id="L54">        return comunicado;</span>
+    }
+
+    @Override
+    public List&lt;ComunicadoResponse&gt; toResponseList(List&lt;Comunicado&gt; comunicados) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if ( comunicados == null ) {</span>
+<span class="nc" id="L60">            return null;</span>
+        }
+
+<span class="nc" id="L63">        List&lt;ComunicadoResponse&gt; list = new ArrayList&lt;ComunicadoResponse&gt;( comunicados.size() );</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        for ( Comunicado comunicado : comunicados ) {</span>
+<span class="nc" id="L65">            list.add( toResponse( comunicado ) );</span>
+<span class="nc" id="L66">        }</span>
+
+<span class="nc" id="L68">        return list;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(ComunicadoRequest request, Comunicado comunicado) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L74">            return;</span>
+        }
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if ( request.getTitulo() != null ) {</span>
+<span class="nc" id="L78">            comunicado.setTitulo( request.getTitulo() );</span>
+        }
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if ( request.getMensaje() != null ) {</span>
+<span class="nc" id="L81">            comunicado.setMensaje( request.getMensaje() );</span>
+        }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if ( request.getDestinatarioTipo() != null ) {</span>
+<span class="nc" id="L84">            comunicado.setDestinatarioTipo( request.getDestinatarioTipo() );</span>
+        }
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if ( request.getDestinatarioId() != null ) {</span>
+<span class="nc" id="L87">            comunicado.setDestinatarioId( request.getDestinatarioId() );</span>
+        }
+<span class="nc" id="L89">    }</span>
+
+    private Long comunicadoAutorId(Comunicado comunicado) {
+<span class="nc" id="L92">        Persona autor = comunicado.getAutor();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if ( autor == null ) {</span>
+<span class="nc" id="L94">            return null;</span>
+        }
+<span class="nc" id="L96">        return autor.getId();</span>
+    }
+
+    private String comunicadoAutorNombres(Comunicado comunicado) {
+<span class="nc" id="L100">        Persona autor = comunicado.getAutor();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if ( autor == null ) {</span>
+<span class="nc" id="L102">            return null;</span>
+        }
+<span class="nc" id="L104">        return autor.getNombres();</span>
+    }
+
+    private String comunicadoAutorApellidos(Comunicado comunicado) {
+<span class="nc" id="L108">        Persona autor = comunicado.getAutor();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if ( autor == null ) {</span>
+<span class="nc" id="L110">            return null;</span>
+        }
+<span class="nc" id="L112">        return autor.getApellidos();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
