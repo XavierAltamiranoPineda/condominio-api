@@ -60,3 +60,13 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# ── Archivos Sensibles y Temporales (Producción) ──
+# Variables de entorno y secretos
+.env
+
+# Directorios de análisis temporales (Dump original)
+tempdb/
+
+# Scripts de pruebas con credenciales hardcodeadas
+test_auth_flow.sh
