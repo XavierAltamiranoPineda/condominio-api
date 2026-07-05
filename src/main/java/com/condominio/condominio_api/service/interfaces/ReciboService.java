@@ -21,8 +21,13 @@ public interface ReciboService {
     ReciboResponse create(ReciboRequest request);
 
     @Transactional
+    ReciboResponse createWithFile(Long pagoId, String numero, org.springframework.web.multipart.MultipartFile file);
+
+    @Transactional
     ReciboResponse update(Long id, ReciboRequest request);
 
     @Transactional
     void delete(Long id);
+
+    org.springframework.core.io.Resource getArchivoResource(Long reciboId);
 }

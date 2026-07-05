@@ -20,12 +20,14 @@ public interface ReciboMapper {
     @Mapping(source = "archivo.nombre", target = "archivoNombre")
     ReciboResponse toResponse(Recibo recibo);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "pago", ignore = true)
     @Mapping(target = "archivo", ignore = true)
     Recibo toEntity(ReciboRequest request);
 
     List<ReciboResponse> toResponseList(List<Recibo> list);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "pago", ignore = true)
     @Mapping(target = "archivo", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

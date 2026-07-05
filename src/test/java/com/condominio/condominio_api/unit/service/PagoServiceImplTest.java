@@ -4,8 +4,10 @@ import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
 import com.condominio.condominio_api.dto.request.PagoRequest;
 import com.condominio.condominio_api.dto.response.PagoResponse;
 import com.condominio.condominio_api.entity.Cuota;
+import com.condominio.condominio_api.entity.Cuota.EstadoCuota;
 import com.condominio.condominio_api.entity.EstadoPago;
 import com.condominio.condominio_api.entity.Pago;
+import com.condominio.condominio_api.exception.BusinessException;
 import com.condominio.condominio_api.exception.ResourceNotFoundException;
 import com.condominio.condominio_api.mapper.PagoMapper;
 import com.condominio.condominio_api.repository.CuotaRepository;
@@ -59,10 +61,11 @@ class PagoServiceImplTest {
     void setUp() {
         cuota = new Cuota();
         cuota.setId(1L);
+        cuota.setValor(new BigDecimal("500.00"));
 
         estado = new EstadoPago();
         estado.setId(1L);
-        estado.setNombre("PAGADO");
+        estado.setNombre("CONFIRMADO");
 
         pago = new Pago();
         pago.setId(1L);
@@ -87,10 +90,14 @@ class PagoServiceImplTest {
     }
 
     @Test
-    @DisplayName("✓ create: debe crear y retornar pago")
-    void shouldCreatePago() {
+    @DisplayName("✓ create: debe crear y retornar pago, actualizando cuota a PAGADA_PARCIAL")
+    void shouldCreatePagoAndSetParcial() {
         when(cuotaRepository.findById(1L)).thenReturn(Optional.of(cuota));
         when(estadoPagoRepository.findById(1L)).thenReturn(Optional.of(estado));
+        when(pagoRepository.sumPagosConfirmadosByCuotaId(1L))
+            .thenReturn(BigDecimal.ZERO)
+            .thenReturn(new BigDecimal("100.00"));
+        
         when(pagoMapper.toEntity(request)).thenReturn(pago);
         when(pagoRepository.save(any(Pago.class))).thenReturn(pago);
         when(pagoMapper.toResponse(pago)).thenReturn(response);
@@ -98,7 +105,54 @@ class PagoServiceImplTest {
         PagoResponse result = pagoService.create(request);
 
         assertThat(result.getId()).isEqualTo(1L);
+        assertThat(cuota.getEstado()).isEqualTo(EstadoCuota.PAGADA_PARCIAL);
         verify(pagoRepository).save(pago);
+        verify(cuotaRepository).save(cuota);
+    }
+
+    @Test
+    @DisplayName("✓ create: debe crear y retornar pago, actualizando cuota a PAGADA_TOTAL")
+    void shouldCreatePagoAndSetTotal() {
+        request.setValor(new BigDecimal("500.00")); // Igual al valor de la cuota
+        pago.setValor(new BigDecimal("500.00"));
+        
+        when(cuotaRepository.findById(1L)).thenReturn(Optional.of(cuota));
+        when(estadoPagoRepository.findById(1L)).thenReturn(Optional.of(estado));
+        when(pagoRepository.sumPagosConfirmadosByCuotaId(1L))
+            .thenReturn(BigDecimal.ZERO)
+            .thenReturn(new BigDecimal("500.00"));
+        
+        when(pagoMapper.toEntity(request)).thenReturn(pago);
+        when(pagoRepository.save(any(Pago.class))).thenReturn(pago);
+        when(pagoMapper.toResponse(pago)).thenReturn(response);
+
+        pagoService.create(request);
+
+        assertThat(cuota.getEstado()).isEqualTo(EstadoCuota.PAGADA_TOTAL);
+        verify(cuotaRepository).save(cuota);
+    }
+
+    @Test
+    @DisplayName("✗ create: lanza BusinessException por sobrepago")
+    void shouldThrowException_whenSobrepago() {
+        request.setValor(new BigDecimal("600.00")); // Supera la cuota de 500
+        pago.setValor(new BigDecimal("600.00"));
+        
+        when(cuotaRepository.findById(1L)).thenReturn(Optional.of(cuota));
+        when(estadoPagoRepository.findById(1L)).thenReturn(Optional.of(estado));
+        when(pagoRepository.sumPagosConfirmadosByCuotaId(1L)).thenReturn(BigDecimal.ZERO);
+        when(pagoMapper.toEntity(request)).thenReturn(pago);
+
+        assertThrows(BusinessException.class, () -> pagoService.create(request));
+    }
+
+    @Test
+    @DisplayName("✗ create: lanza BusinessException si cuota ya está PAGADA_TOTAL")
+    void shouldThrowException_whenCuotaPagadaTotal() {
+        cuota.setEstado(EstadoCuota.PAGADA_TOTAL);
+        when(cuotaRepository.findById(1L)).thenReturn(Optional.of(cuota));
+
+        assertThrows(BusinessException.class, () -> pagoService.create(request));
     }
 
     @Test

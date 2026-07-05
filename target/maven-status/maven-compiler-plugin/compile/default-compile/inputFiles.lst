@@ -99,6 +99,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/AuthServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/CondominioServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/CuotaServiceImpl.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/FileSystemStorageService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/PagoServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/PersonaServiceImpl.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/impl/PersonaUnidadServiceImpl.java
@@ -115,6 +116,7 @@
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/PersonaUnidadService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/ReciboService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/RolService.java
+/home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/StorageService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/TorreService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/UnidadService.java
 /home/xavo/GitHub/Personal/condominio-api/src/main/java/com/condominio/condominio_api/service/interfaces/UsuarioService.java

@@ -23,4 +23,7 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     @Query(value = "SELECT p FROM Pago p JOIN FETCH p.cuota c JOIN FETCH p.estado WHERE p.cuota.id = :cuotaId",
            countQuery = "SELECT count(p) FROM Pago p WHERE p.cuota.id = :cuotaId")
     Page<Pago> findByCuotaIdWithDetails(@Param("cuotaId") Long cuotaId, Pageable pageable);
+
+    @Query("SELECT COALESCE(SUM(p.valor), 0) FROM Pago p WHERE p.cuota.id = :cuotaId AND p.estado.nombre = 'CONFIRMADO'")
+    java.math.BigDecimal sumPagosConfirmadosByCuotaId(@Param("cuotaId") Long cuotaId);
 }

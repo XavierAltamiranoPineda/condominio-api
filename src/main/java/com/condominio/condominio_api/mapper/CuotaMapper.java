@@ -19,11 +19,13 @@ public interface CuotaMapper {
     @Mapping(source = "unidad.condominio.nombre", target = "condominioNombre")
     CuotaResponse toResponse(Cuota cuota);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "unidad", ignore = true)
     Cuota toEntity(CuotaRequest request);
 
     List<CuotaResponse> toResponseList(List<Cuota> list);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "unidad", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromRequest(CuotaRequest request, @MappingTarget Cuota cuota);

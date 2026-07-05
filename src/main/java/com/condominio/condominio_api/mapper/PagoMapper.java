@@ -20,12 +20,14 @@ public interface PagoMapper {
     @Mapping(source = "estado.nombre", target = "estadoNombre")
     PagoResponse toResponse(Pago pago);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "cuota", ignore = true)
     @Mapping(target = "estado", ignore = true)
     Pago toEntity(PagoRequest request);
 
     List<PagoResponse> toResponseList(List<Pago> list);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "cuota", ignore = true)
     @Mapping(target = "estado", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

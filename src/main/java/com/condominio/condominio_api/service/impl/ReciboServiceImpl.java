@@ -13,11 +13,14 @@ import com.condominio.condominio_api.repository.ArchivoRepository;
 import com.condominio.condominio_api.repository.PagoRepository;
 import com.condominio.condominio_api.repository.ReciboRepository;
 import com.condominio.condominio_api.service.interfaces.ReciboService;
+import com.condominio.condominio_api.service.interfaces.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -29,6 +32,7 @@ public class ReciboServiceImpl implements ReciboService {
     private final ArchivoRepository archivoRepository;
     private final ReciboMapper reciboMapper;
     private final PostgresAuditInterceptor auditInterceptor;
+    private final StorageService storageService;
 
     @Override
     public ReciboResponse findById(Long id) {
@@ -82,6 +86,38 @@ public class ReciboServiceImpl implements ReciboService {
     }
 
     @Override
+    public ReciboResponse createWithFile(Long pagoId, String numero, MultipartFile file) {
+        String filename = storageService.store(file);
+        
+        Archivo archivo = new Archivo();
+        archivo.setNombre(file.getOriginalFilename());
+        archivo.setRuta(filename);
+        archivo.setTipo("RECIBO");
+        archivo.setMimeType(file.getContentType());
+        archivo.setTamano(file.getSize());
+        archivo = archivoRepository.save(archivo);
+
+        ReciboRequest request = new ReciboRequest();
+        request.setNumero(numero);
+        request.setPagoId(pagoId);
+        request.setArchivoId(archivo.getId());
+
+        return create(request);
+    }
+
+    @Override
+    public Resource getArchivoResource(Long reciboId) {
+        Recibo recibo = reciboRepository.findByIdWithDetails(reciboId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recibo", "id", reciboId));
+        
+        if (recibo.getArchivo() == null) {
+            throw new ResourceNotFoundException("Archivo", "reciboId", reciboId);
+        }
+        
+        return storageService.loadAsResource(recibo.getArchivo().getRuta());
+    }
+
+    @Override
     public ReciboResponse update(Long id, ReciboRequest request) {
         Recibo recibo = reciboRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recibo", "id", id));
@@ -120,7 +156,7 @@ public class ReciboServiceImpl implements ReciboService {
 
     @Override
     public void delete(Long id) {
-        Recibo recibo = reciboRepository.findById(id)
+        Recibo recibo = reciboRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recibo", "id", id));
 
         auditInterceptor.setUsuarioActual();

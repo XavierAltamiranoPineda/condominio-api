@@ -15,10 +15,12 @@ public interface CondominioMapper {
 
     CondominioResponse toResponse(Condominio condominio);
 
+    @org.mapstruct.Mapping(target = "id", ignore = true)
     Condominio toEntity(CondominioRequest request);
 
     List<CondominioResponse> toResponseList(List<Condominio> condominios);
 
+    @org.mapstruct.Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromRequest(CondominioRequest request, @MappingTarget Condominio condominio);
 }

@@ -22,12 +22,14 @@ public interface PersonaUnidadMapper {
     @Mapping(source = "unidad.condominio.nombre", target = "condominioNombre")
     PersonaUnidadResponse toResponse(PersonaUnidad personaUnidad);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "persona", ignore = true)
     @Mapping(target = "unidad", ignore = true)
     PersonaUnidad toEntity(PersonaUnidadRequest request);
 
     List<PersonaUnidadResponse> toResponseList(List<PersonaUnidad> list);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "persona", ignore = true)
     @Mapping(target = "unidad", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

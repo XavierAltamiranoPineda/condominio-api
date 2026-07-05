@@ -19,11 +19,13 @@ public interface TorreMapper {
     TorreResponse toResponse(Torre torre);
 
     // No mapear el condominio automáticamente desde el request, se asigna en el servicio
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "condominio", ignore = true)
     Torre toEntity(TorreRequest request);
 
     List<TorreResponse> toResponseList(List<Torre> torres);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "condominio", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromRequest(TorreRequest request, @MappingTarget Torre torre);

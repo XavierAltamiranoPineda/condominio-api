@@ -4,8 +4,10 @@ import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
 import com.condominio.condominio_api.dto.request.PagoRequest;
 import com.condominio.condominio_api.dto.response.PagoResponse;
 import com.condominio.condominio_api.entity.Cuota;
+import com.condominio.condominio_api.entity.Cuota.EstadoCuota;
 import com.condominio.condominio_api.entity.EstadoPago;
 import com.condominio.condominio_api.entity.Pago;
+import com.condominio.condominio_api.exception.BusinessException;
 import com.condominio.condominio_api.exception.ResourceNotFoundException;
 import com.condominio.condominio_api.mapper.PagoMapper;
 import com.condominio.condominio_api.repository.CuotaRepository;
@@ -18,9 +20,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-<span class="fc" id="L23">@Slf4j</span>
+<span class="fc" id="L26">@Slf4j</span>
 @Service
 @RequiredArgsConstructor
 public class PagoServiceImpl implements PagoService {
@@ -33,84 +36,154 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     public PagoResponse findById(Long id) {
-<span class="nc" id="L36">        return pagoRepository.findByIdWithDetails(id)</span>
-<span class="nc" id="L37">                .map(pagoMapper::toResponse)</span>
-<span class="nc" id="L38">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L39">        return pagoRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L40">                .map(pagoMapper::toResponse)</span>
+<span class="nc" id="L41">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
     }
 
     @Override
     public Page&lt;PagoResponse&gt; findAll(Pageable pageable) {
-<span class="nc" id="L43">        return pagoRepository.findAllWithDetails(pageable)</span>
-<span class="nc" id="L44">                .map(pagoMapper::toResponse);</span>
+<span class="nc" id="L46">        return pagoRepository.findAllWithDetails(pageable)</span>
+<span class="nc" id="L47">                .map(pagoMapper::toResponse);</span>
     }
 
     @Override
     public Page&lt;PagoResponse&gt; findByCuotaId(Long cuotaId, Pageable pageable) {
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (!cuotaRepository.existsById(cuotaId)) {</span>
-<span class="nc" id="L50">            throw new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, cuotaId);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (!cuotaRepository.existsById(cuotaId)) {</span>
+<span class="nc" id="L53">            throw new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, cuotaId);</span>
         }
-<span class="nc" id="L52">        return pagoRepository.findByCuotaIdWithDetails(cuotaId, pageable)</span>
-<span class="nc" id="L53">                .map(pagoMapper::toResponse);</span>
+<span class="nc" id="L55">        return pagoRepository.findByCuotaIdWithDetails(cuotaId, pageable)</span>
+<span class="nc" id="L56">                .map(pagoMapper::toResponse);</span>
     }
 
     @Override
     public PagoResponse create(PagoRequest request) {
-<span class="fc" id="L58">        Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
-<span class="fc" id="L59">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
+<span class="fc" id="L61">        Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="fc" id="L62">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
 
-<span class="fc" id="L61">        EstadoPago estado = estadoPagoRepository.findById(request.getEstadoId())</span>
-<span class="pc" id="L62">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
-
-<span class="fc" id="L64">        auditInterceptor.setUsuarioActual();</span>
-<span class="fc" id="L65">        Pago pago = pagoMapper.toEntity(request);</span>
-<span class="fc" id="L66">        pago.setCuota(cuota);</span>
-<span class="fc" id="L67">        pago.setEstado(estado);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (pago.getFecha() == null) {</span>
-<span class="fc" id="L69">            pago.setFecha(OffsetDateTime.now());</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (cuota.getEstado() == EstadoCuota.PAGADA_TOTAL) {</span>
+<span class="fc" id="L65">            throw new BusinessException(&quot;No se pueden registrar pagos a una cuota que ya está pagada en su totalidad.&quot;);</span>
         }
-<span class="fc" id="L71">        pago = pagoRepository.save(pago);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (cuota.getEstado() == EstadoCuota.ANULADA) {</span>
+<span class="nc" id="L68">            throw new BusinessException(&quot;No se pueden registrar pagos a una cuota anulada.&quot;);</span>
+        }
 
-<span class="fc" id="L73">        log.info(&quot;Pago creado: id={}&quot;, pago.getId());</span>
-<span class="fc" id="L74">        return pagoMapper.toResponse(pago);</span>
+<span class="fc" id="L71">        EstadoPago estado = estadoPagoRepository.findById(request.getEstadoId())</span>
+<span class="pc" id="L72">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
+
+<span class="fc" id="L74">        auditInterceptor.setUsuarioActual();</span>
+<span class="fc" id="L75">        Pago pago = pagoMapper.toEntity(request);</span>
+<span class="fc" id="L76">        pago.setCuota(cuota);</span>
+<span class="fc" id="L77">        pago.setEstado(estado);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (pago.getFecha() == null) {</span>
+<span class="fc" id="L79">            pago.setFecha(OffsetDateTime.now());</span>
+        }
+        
+<span class="fc" id="L82">        validarSobrepago(cuota, pago, null);</span>
+
+<span class="fc" id="L84">        pago = pagoRepository.save(pago);</span>
+        
+<span class="fc" id="L86">        recalcularEstadoCuota(cuota);</span>
+
+<span class="fc" id="L88">        log.info(&quot;Pago creado: id={}&quot;, pago.getId());</span>
+<span class="fc" id="L89">        return pagoMapper.toResponse(pago);</span>
     }
 
     @Override
     public PagoResponse update(Long id, PagoRequest request) {
-<span class="nc" id="L79">        Pago pago = pagoRepository.findByIdWithDetails(id)</span>
-<span class="nc" id="L80">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L94">        Pago pago = pagoRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L95">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (!pago.getCuota().getId().equals(request.getCuotaId())) {</span>
-<span class="nc" id="L83">            Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
-<span class="nc" id="L84">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
-<span class="nc" id="L85">            pago.setCuota(cuota);</span>
+<span class="nc" id="L97">        Cuota cuota = pago.getCuota();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (!cuota.getId().equals(request.getCuotaId())) {</span>
+<span class="nc" id="L99">            cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="nc" id="L100">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
         }
 
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (!pago.getEstado().getId().equals(request.getEstadoId())) {</span>
-<span class="nc" id="L89">            EstadoPago estado = estadoPagoRepository.findById(request.getEstadoId())</span>
-<span class="nc" id="L90">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
-<span class="nc" id="L91">            pago.setEstado(estado);</span>
+<span class="nc" id="L103">        EstadoPago estado = pago.getEstado();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (!estado.getId().equals(request.getEstadoId())) {</span>
+<span class="nc" id="L105">            estado = estadoPagoRepository.findById(request.getEstadoId())</span>
+<span class="nc" id="L106">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
         }
 
-<span class="nc" id="L94">        auditInterceptor.setUsuarioActual();</span>
-<span class="nc" id="L95">        pagoMapper.updateEntityFromRequest(request, pago);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (request.getFecha() != null) {</span>
-<span class="nc" id="L97">            pago.setFecha(request.getFecha());</span>
-        }
-<span class="nc" id="L99">        pago = pagoRepository.save(pago);</span>
+<span class="nc" id="L109">        auditInterceptor.setUsuarioActual();</span>
+        
+<span class="nc" id="L111">        Pago pagoSimulado = new Pago();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        pagoSimulado.setValor(request.getValor() != null ? request.getValor() : pago.getValor());</span>
+<span class="nc" id="L113">        pagoSimulado.setEstado(estado);</span>
+<span class="nc" id="L114">        validarSobrepago(cuota, pagoSimulado, pago.getId());</span>
 
-<span class="nc" id="L101">        log.info(&quot;Pago actualizado: id={}&quot;, pago.getId());</span>
-<span class="nc" id="L102">        return pagoMapper.toResponse(pago);</span>
+<span class="nc" id="L116">        pagoMapper.updateEntityFromRequest(request, pago);</span>
+<span class="nc" id="L117">        pago.setCuota(cuota);</span>
+<span class="nc" id="L118">        pago.setEstado(estado);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (request.getFecha() != null) {</span>
+<span class="nc" id="L120">            pago.setFecha(request.getFecha());</span>
+        }
+<span class="nc" id="L122">        pago = pagoRepository.save(pago);</span>
+        
+<span class="nc" id="L124">        recalcularEstadoCuota(cuota);</span>
+        
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (!cuota.getId().equals(pago.getCuota().getId())) {</span>
+<span class="nc" id="L127">            recalcularEstadoCuota(pago.getCuota());</span>
+        }
+
+<span class="nc" id="L130">        log.info(&quot;Pago actualizado: id={}&quot;, pago.getId());</span>
+<span class="nc" id="L131">        return pagoMapper.toResponse(pago);</span>
     }
 
     @Override
     public void delete(Long id) {
-<span class="nc" id="L107">        Pago pago = pagoRepository.findById(id)</span>
-<span class="nc" id="L108">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L136">        Pago pago = pagoRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L137">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
 
-<span class="nc" id="L110">        auditInterceptor.setUsuarioActual();</span>
-<span class="nc" id="L111">        pagoRepository.delete(pago);</span>
+<span class="nc" id="L139">        Cuota cuota = pago.getCuota();</span>
 
-<span class="nc" id="L113">        log.info(&quot;Pago eliminado: id={}&quot;, id);</span>
-<span class="nc" id="L114">    }</span>
+<span class="nc" id="L141">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L142">        pagoRepository.delete(pago);</span>
+        
+<span class="nc" id="L144">        recalcularEstadoCuota(cuota);</span>
+
+<span class="nc" id="L146">        log.info(&quot;Pago eliminado: id={}&quot;, id);</span>
+<span class="nc" id="L147">    }</span>
+    
+    private void validarSobrepago(Cuota cuota, Pago pagoSimulado, Long pagoIdIgnorar) {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (!&quot;CONFIRMADO&quot;.equals(pagoSimulado.getEstado().getNombre())) {</span>
+<span class="nc" id="L151">            return; </span>
+        }
+        
+<span class="fc" id="L154">        BigDecimal pagado = pagoRepository.sumPagosConfirmadosByCuotaId(cuota.getId());</span>
+        
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (pagoIdIgnorar != null) {</span>
+<span class="nc" id="L157">            Pago pagoExistente = pagoRepository.findById(pagoIdIgnorar).orElse(null);</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">            if (pagoExistente != null &amp;&amp; &quot;CONFIRMADO&quot;.equals(pagoExistente.getEstado().getNombre())) {</span>
+<span class="nc" id="L159">                pagado = pagado.subtract(pagoExistente.getValor());</span>
+            }
+        }
+        
+<span class="fc" id="L163">        BigDecimal nuevoTotal = pagado.add(pagoSimulado.getValor());</span>
+        
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (nuevoTotal.compareTo(cuota.getValor()) &gt; 0) {</span>
+<span class="fc" id="L166">            BigDecimal exceso = nuevoTotal.subtract(cuota.getValor());</span>
+<span class="fc" id="L167">            throw new BusinessException(String.format(&quot;El pago excede el valor de la cuota por $%s. Saldo pendiente real: $%s&quot;, </span>
+<span class="fc" id="L168">                    exceso, cuota.getValor().subtract(pagado)));</span>
+        }
+<span class="fc" id="L170">    }</span>
+
+    private void recalcularEstadoCuota(Cuota cuota) {
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (cuota.getEstado() == EstadoCuota.ANULADA) return;</span>
+
+<span class="fc" id="L175">        BigDecimal totalPagado = pagoRepository.sumPagosConfirmadosByCuotaId(cuota.getId());</span>
+
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (totalPagado.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="nc" id="L178">            cuota.setEstado(EstadoCuota.PENDIENTE);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        } else if (totalPagado.compareTo(cuota.getValor()) &gt;= 0) {</span>
+<span class="fc" id="L180">            cuota.setEstado(EstadoCuota.PAGADA_TOTAL);</span>
+        } else {
+<span class="fc" id="L182">            cuota.setEstado(EstadoCuota.PAGADA_PARCIAL);</span>
+        }
+        
+<span class="fc" id="L185">        cuotaRepository.save(cuota);</span>
+<span class="fc" id="L186">        log.info(&quot;Estado de cuota recalculado: id={}, estado={}&quot;, cuota.getId(), cuota.getEstado());</span>
+<span class="fc" id="L187">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

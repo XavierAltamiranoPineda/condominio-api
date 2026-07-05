@@ -22,6 +22,7 @@ public interface UnidadMapper {
     @Mapping(source = "estado.nombre", target = "estadoNombre")
     UnidadResponse toResponse(Unidad unidad);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "condominio", ignore = true)
     @Mapping(target = "torre", ignore = true)
     @Mapping(target = "estado", ignore = true)
@@ -29,6 +30,7 @@ public interface UnidadMapper {
 
     List<UnidadResponse> toResponseList(List<Unidad> unidades);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "condominio", ignore = true)
     @Mapping(target = "torre", ignore = true)
     @Mapping(target = "estado", ignore = true)

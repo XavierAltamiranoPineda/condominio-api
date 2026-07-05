@@ -4,6 +4,7 @@ com/condominio/condominio_api/controller/CuotaController.class
 com/condominio/condominio_api/mapper/TorreMapper.class
 com/condominio/condominio_api/mapper/CuotaMapperImpl.class
 com/condominio/condominio_api/controller/RolController.class
+com/condominio/condominio_api/service/impl/FileSystemStorageService.class
 com/condominio/condominio_api/dto/request/RolRequest.class
 com/condominio/condominio_api/service/interfaces/PagoService.class
 com/condominio/condominio_api/repository/CondominioRepository.class
@@ -147,6 +148,7 @@ com/condominio/condominio_api/entity/Archivo.class
 com/condominio/condominio_api/dto/response/ReciboResponse$ReciboResponseBuilder.class
 com/condominio/condominio_api/mapper/CondominioMapperImpl.class
 com/condominio/condominio_api/security/SecurityConfig.class
+com/condominio/condominio_api/service/interfaces/StorageService.class
 com/condominio/condominio_api/dto/request/PagoRequest.class
 com/condominio/condominio_api/audit/PostgresAuditInterceptor.class
 com/condominio/condominio_api/entity/Permiso.class
