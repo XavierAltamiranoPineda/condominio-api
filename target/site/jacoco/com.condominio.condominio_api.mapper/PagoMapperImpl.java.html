@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PagoMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.mapper</a> &gt; <span class="el_source">PagoMapperImpl.java</span></div><h1>PagoMapperImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.mapper;
+
+import com.condominio.condominio_api.dto.request.PagoRequest;
+import com.condominio.condominio_api.dto.response.PagoResponse;
+import com.condominio.condominio_api.entity.Cuota;
+import com.condominio.condominio_api.entity.EstadoPago;
+import com.condominio.condominio_api.entity.Pago;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2026-07-04T19:57:28-0500&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 25.0.3 (Eclipse Adoptium)&quot;
+)
+@Component
+<span class="fc" id="L19">public class PagoMapperImpl implements PagoMapper {</span>
+
+    @Override
+    public PagoResponse toResponse(Pago pago) {
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if ( pago == null ) {</span>
+<span class="nc" id="L24">            return null;</span>
+        }
+
+<span class="nc" id="L27">        PagoResponse.PagoResponseBuilder pagoResponse = PagoResponse.builder();</span>
+
+<span class="nc" id="L29">        pagoResponse.cuotaId( pagoCuotaId( pago ) );</span>
+<span class="nc" id="L30">        pagoResponse.cuotaDescripcion( pagoCuotaDescripcion( pago ) );</span>
+<span class="nc" id="L31">        pagoResponse.estadoId( pagoEstadoId( pago ) );</span>
+<span class="nc" id="L32">        pagoResponse.estadoNombre( pagoEstadoNombre( pago ) );</span>
+<span class="nc" id="L33">        pagoResponse.id( pago.getId() );</span>
+<span class="nc" id="L34">        pagoResponse.fecha( pago.getFecha() );</span>
+<span class="nc" id="L35">        pagoResponse.valor( pago.getValor() );</span>
+<span class="nc" id="L36">        pagoResponse.metodo( pago.getMetodo() );</span>
+<span class="nc" id="L37">        pagoResponse.referencia( pago.getReferencia() );</span>
+
+<span class="nc" id="L39">        return pagoResponse.build();</span>
+    }
+
+    @Override
+    public Pago toEntity(PagoRequest request) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L45">            return null;</span>
+        }
+
+<span class="nc" id="L48">        Pago pago = new Pago();</span>
+
+<span class="nc" id="L50">        pago.setFecha( request.getFecha() );</span>
+<span class="nc" id="L51">        pago.setValor( request.getValor() );</span>
+<span class="nc" id="L52">        pago.setMetodo( request.getMetodo() );</span>
+<span class="nc" id="L53">        pago.setReferencia( request.getReferencia() );</span>
+
+<span class="nc" id="L55">        return pago;</span>
+    }
+
+    @Override
+    public List&lt;PagoResponse&gt; toResponseList(List&lt;Pago&gt; list) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if ( list == null ) {</span>
+<span class="nc" id="L61">            return null;</span>
+        }
+
+<span class="nc" id="L64">        List&lt;PagoResponse&gt; list1 = new ArrayList&lt;PagoResponse&gt;( list.size() );</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        for ( Pago pago : list ) {</span>
+<span class="nc" id="L66">            list1.add( toResponse( pago ) );</span>
+<span class="nc" id="L67">        }</span>
+
+<span class="nc" id="L69">        return list1;</span>
+    }
+
+    @Override
+    public void updateEntityFromRequest(PagoRequest request, Pago pago) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if ( request == null ) {</span>
+<span class="nc" id="L75">            return;</span>
+        }
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if ( request.getFecha() != null ) {</span>
+<span class="nc" id="L79">            pago.setFecha( request.getFecha() );</span>
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if ( request.getValor() != null ) {</span>
+<span class="nc" id="L82">            pago.setValor( request.getValor() );</span>
+        }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if ( request.getMetodo() != null ) {</span>
+<span class="nc" id="L85">            pago.setMetodo( request.getMetodo() );</span>
+        }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if ( request.getReferencia() != null ) {</span>
+<span class="nc" id="L88">            pago.setReferencia( request.getReferencia() );</span>
+        }
+<span class="nc" id="L90">    }</span>
+
+    private Long pagoCuotaId(Pago pago) {
+<span class="nc" id="L93">        Cuota cuota = pago.getCuota();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if ( cuota == null ) {</span>
+<span class="nc" id="L95">            return null;</span>
+        }
+<span class="nc" id="L97">        return cuota.getId();</span>
+    }
+
+    private String pagoCuotaDescripcion(Pago pago) {
+<span class="nc" id="L101">        Cuota cuota = pago.getCuota();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if ( cuota == null ) {</span>
+<span class="nc" id="L103">            return null;</span>
+        }
+<span class="nc" id="L105">        return cuota.getDescripcion();</span>
+    }
+
+    private Long pagoEstadoId(Pago pago) {
+<span class="nc" id="L109">        EstadoPago estado = pago.getEstado();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if ( estado == null ) {</span>
+<span class="nc" id="L111">            return null;</span>
+        }
+<span class="nc" id="L113">        return estado.getId();</span>
+    }
+
+    private String pagoEstadoNombre(Pago pago) {
+<span class="nc" id="L117">        EstadoPago estado = pago.getEstado();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if ( estado == null ) {</span>
+<span class="nc" id="L119">            return null;</span>
+        }
+<span class="nc" id="L121">        return estado.getNombre();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

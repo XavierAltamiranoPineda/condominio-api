@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PagoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">condominio-api</a> &gt; <a href="index.source.html" class="el_package">com.condominio.condominio_api.service.impl</a> &gt; <span class="el_source">PagoServiceImpl.java</span></div><h1>PagoServiceImpl.java</h1><pre class="source lang-java linenums">package com.condominio.condominio_api.service.impl;
+
+import com.condominio.condominio_api.audit.PostgresAuditInterceptor;
+import com.condominio.condominio_api.dto.request.PagoRequest;
+import com.condominio.condominio_api.dto.response.PagoResponse;
+import com.condominio.condominio_api.entity.Cuota;
+import com.condominio.condominio_api.entity.EstadoPago;
+import com.condominio.condominio_api.entity.Pago;
+import com.condominio.condominio_api.exception.ResourceNotFoundException;
+import com.condominio.condominio_api.mapper.PagoMapper;
+import com.condominio.condominio_api.repository.CuotaRepository;
+import com.condominio.condominio_api.repository.EstadoPagoRepository;
+import com.condominio.condominio_api.repository.PagoRepository;
+import com.condominio.condominio_api.service.interfaces.PagoService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
+
+<span class="fc" id="L23">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class PagoServiceImpl implements PagoService {
+
+    private final PagoRepository pagoRepository;
+    private final CuotaRepository cuotaRepository;
+    private final EstadoPagoRepository estadoPagoRepository;
+    private final PagoMapper pagoMapper;
+    private final PostgresAuditInterceptor auditInterceptor;
+
+    @Override
+    public PagoResponse findById(Long id) {
+<span class="nc" id="L36">        return pagoRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L37">                .map(pagoMapper::toResponse)</span>
+<span class="nc" id="L38">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    public Page&lt;PagoResponse&gt; findAll(Pageable pageable) {
+<span class="nc" id="L43">        return pagoRepository.findAllWithDetails(pageable)</span>
+<span class="nc" id="L44">                .map(pagoMapper::toResponse);</span>
+    }
+
+    @Override
+    public Page&lt;PagoResponse&gt; findByCuotaId(Long cuotaId, Pageable pageable) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (!cuotaRepository.existsById(cuotaId)) {</span>
+<span class="nc" id="L50">            throw new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, cuotaId);</span>
+        }
+<span class="nc" id="L52">        return pagoRepository.findByCuotaIdWithDetails(cuotaId, pageable)</span>
+<span class="nc" id="L53">                .map(pagoMapper::toResponse);</span>
+    }
+
+    @Override
+    public PagoResponse create(PagoRequest request) {
+<span class="fc" id="L58">        Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="fc" id="L59">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
+
+<span class="fc" id="L61">        EstadoPago estado = estadoPagoRepository.findById(request.getEstadoId())</span>
+<span class="pc" id="L62">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
+
+<span class="fc" id="L64">        auditInterceptor.setUsuarioActual();</span>
+<span class="fc" id="L65">        Pago pago = pagoMapper.toEntity(request);</span>
+<span class="fc" id="L66">        pago.setCuota(cuota);</span>
+<span class="fc" id="L67">        pago.setEstado(estado);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (pago.getFecha() == null) {</span>
+<span class="fc" id="L69">            pago.setFecha(OffsetDateTime.now());</span>
+        }
+<span class="fc" id="L71">        pago = pagoRepository.save(pago);</span>
+
+<span class="fc" id="L73">        log.info(&quot;Pago creado: id={}&quot;, pago.getId());</span>
+<span class="fc" id="L74">        return pagoMapper.toResponse(pago);</span>
+    }
+
+    @Override
+    public PagoResponse update(Long id, PagoRequest request) {
+<span class="nc" id="L79">        Pago pago = pagoRepository.findByIdWithDetails(id)</span>
+<span class="nc" id="L80">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (!pago.getCuota().getId().equals(request.getCuotaId())) {</span>
+<span class="nc" id="L83">            Cuota cuota = cuotaRepository.findById(request.getCuotaId())</span>
+<span class="nc" id="L84">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Cuota&quot;, &quot;id&quot;, request.getCuotaId()));</span>
+<span class="nc" id="L85">            pago.setCuota(cuota);</span>
+        }
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (!pago.getEstado().getId().equals(request.getEstadoId())) {</span>
+<span class="nc" id="L89">            EstadoPago estado = estadoPagoRepository.findById(request.getEstadoId())</span>
+<span class="nc" id="L90">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;EstadoPago&quot;, &quot;id&quot;, request.getEstadoId()));</span>
+<span class="nc" id="L91">            pago.setEstado(estado);</span>
+        }
+
+<span class="nc" id="L94">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L95">        pagoMapper.updateEntityFromRequest(request, pago);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (request.getFecha() != null) {</span>
+<span class="nc" id="L97">            pago.setFecha(request.getFecha());</span>
+        }
+<span class="nc" id="L99">        pago = pagoRepository.save(pago);</span>
+
+<span class="nc" id="L101">        log.info(&quot;Pago actualizado: id={}&quot;, pago.getId());</span>
+<span class="nc" id="L102">        return pagoMapper.toResponse(pago);</span>
+    }
+
+    @Override
+    public void delete(Long id) {
+<span class="nc" id="L107">        Pago pago = pagoRepository.findById(id)</span>
+<span class="nc" id="L108">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Pago&quot;, &quot;id&quot;, id));</span>
+
+<span class="nc" id="L110">        auditInterceptor.setUsuarioActual();</span>
+<span class="nc" id="L111">        pagoRepository.delete(pago);</span>
+
+<span class="nc" id="L113">        log.info(&quot;Pago eliminado: id={}&quot;, id);</span>
+<span class="nc" id="L114">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
