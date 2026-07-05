@@ -47,7 +47,9 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/webjars/**",
             // Health
-            "/actuator/health"
+            "/actuator/health",
+            // Error
+            "/error"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
