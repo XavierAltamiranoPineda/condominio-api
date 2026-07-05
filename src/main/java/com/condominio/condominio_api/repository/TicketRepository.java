@@ -37,4 +37,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
                    "WHERE t.unidad.condominio.id = :condominioId",
            countQuery = "SELECT COUNT(t) FROM Ticket t WHERE t.unidad.condominio.id = :condominioId")
     Page<Ticket> findByCondominioIdWithDetails(Long condominioId, Pageable pageable);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.unidad.condominio.id = :condominioId AND t.estadoActual.nombre NOT IN ('CERRADO', 'RESUELTO', 'ANULADO')")
+    long countTicketsAbiertosByCondominioId(Long condominioId);
 }

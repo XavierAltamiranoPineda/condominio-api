@@ -1,6 +1,7 @@
 com/condominio/condominio_api/mapper/UnidadMapper.class
 com/condominio/condominio_api/service/impl/FileSystemStorageService.class
 com/condominio/condominio_api/repository/CondominioRepository.class
+com/condominio/condominio_api/service/interfaces/DashboardService.class
 com/condominio/condominio_api/mapper/HistorialTicketMapper.class
 com/condominio/condominio_api/mapper/RolMapperImpl.class
 com/condominio/condominio_api/dto/response/PermisoResponse$PermisoResponseBuilder.class
@@ -48,6 +49,7 @@ com/condominio/condominio_api/entity/PersonaUnidad.class
 com/condominio/condominio_api/repository/TorreRepository.class
 com/condominio/condominio_api/controller/PersonaUnidadController.class
 com/condominio/condominio_api/service/impl/CondominioServiceImpl.class
+com/condominio/condominio_api/controller/DashboardController.class
 com/condominio/condominio_api/controller/TorreController.class
 com/condominio/condominio_api/service/impl/UsuarioServiceImpl.class
 com/condominio/condominio_api/mapper/TorreMapperImpl.class
@@ -63,6 +65,7 @@ com/condominio/condominio_api/security/UserDetailsServiceImpl.class
 com/condominio/condominio_api/controller/UnidadController.class
 com/condominio/condominio_api/entity/Unidad.class
 com/condominio/condominio_api/event/listener/NotificationEventListener.class
+com/condominio/condominio_api/dto/response/RecaudacionMensualDTO$RecaudacionMensualDTOBuilder.class
 com/condominio/condominio_api/mapper/TicketMapper.class
 com/condominio/condominio_api/repository/ArchivoRepository.class
 com/condominio/condominio_api/dto/response/RolDetalleResponse$RolDetalleResponseBuilder.class
@@ -101,10 +104,12 @@ com/condominio/condominio_api/repository/HistorialTicketRepository.class
 com/condominio/condominio_api/mapper/TicketComentarioMapper.class
 com/condominio/condominio_api/dto/request/RolRequest.class
 com/condominio/condominio_api/service/interfaces/PagoService.class
+com/condominio/condominio_api/repository/projection/RecaudacionMensualProjection.class
 com/condominio/condominio_api/entity/Categoria.class
 com/condominio/condominio_api/entity/PersonaUnidad$TipoPersonaUnidad.class
 com/condominio/condominio_api/entity/EstadoTicket.class
 com/condominio/condominio_api/mapper/TicketMapperImpl.class
+com/condominio/condominio_api/dto/response/DashboardResponse$DashboardResponseBuilder.class
 com/condominio/condominio_api/entity/Cuota.class
 com/condominio/condominio_api/dto/request/CuotaRequest.class
 com/condominio/condominio_api/dto/request/CondominioRequest.class
@@ -183,9 +188,12 @@ com/condominio/condominio_api/exception/BusinessException.class
 com/condominio/condominio_api/controller/ReciboController.class
 com/condominio/condominio_api/entity/Archivo.class
 com/condominio/condominio_api/mapper/HistorialTicketMapperImpl.class
+com/condominio/condominio_api/dto/response/DashboardResponse.class
+com/condominio/condominio_api/service/impl/DashboardServiceImpl.class
 com/condominio/condominio_api/security/SecurityConfig.class
 com/condominio/condominio_api/service/interfaces/StorageService.class
 com/condominio/condominio_api/dto/request/PagoRequest.class
 com/condominio/condominio_api/service/impl/TicketComentarioServiceImpl.class
 com/condominio/condominio_api/dto/response/HistorialTicketResponse.class
 com/condominio/condominio_api/mapper/PersonaUnidadMapper.class
+com/condominio/condominio_api/dto/response/RecaudacionMensualDTO.class

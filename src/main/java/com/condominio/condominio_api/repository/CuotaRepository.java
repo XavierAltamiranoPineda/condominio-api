@@ -26,4 +26,36 @@ public interface CuotaRepository extends JpaRepository<Cuota, Long> {
 
     boolean existsByUnidadIdAndMesAndAnioAndTipo(Long unidadId, Short mes, Short anio, Cuota.TipoCuota tipo);
     boolean existsByUnidadIdAndMesAndAnioAndTipoAndIdNot(Long unidadId, Short mes, Short anio, Cuota.TipoCuota tipo, Long id);
+
+    @Query("SELECT COUNT(c) FROM Cuota c WHERE c.unidad.condominio.id = :condominioId AND c.fechaVencimiento < CURRENT_DATE AND c.estado IN ('PENDIENTE', 'PAGADA_PARCIAL')")
+    long countCuotasVencidasByCondominioId(@Param("condominioId") Long condominioId);
+
+    @Query(value = "SELECT COALESCE(SUM(c.valor - COALESCE(p_sum.pagado, 0)), 0) " +
+           "FROM cuota c " +
+           "JOIN unidad u ON c.id_unidad = u.id_unidad " +
+           "LEFT JOIN ( " +
+           "    SELECT p.id_cuota, SUM(p.valor) as pagado " +
+           "    FROM pago p " +
+           "    JOIN estado_pago ep ON p.id_estado = ep.id_estado " +
+           "    WHERE ep.nombre = 'CONFIRMADO' " +
+           "    GROUP BY p.id_cuota " +
+           ") p_sum ON c.id_cuota = p_sum.id_cuota " +
+           "WHERE u.id_condominio = :condominioId " +
+           "  AND c.estado IN ('PENDIENTE', 'PAGADA_PARCIAL')", nativeQuery = true)
+    java.math.BigDecimal sumSaldoPendienteTotalByCondominioId(@Param("condominioId") Long condominioId);
+
+    @Query(value = "SELECT COALESCE(SUM(c.valor - COALESCE(p_sum.pagado, 0)), 0) " +
+           "FROM cuota c " +
+           "JOIN unidad u ON c.id_unidad = u.id_unidad " +
+           "LEFT JOIN ( " +
+           "    SELECT p.id_cuota, SUM(p.valor) as pagado " +
+           "    FROM pago p " +
+           "    JOIN estado_pago ep ON p.id_estado = ep.id_estado " +
+           "    WHERE ep.nombre = 'CONFIRMADO' " +
+           "    GROUP BY p.id_cuota " +
+           ") p_sum ON c.id_cuota = p_sum.id_cuota " +
+           "WHERE u.id_condominio = :condominioId " +
+           "  AND c.fecha_vencimiento < CURRENT_DATE " +
+           "  AND c.estado IN ('PENDIENTE', 'PAGADA_PARCIAL')", nativeQuery = true)
+    java.math.BigDecimal sumSaldoVencidoTotalByCondominioId(@Param("condominioId") Long condominioId);
 }
