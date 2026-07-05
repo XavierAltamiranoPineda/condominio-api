@@ -94,10 +94,6 @@ public class TicketServiceImpl implements TicketService {
         Unidad unidad = unidadesPage.getContent().get(0).getUnidad();
 
         Persona tecnico = null;
-        if (request.getTecnicoId() != null) {
-            tecnico = personaRepository.findById(request.getTecnicoId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Tecnico", "id", request.getTecnicoId()));
-        }
 
         Categoria categoria = null;
         if (request.getCategoriaId() != null) {
