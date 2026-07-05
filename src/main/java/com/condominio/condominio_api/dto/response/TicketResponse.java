@@ -10,7 +10,10 @@ import java.util.List;
 public class TicketResponse {
     private Long id;
     private Long personaId;
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("creadoPor")
     private String personaNombre;
+
     private Long unidadId;
     private String unidadNombre;
     private Long tecnicoId;
@@ -18,7 +21,10 @@ public class TicketResponse {
     private Long categoriaId;
     private String categoriaNombre;
     private Long estadoActualId;
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("estado")
     private String estadoActualNombre;
+
     private String titulo;
     private String descripcion;
     private String prioridad;

@@ -1,21 +1,14 @@
 package com.condominio.condominio_api.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class TicketRequest {
 
-    @NotNull(message = "El ID de la persona no puede ser nulo")
-    private Long personaId;
-
-    @NotNull(message = "El ID de la unidad no puede ser nulo")
-    private Long unidadId;
-
-    private Long tecnicoId;
-    
+    @JsonProperty("idCategoria")
     private Long categoriaId;
     
     private Long estadoActualId;

@@ -43,6 +43,8 @@ public class TicketServiceImpl implements TicketService {
     private final PostgresAuditInterceptor auditInterceptor;
     private final StorageService storageService;
     private final ApplicationEventPublisher eventPublisher;
+    private final UsuarioRepository usuarioRepository;
+    private final PersonaUnidadRepository personaUnidadRepository;
 
     @Override
     public TicketResponse findById(Long id) {
@@ -72,11 +74,24 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public TicketResponse createWithArchivos(TicketRequest request, List<MultipartFile> files) {
-        Persona persona = personaRepository.findById(request.getPersonaId())
-                .orElseThrow(() -> new ResourceNotFoundException("Persona", "id", request.getPersonaId()));
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof com.condominio.condominio_api.security.CustomUserDetails)) {
+            throw new BusinessException("Usuario no autenticado");
+        }
+        Long usuarioId = ((com.condominio.condominio_api.security.CustomUserDetails) auth.getPrincipal()).getId();
+        
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", usuarioId));
+        Persona persona = usuario.getPersona();
+        if (persona == null) {
+            throw new BusinessException("El usuario no tiene una persona asociada");
+        }
 
-        Unidad unidad = unidadRepository.findById(request.getUnidadId())
-                .orElseThrow(() -> new ResourceNotFoundException("Unidad", "id", request.getUnidadId()));
+        Page<PersonaUnidad> unidadesPage = personaUnidadRepository.findByPersonaIdWithDetails(persona.getId(), org.springframework.data.domain.PageRequest.of(0, 1));
+        if (unidadesPage.isEmpty()) {
+            throw new BusinessException("El usuario no tiene unidades asociadas");
+        }
+        Unidad unidad = unidadesPage.getContent().get(0).getUnidad();
 
         Persona tecnico = null;
         if (request.getTecnicoId() != null) {
