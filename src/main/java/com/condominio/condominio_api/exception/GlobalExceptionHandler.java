@@ -145,6 +145,18 @@ public class GlobalExceptionHandler {
                         "El cuerpo de la petición (JSON) está mal formado o es ilegible."));
     }
 
+    @ExceptionHandler({
+        org.springframework.web.servlet.resource.NoResourceFoundException.class,
+        org.springframework.web.servlet.NoHandlerFoundException.class
+    })
+    public ResponseEntity<ApiResponse<Void>> handleNoResourceFound(Exception ex, HttpServletRequest request) {
+        log.warn("Ruta no encontrada '{}': {}", request.getRequestURI(), ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(HttpStatus.NOT_FOUND.value(),
+                        "El endpoint o recurso solicitado no existe."));
+    }
+
     // ─── Fallback ────────────────────────────────────────────────────────────
 
     @ExceptionHandler(Exception.class)
