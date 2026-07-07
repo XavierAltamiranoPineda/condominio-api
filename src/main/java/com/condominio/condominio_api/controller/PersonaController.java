@@ -17,9 +17,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/personas")
+@RequestMapping("/api/v1/residentes")
 @RequiredArgsConstructor
-@Tag(name = "Personas", description = "Gestión de personas (propietarios, arrendatarios, etc.)")
+@Tag(name = "Residentes", description = "Gestión de residentes (propietarios, arrendatarios, etc.)")
 public class PersonaController {
 
     private final PersonaService personaService;

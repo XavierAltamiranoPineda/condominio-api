@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class TicketRequest {
 
-    @JsonProperty("idCategoria")
     private Long categoriaId;
     
     private Long estadoActualId;
