@@ -33,6 +33,7 @@ spring:
 # ── Servidor ────────────────────────────────────────────────
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: native
   error:
     include-message: never
     include-stacktrace: never
@@ -43,8 +44,6 @@ logging:
     root: WARN
     com.condominio: INFO
     org.springframework.security: WARN
-  file:
-    name: /var/log/condominio-api/app.log
 
 # ── JWT ─────────────────────────────────────────────────────
 app:
@@ -55,9 +54,9 @@ app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS}
 
-# ── SpringDoc — DESACTIVADO en producción ──────────────────
+# ── SpringDoc — Configurable en producción ──────────────────
 springdoc:
   swagger-ui:
-    enabled: false
+    enabled: ${SWAGGER_ENABLED:true}
   api-docs:
-    enabled: false
+    enabled: ${SWAGGER_ENABLED:true}
