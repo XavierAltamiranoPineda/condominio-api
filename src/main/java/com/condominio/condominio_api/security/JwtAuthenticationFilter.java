@@ -62,17 +62,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(username)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (jwtTokenProvider.isTokenValid(jwt)) {
+                    java.util.List<String> roles = jwtTokenProvider.extractRoles(jwt);
+                    
+                    java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities = 
+                            roles == null ? java.util.Collections.emptyList() : 
+                            roles.stream()
+                                 .map(org.springframework.security.core.authority.SimpleGrantedAuthority::new)
+                                 .toList();
 
-                if (jwtTokenProvider.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
-                                    userDetails,
-                                    null,
-                                    userDetails.getAuthorities());
+                                    username, // Principal
+                                    null, // Credentials
+                                    authorities); // Roles
+
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    log.debug("Usuario autenticado: {} | Roles: {}", username, userDetails.getAuthorities());
+                    log.debug("Usuario autenticado desde token: {} | Roles: {}", username, authorities);
                 }
             }
         } catch (Exception e) {

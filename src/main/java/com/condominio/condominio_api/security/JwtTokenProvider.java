@@ -86,6 +86,11 @@ public class JwtTokenProvider {
         return extractClaim(token, claims -> claims.get("type", String.class));
     }
 
+    @SuppressWarnings("unchecked")
+    public java.util.List<String> extractRoles(String token) {
+        return extractClaim(token, claims -> claims.get("roles", java.util.List.class));
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

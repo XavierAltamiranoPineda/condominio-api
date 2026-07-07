@@ -25,7 +25,7 @@ public class PersonaController {
     private final PersonaService personaService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('PERSONAS_LEER')")
+    @PreAuthorize("hasAuthority('RESIDENTES_LEER')")
     @Operation(summary = "Listar personas paginadas")
     public ResponseEntity<ApiResponse<Page<PersonaResponse>>> listar(
             @PageableDefault(size = 20, sort = "apellidos", direction = Sort.Direction.ASC)
@@ -34,14 +34,14 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('PERSONAS_LEER')")
+    @PreAuthorize("hasAuthority('RESIDENTES_LEER')")
     @Operation(summary = "Obtener persona por ID")
     public ResponseEntity<ApiResponse<PersonaResponse>> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(ApiResponse.ok(personaService.findById(id), "Persona encontrada"));
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('PERSONAS_CREAR')")
+    @PreAuthorize("hasAuthority('RESIDENTES_CREAR')")
     @Operation(summary = "Crear una nueva persona")
     public ResponseEntity<ApiResponse<PersonaResponse>> crear(@Valid @RequestBody PersonaRequest request) {
         return ResponseEntity.status(201)
@@ -49,7 +49,7 @@ public class PersonaController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('PERSONAS_EDITAR')")
+    @PreAuthorize("hasAuthority('RESIDENTES_EDITAR')")
     @Operation(summary = "Actualizar una persona existente")
     public ResponseEntity<ApiResponse<PersonaResponse>> actualizar(
             @PathVariable Long id,
@@ -58,7 +58,7 @@ public class PersonaController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('PERSONAS_ELIMINAR')")
+    @PreAuthorize("hasAuthority('RESIDENTES_ELIMINAR')")
     @Operation(summary = "Eliminar una persona")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         personaService.delete(id);
