@@ -46,7 +46,7 @@ public class JwtTokenProvider {
         extraClaims.put("type", "access");
         extraClaims.put("roles", userDetails.getAuthorities()
                 .stream()
-                .map(Object::toString)
+                .map(org.springframework.security.core.GrantedAuthority::getAuthority)
                 .toList());
         return buildToken(extraClaims, userDetails, accessTokenExpirationMs);
     }
@@ -88,7 +88,13 @@ public class JwtTokenProvider {
 
     @SuppressWarnings("unchecked")
     public java.util.List<String> extractRoles(String token) {
-        return extractClaim(token, claims -> claims.get("roles", java.util.List.class));
+        return extractClaim(token, claims -> {
+            Object rolesObj = claims.get("roles");
+            if (rolesObj instanceof java.util.List<?>) {
+                return (java.util.List<String>) rolesObj;
+            }
+            return java.util.Collections.emptyList();
+        });
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
