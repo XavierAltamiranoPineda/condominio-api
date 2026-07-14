@@ -88,10 +88,8 @@ public class TicketServiceImpl implements TicketService {
         }
 
         Page<PersonaUnidad> unidadesPage = personaUnidadRepository.findByPersonaIdWithDetails(persona.getId(), org.springframework.data.domain.PageRequest.of(0, 1));
-        if (unidadesPage.isEmpty()) {
-            throw new BusinessException("El usuario no tiene unidades asociadas");
-        }
-        Unidad unidad = unidadesPage.getContent().get(0).getUnidad();
+        // Si el usuario no tiene unidades asignadas (ej. admin), unidad queda null — no bloquear la creacion
+        Unidad unidad = unidadesPage.isEmpty() ? null : unidadesPage.getContent().get(0).getUnidad();
 
         Persona tecnico = null;
 

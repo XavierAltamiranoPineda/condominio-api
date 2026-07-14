@@ -65,15 +65,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtTokenProvider.isTokenValid(jwt)) {
                     java.util.List<String> roles = jwtTokenProvider.extractRoles(jwt);
                     
-                    java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities = 
+                    java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities = new java.util.ArrayList<>(
                             roles == null ? java.util.Collections.emptyList() : 
                             roles.stream()
                                  .map(org.springframework.security.core.authority.SimpleGrantedAuthority::new)
-                                 .toList();
+                                 .toList());
 
+                    if (roles != null && roles.contains("ROLE_ADMIN")) {
+                        String[] modulos = {"ASAMBLEAS", "RESERVAS", "TICKETS", "SEGURIDAD", "RESIDENTES", "UNIDADES", "PERSONAS", "PAGOS", "CUOTAS", "MULTAS", "COMUNICADOS", "NOTIFICACIONES", "USUARIOS", "REPORTES", "CONFIGURACIONES", "CONVENIOS", "PARQUEADEROS", "VEHICULOS", "CATEGORIAS", "ADMIN"};
+                        for (String m : modulos) {
+                            authorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(m + "_LEER"));
+                            authorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(m + "_CREAR"));
+                            authorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(m + "_EDITAR"));
+                            authorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(m + "_ELIMINAR"));
+                            authorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(m));
+                        }
+                    }
+
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
-                                    username, // Principal
+                                    userDetails, // Principal is now UserDetails
                                     null, // Credentials
                                     authorities); // Roles
 

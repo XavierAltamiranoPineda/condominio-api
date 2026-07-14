@@ -16,7 +16,7 @@
 	<description>API REST para sistema de gestión de condominios</description>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 		<jjwt.version>0.12.6</jjwt.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<springdoc.version>2.8.6</springdoc.version>
